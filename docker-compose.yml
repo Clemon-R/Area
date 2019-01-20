@@ -1,0 +1,12 @@
+version: '3'
+services:
+  server:
+    build: 
+        context: ./server
+    ports:
+     - "8080:80"
+  client_web:
+    build: 
+        context: ./client_web
+    ports:
+     - "8081:81"
