@@ -1,12 +1,19 @@
 version: '3'
 services:
-  server:
-    build: 
-        context: ./server
-    ports:
-     - "8080:80"
-  client_web:
-    build: 
-        context: ./client_web
-    ports:
-     - "8081:81"
+    server:
+        build: 
+            context: ./server
+        depends_on: 
+            - dotnet
+            - dotnet_asp
+        ports:
+            - "8080:80"
+    client_web:
+        build: 
+            context: ./client_web
+        ports:
+            - "8081:81"
+    dotnet:
+        image: microsoft/dotnet:2.1.300-sdk
+    dotnet_asp:
+        image: microsoft/dotnet:2.1.0-aspnetcore-runtime

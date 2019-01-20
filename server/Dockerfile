@@ -1,20 +1,16 @@
-# Utiliser une runtime officielle de Python comme image d'origine
-FROM python:2.7-slim
-
-# Définir le répertoire de travail de l'applicaiton à /app
+FROM microsoft/dotnet:sdk AS build-env
 WORKDIR /app
 
-# Copier le contenu du répertoire courant dans le conteneur à l'adresse /app
-ADD . /app
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
 
-# Installer tous les packets nécessaires définis dans le fichier requirements.txt
-RUN pip install -r requirements.txt
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-# Rendre le port 80 accessible à l'extérieur du conteneur
-EXPOSE 80
-
-# Définir une variable d'environnement
-ENV NAME World
-
-# Lancer app.py quand le conteneur s'exécute
-CMD ["python", "app.py"]
+# Build runtime image
+FROM microsoft/dotnet:aspnetcore-runtime
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "Area.dll"]
