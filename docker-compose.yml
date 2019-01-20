@@ -11,9 +11,13 @@ services:
     client_web:
         build: 
             context: ./client_web
+        depends_on:
+            - node
         ports:
-            - "8081:81"
+            - "8081:4200"
     dotnet:
         image: microsoft/dotnet:2.1.300-sdk
     dotnet_asp:
         image: microsoft/dotnet:2.1.0-aspnetcore-runtime
+    node:
+        image: node:8.15.0
