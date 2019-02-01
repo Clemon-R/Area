@@ -1,20 +1,23 @@
-# Utiliser une runtime officielle de Python comme image d'origine
-FROM python:2.7-slim
-
-# Définir le répertoire de travail de l'applicaiton à /app
+FROM openjdk:8
+ENV SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip" \
+    ANDROID_HOME="/usr/local/android-sdk" \
+    ANDROID_VERSION=28 \
+    ANDROID_BUILD_TOOLS_VERSION=28.0.0
+	
+RUN mkdir "$ANDROID_HOME" .android \
+    && cd "$ANDROID_HOME" \
+    && curl -o sdk.zip $SDK_URL \
+    && unzip sdk.zip \
+    && rm sdk.zip \
+    && yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+RUN $ANDROID_HOME/tools/bin/sdkmanager --update
+RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
+    "platforms;android-${ANDROID_VERSION}" \
+    "platform-tools"
 WORKDIR /app
+COPY . /app
 
-# Copier le contenu du répertoire courant dans le conteneur à l'adresse /app
-ADD . /app
+RUN ./gradlew tasks
+RUN ./gradlew build
 
-# Installer tous les packets nécessaires définis dans le fichier requirements.txt
-RUN pip install -r requirements.txt
-
-# Rendre le port 80 accessible à l'extérieur du conteneur
-EXPOSE 80
-
-# Définir une variable d'environnement
-ENV NAME World
-
-# Lancer app.py quand le conteneur s'exécute
-CMD ["python", "app.py"]
+CMD ./gradlew assembleRelease

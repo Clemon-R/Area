@@ -15,6 +15,11 @@ services:
             - node
         ports:
             - "8081:4200"
+    mobile_user:
+        build:
+            context: ./mobile_user
+        volumes:
+            - ".:/app/app/build/outputs/apk/release"
     dotnet:
         image: microsoft/dotnet:2.1.300-sdk
     dotnet_asp:
