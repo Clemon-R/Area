@@ -21,7 +21,11 @@ namespace Area.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _context.Find<Account>(0);
+            _context.Add<Account>(new Account() { UserName="Test"});
+            _context.SaveChanges();
+            foreach (var account in _context.Accounts){
+                Console.WriteLine(account.UserName);
+            }
             return new string[] { "value1", "value2" };
         }
 

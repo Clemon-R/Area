@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Graphs\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Services\Actions\" />
     <Folder Include="Services\Triggers\" />
     <Folder Include="Services\Reactions\" />
