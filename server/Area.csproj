@@ -5,12 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Graphs\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Services\Actions\" />
+    <Folder Include="Services\Triggers\" />
+    <Folder Include="Services\Reactions\" />
+    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.8" />
   </ItemGroup>
 
 </Project>

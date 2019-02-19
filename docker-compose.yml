@@ -6,13 +6,12 @@ services:
         depends_on: 
             - dotnet
             - dotnet_asp
+            - db
         ports:
             - "8080:80"
     client_web:
         build: 
             context: ./client_web
-        depends_on:
-            - node
         ports:
             - "8081:4200"
     mobile_user:
@@ -24,5 +23,8 @@ services:
         image: microsoft/dotnet:2.1.300-sdk
     dotnet_asp:
         image: microsoft/dotnet:2.1.0-aspnetcore-runtime
-    node:
-        image: node:8.15.0
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Your_password123"
+            ACCEPT_EULA: "Y"
