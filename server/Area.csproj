@@ -9,7 +9,6 @@
     <Folder Include="Services\Actions\" />
     <Folder Include="Services\Triggers\" />
     <Folder Include="Services\Reactions\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

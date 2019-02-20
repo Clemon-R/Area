@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.Identity;
+using Area.Services.App;
 
 namespace Area
 {
@@ -32,7 +33,9 @@ namespace Area
             // This line uses 'UseSqlServer' in the 'options' parameter
             // with the connection string defined above.
             services.AddDbContext<ApplicationDbContext>();
-            
+
+            services.AddScoped<AccountService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
