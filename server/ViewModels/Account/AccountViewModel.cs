@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Area.ViewModels.Account
 {
-    public class AccountViewModel : IViewModel
+    public class AccountViewModel : SuccessViewModel
     {
         public string Token { get; set; }
     }

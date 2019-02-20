@@ -20,10 +20,34 @@ namespace Area.Services.App
 
         public Account GetAccount(IConnectedViewModel model)
         {
+            Console.WriteLine($"AccountService(GetAccount): Getting account for token({model.Token})");
             Account current = _context.Accounts
                 .Where(account => account.Token.Equals(model.Token))
                 .FirstOrDefault();
             return current;
+        }
+
+        public ErrorViewModel Register(RegisterViewModel model)
+        {
+            Console.WriteLine("AccountService(Register): Trying to register");
+            if (!model.Password.Equals(model.PasswordConfirm))
+            {
+                Console.WriteLine("AccountService(Register): Wrong password");
+                return new ErrorViewModel() { Error = "Les mot de passe ne sont pas les même" };
+            } else if (_context.Accounts.Any(a => a.UserName.Equals(model.UserName)))
+            {
+                Console.WriteLine($"AccountService(Register): UserName already exist({model.UserName})");
+                return new ErrorViewModel() { Error="Nom de compte déjà existent"};
+            }
+            var account = new Account()
+            {
+                UserName = model.UserName,
+                Password = model.Password
+            };
+            _context.Add(account);
+            _context.SaveChanges();
+            Console.WriteLine("AccountService(Register): Registered");
+            return null;
         }
 
         public IViewModel Login(LoginViewModel model)
@@ -43,18 +67,21 @@ namespace Area.Services.App
             byte[] encodedPassword = new UTF8Encoding().GetBytes($"{current.Id}{current.UserName}{current.Password}");
             byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
             string encoded = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-            current.Token = encoded;
-            AccountViewModel result = new AccountViewModel()
-            {
-                Token = current.Token
+            
+            AccountViewModel result = new AccountViewModel(){
+                Token = encoded
             };
-            Save(current);
+            if (current.Token == null || !current.Token.Equals(encoded)){
+                current.Token = encoded;
+                Save(current);
+            }
             Console.WriteLine($"AccountService(Login): Account({current.Id}) connected");
             return result;
         }
 
         public void Logout(Account current)
         {
+            Console.WriteLine($"AccountService(Logout): Donnection account({current.Id})");
             current.Token = null;
             _context.Update(current);
             _context.SaveChanges();

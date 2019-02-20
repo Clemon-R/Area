@@ -7,5 +7,6 @@ namespace Area.ViewModels
 {
     public interface IViewModel
     {
+        bool Success { get; }
     }
 }

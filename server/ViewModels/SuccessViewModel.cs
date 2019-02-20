@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace Area.ViewModels
 {
-    public class ErrorViewModel : IViewModel
+    public class SuccessViewModel : IViewModel
     {
-        public string Error { get; set;}
-
-        public bool Success => false;
+        public bool Success { get => true;}
     }
 }

@@ -20,6 +20,12 @@ namespace Area.Controllers
             _accountService = accountService;
         }
 
+        [HttpGet("register")]
+        public IViewModel Register([FromBody] RegisterViewModel model)
+        {
+            return _accountService.Register(model);
+        }
+
         [HttpGet("login")]
         public IViewModel Login([FromBody] LoginViewModel model)
         {

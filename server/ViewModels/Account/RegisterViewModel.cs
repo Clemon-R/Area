@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Area.ViewModels.Account
 {
-    public class LoginViewModel
+    public class RegisterViewModel
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string PasswordConfirm { get; set; }
     }
 }
