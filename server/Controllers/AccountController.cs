@@ -25,5 +25,12 @@ namespace Area.Controllers
         {
             return _accountService.Login(model);
         }
+
+        [HttpGet("logout")]
+        public void Logout([FromBody] IConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            _accountService.Logout(account);
+        }
     }
 }

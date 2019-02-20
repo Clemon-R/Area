@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Area.Controllers
 {
-    [Route("api/[controller]")]
+    /*[Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -53,5 +53,5 @@ namespace Area.Controllers
         public void Delete(int id)
         {
         }
-    }
+    }*/
 }

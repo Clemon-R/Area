@@ -15,6 +15,11 @@ namespace Area.Migrations
                 name: "Token",
                 table: "Accounts",
                 nullable: true);
+            migrationBuilder.InsertData(
+                "Accounts",
+                new[] { "Id", "UserName", "Password"},
+                new[] {"1", "Admin", "Admin" }
+                );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
