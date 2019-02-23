@@ -23,9 +23,20 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/vendor/bootstrap/scss/bootstrap.scss",
+              "src/assets/vendor/bootstrap/scss/bootstrap-grid.scss",
+              "src/assets/css/sb-admin-2.css",
+              "src/assets/scss/sb-admin-2.scss",
+              "src/assets/vendor/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts":[
+              "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/vendor/jquery/jquery.min.js",
+              "src/assets/vendor/jquery/jquery.js",
+              "src/assets/vendor/jquery-easing/jquery.easing.min.js",
+              "src/assets/js/sb-admin-2.js"
+            ]
           },
           "configurations": {
             "production": {

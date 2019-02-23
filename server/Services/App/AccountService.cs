@@ -37,7 +37,7 @@ namespace Area.Services.App
             } else if (_context.Accounts.Any(a => a.UserName.Equals(model.UserName)))
             {
                 Console.WriteLine($"AccountService(Register): UserName already exist({model.UserName})");
-                return new ErrorViewModel() { Error="Nom de compte déjà existent"};
+                return new ErrorViewModel() { Error="Nom de compte déjà existant"};
             }
             var account = new Account()
             {
