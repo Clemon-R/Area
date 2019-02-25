@@ -20,20 +20,20 @@ namespace Area.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet("register")]
+        [HttpPost("register")]
         public IViewModel Register([FromBody] RegisterViewModel model)
         {
             return _accountService.Register(model);
         }
 
-        [HttpGet("login")]
+        [HttpPost("login")]
         public IViewModel Login([FromBody] LoginViewModel model)
         {
             return _accountService.Login(model);
         }
 
-        [HttpGet("logout")]
-        public void Logout([FromBody] IConnectedViewModel model)
+        [HttpPost("logout")]
+        public void Logout([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
             _accountService.Logout(account);

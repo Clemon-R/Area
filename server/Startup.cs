@@ -36,6 +36,11 @@ namespace Area
             services.AddDbContext<ApplicationDbContext>();
 
             services.AddScoped<AccountService>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin1",
+                    builder => builder.AllowAnyOrigin());
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -53,6 +58,7 @@ namespace Area
                 app.UseHsts();
             }
 
+            app.UseCors("AllowOrigin");
             //app.UseHttpsRedirection();
             app.UseMvc();
         }

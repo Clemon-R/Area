@@ -162,7 +162,7 @@
           </a>
           <!-- Dropdown - User Information -->
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">
+            <!--<a class="dropdown-item" href="#">
               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Profile
             </a>
@@ -173,14 +173,27 @@
             <a class="dropdown-item" href="#">
               <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
               Activity Log
-            </a>
+            </a>-->
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
               <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-              Logout
+              Déconnexion
             </a>
           </div>
         </li>
+
+        <!-- Topbar Connection -->
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-connection">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Nom de compte" aria-label="Username" aria-describedby="basic-addon2">
+            <input type="password" class="form-control bg-light border-0 small" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <i class="fas fa-key fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
 
       </ul>
 
@@ -190,7 +203,6 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
       <router-outlet></router-outlet>
-
     </div>
     <!-- /.container-fluid -->
 
@@ -201,7 +213,7 @@
   <footer class="sticky-footer bg-white">
     <div class="container my-auto">
       <div class="copyright text-center my-auto">
-        <span>Copyright &copy; Your Website 2019</span>
+        <span>Copyright &copy; Area 2019</span>
       </div>
     </div>
   </footer>
@@ -214,15 +226,15 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Vous voulez nous quitter ?</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-body">Sélectionner "Déconnecté" en bas, si vous voulez arrêter votre session actuel.</div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+        <a class="btn btn-danger" (click)="disconnect()" data-dismiss="modal" color="white">Déconnecté</a>
       </div>
     </div>
   </div>
