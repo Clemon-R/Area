@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LayoutService} from './layout.service';
 import {Account} from '../models/account';
+import {ResultViewModel} from '../viewModels/ResultViewModel';
 
 @Component({
   selector: 'app-layout',
@@ -26,38 +27,47 @@ export class LayoutComponent implements OnInit {
       this.account = new Account();
       this.account.token = document.cookie;
       console.log('Getting account...');
-      this.account = await this.layoutService.getAccount(this.account);
-      if (this.account) {
-        this.connected = true;
-        console.log('Account loaded');
-        console.log(this.account);
-      }
+      this.layoutService.getAccount(this.account).then(
+        (result: Account) => {
+          this.account = result;
+          if (this.account) {
+            this.connected = true;
+            console.log('Account loaded');
+            console.log(this.account);
+          }
+        }
+      );
     }
   }
 
-  public async disconnect() {
+  public disconnect() {
     console.log('Trying to disconnect...');
     if (this.connected && this.account) {
-      const result = await this.layoutService.disconnectAccount(this.account);
-      if (result.success) {
-        this.connected = false;
-        document.cookie = null;
-        console.log('Disconnected successfully');
-      }
+      this.layoutService.disconnectAccount(this.account).then(
+        (result: ResultViewModel) => {
+          if (result.success) {
+            this.connected = false;
+            document.cookie = null;
+            console.log('Disconnected successfully');
+          }
+        }
+      );
     }
   }
 
-  public async connect() {
+  public connect() {
     console.log('Trying to connect...');
-    const result: Account = await this.layoutService.connectAccount(this.username, this.password);
-    this.account = result;
-    console.log(this.account);
-    if (result) {
-      document.cookie = result.token;
-      console.log('Cookie content: ' + document.cookie);
-      if (document.cookie) {
-        this.connected = true;
+    this.layoutService.connectAccount(this.username, this.password).then(
+      (result: Account) => {
+        this.account = result;
+        if (result) {
+          document.cookie = result.token;
+          console.log('Cookie content: ' + document.cookie);
+          if (document.cookie) {
+            this.connected = true;
+          }
+        }
       }
-    }
+    );
   }
 }

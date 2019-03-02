@@ -1,0 +1,32 @@
+<!-- Page Heading -->
+<h1 class="h3 mb-4 text-gray-800">Inscription</h1>
+<div class="alert alert-success" role="alert" *ngIf="success">
+  {{message}}
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="error">
+  {{message}}
+</div>
+<div>
+  <form>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-user fa-sm"></i></span>
+      </div>
+      <input type="text" class="form-control" placeholder="Nom de compte" aria-label="username" aria-describedby="basic-addon2" [value]="username" (input)="username = $event.target.value">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-key fa-sm"></i></span>
+      </div>
+      <input type="password" class="form-control" placeholder="Mot de passe" aria-label="password" aria-describedby="basic-addon2" [value]="password" (input)="password = $event.target.value">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-key fa-sm"></i></span>
+      </div>
+      <input type="password" class="form-control" placeholder="Confirmation de mot de passe" aria-label="passwordconfirm" aria-describedby="basic-addon2" [value]="passwordConfirm" (input)="passwordConfirm = $event.target.value">
+    </div>
+    <br/>
+    <button class="btn btn-success" type="submit" (click)="register()">S'inscrire</button>
+  </form>
+</div>

@@ -42,7 +42,12 @@ namespace Area.Services.App
             try
             {
                 Console.WriteLine("AccountService(Register): Trying to register");
-                if (!model.Password.Equals(model.PasswordConfirm))
+                if (string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.PasswordConfirm))
+                {
+                    Console.WriteLine("AccountService(Register): Field empty");
+                    return new ErrorViewModel() { Error = "Veuillez remplir tout les champs" };
+                }
+                else if (!model.Password.Equals(model.PasswordConfirm))
                 {
                     Console.WriteLine("AccountService(Register): Wrong password");
                     return new ErrorViewModel() { Error = "Les mot de passe ne sont pas les même" };
@@ -58,7 +63,7 @@ namespace Area.Services.App
                 };
                 _context.Add(account);
                 _context.SaveChanges();
-                result = Get(account);
+                result = new SuccessViewModel();
                 Console.WriteLine("AccountService(Register): Registered");
             }
             catch (Exception e)

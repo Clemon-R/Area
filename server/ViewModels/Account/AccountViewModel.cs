@@ -8,5 +8,6 @@ namespace Area.ViewModels.Account
     public class AccountViewModel : SuccessViewModel
     {
         public string Token { get; set; }
+        public string Username { get; set; }
     }
 }
