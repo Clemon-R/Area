@@ -1,3 +1,3 @@
 export class ResultViewModel {
-  succes: boolean;
+  success: boolean;
 }

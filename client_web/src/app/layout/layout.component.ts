@@ -25,18 +25,24 @@ export class LayoutComponent implements OnInit {
       console.log('Token found: ' + document.cookie);
       this.account = new Account();
       this.account.token = document.cookie;
+      console.log('Getting account...');
       this.account = await this.layoutService.getAccount(this.account);
-      this.connected = true;
+      if (this.account) {
+        this.connected = true;
+        console.log('Account loaded');
+        console.log(this.account);
+      }
     }
   }
 
   public async disconnect() {
     console.log('Trying to disconnect...');
-    if (this.connected) {
+    if (this.connected && this.account) {
       const result = await this.layoutService.disconnectAccount(this.account);
-      if (result.succes) {
+      if (result.success) {
         this.connected = false;
         document.cookie = null;
+        console.log('Disconnected successfully');
       }
     }
   }
@@ -44,10 +50,14 @@ export class LayoutComponent implements OnInit {
   public async connect() {
     console.log('Trying to connect...');
     const result: Account = await this.layoutService.connectAccount(this.username, this.password);
-    document.cookie = result.token;
-    console.log('Cookie content: ' + document.cookie);
-    if (document.cookie) {
-      this.connected = true;
+    this.account = result;
+    console.log(this.account);
+    if (result) {
+      document.cookie = result.token;
+      console.log('Cookie content: ' + document.cookie);
+      if (document.cookie) {
+        this.connected = true;
+      }
     }
   }
 }

@@ -40,10 +40,10 @@ namespace Area.Controllers
         }
 
         [HttpPost("logout")]
-        public void Logout([FromBody] ConnectedViewModel model)
+        public IViewModel Logout([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            _accountService.Logout(account);
+            return _accountService.Logout(account);
         }
     }
 }
