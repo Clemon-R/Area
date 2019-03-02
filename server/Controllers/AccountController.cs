@@ -20,6 +20,13 @@ namespace Area.Controllers
             _accountService = accountService;
         }
 
+        [HttpPost("get")]
+        public IViewModel Get([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _accountService.Get(account);
+        }
+
         [HttpPost("register")]
         public IViewModel Register([FromBody] RegisterViewModel model)
         {
