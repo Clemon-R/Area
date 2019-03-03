@@ -27,7 +27,7 @@ export class SpotifyAddComponent implements OnInit {
     }
     this.spotifyService.isTokenAvailable(this.account).then(
       (result: ResultViewModel) => {
-        this.connected = true;
+        this.connected = result.success;
       }
     );
   }

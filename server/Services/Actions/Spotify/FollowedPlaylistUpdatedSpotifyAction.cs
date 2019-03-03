@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
-using Area.Services.APIs;
 
 namespace Area.Services.Actions.Spotify
 {
@@ -11,7 +10,7 @@ namespace Area.Services.Actions.Spotify
     {
         public bool IsTriggered()
         {
-            string currentUserId = "?";
+            /*string currentUserId = "?";
             DateTime lastCheckDate = new DateTime();
             List<PlaylistTrack> newTracks = new List<PlaylistTrack>();
             // Check the last time this trigger was checked in the database, if value is null set it to current time
@@ -28,8 +27,8 @@ namespace Area.Services.Actions.Spotify
                         newTracks.Add(tracks.Items[j]);
                     }
                 }
-            }
-            return newTracks.Count > 0;
+            }*/
+            return true;// newTracks.Count > 0;
         }
     }
 }
