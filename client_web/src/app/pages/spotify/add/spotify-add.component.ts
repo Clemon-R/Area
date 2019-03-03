@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SpotifyService} from '../spotify.service';
 import {Account} from '../../../models/account';
 import {Router} from '@angular/router';
+import {ResultViewModel} from '../../../viewModels/ResultViewModel';
 
 @Component({
   selector: 'app-spotify-add',
@@ -10,11 +11,12 @@ import {Router} from '@angular/router';
 })
 export class SpotifyAddComponent implements OnInit {
   account: Account;
+  connected: boolean;
 
   constructor(
     private spotifyService: SpotifyService,
     private router: Router) {
-
+    this.connected = false;
   }
 
   ngOnInit() {
@@ -23,5 +25,10 @@ export class SpotifyAddComponent implements OnInit {
       this.router.navigate(['/disconnected']);
       return;
     }
+    this.spotifyService.isTokenAvailable(this.account).then(
+      (result: ResultViewModel) => {
+        this.connected = true;
+      }
+    );
   }
 }

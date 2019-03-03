@@ -52,7 +52,7 @@ namespace Area.Services.App
                 {
                     Console.WriteLine("AccountService(Register): Wrong password");
                     return new ErrorViewModel() { Error = "Les mot de passe ne sont pas les même" };
-                } else if (_context.Accounts.Any(a => a.UserName.Equals(model.UserName)))
+                } else if (_context.Accounts.Any(a => a.UserName.ToLower().Equals(model.UserName.ToLower())))
                 {
                     Console.WriteLine($"AccountService(Register): UserName already exist({model.UserName})");
                     return new ErrorViewModel() { Error="Nom de compte déjà existant"};
@@ -77,12 +77,17 @@ namespace Area.Services.App
 
         public IViewModel Login(LoginViewModel model)
         {
+            return Login(model.UserName, model.Password);
+        }
+
+        public IViewModel Login(string username, string password)
+        {
             IViewModel result;
             try
             {
                 Console.WriteLine("AccountService(Login): Trying to connect");
                 Account current = _context.Accounts
-                    .Where(account => account.UserName.ToLower().Equals(model.UserName.ToLower()) && account.Password.Equals(model.Password))
+                    .Where(account => account.UserName.ToLower().Equals(username.ToLower()) && account.Password.Equals(password))
                     .FirstOrDefault();
 
                 if (current == null)
@@ -90,6 +95,21 @@ namespace Area.Services.App
                     Console.WriteLine("AccountService(Login): Impossible to connect");
                     return new ErrorViewModel() { Error = "Nom de compte ou mot de passe incorrect" };
                 }
+                return Login(current);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"AccountService(Login): {e.Message}\n{e.StackTrace}");
+                result = new ErrorViewModel();
+            }
+            return result;
+        }
+
+        public IViewModel Login(Account current)
+        {
+            IViewModel result;
+            try
+            {
                 byte[] encodedPassword = new UTF8Encoding().GetBytes($"{current.Id}{current.UserName}{current.Password}");
                 byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
                 string encoded = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();

@@ -9,7 +9,7 @@ namespace Area
 {
     public class ViewModelFiller
     {
-        public AccountViewModel FillAccount(Account current)
+        public static AccountViewModel FillAccount(Account current)
         {
             var result = new AccountViewModel()
             {

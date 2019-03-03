@@ -30,7 +30,7 @@
       <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">
         <i class="fas fa-fw fa-home"></i>
         <span>Home</span></a>
-      <a class="nav-link" [routerLink]="['/register']">
+      <a class="nav-link" [routerLink]="['/register']" *ngIf="!layout.connected">
         <i class="fas fa-fw fa-user"></i>
         <span>Inscription</span></a>
     </li>

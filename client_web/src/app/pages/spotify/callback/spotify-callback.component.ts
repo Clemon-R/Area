@@ -21,15 +21,16 @@ export class SpotifyCallbackComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
     this.error = false;
-    this.message = '';
-  }
+    this.message = 'Veuillez attendre un instant s\'il vous plez';
 
-  ngOnInit() {
     this.account = JSON.parse(localStorage.getItem('account')) as Account;
     if (this.account == null) {
       this.router.navigate(['/disconnected']);
       return;
     }
+  }
+
+  ngOnInit() {
     console.log('Trying to find the code...');
     this.route.queryParams.subscribe(params => {
       if (!params.hasOwnProperty('code') || this.account == null) {

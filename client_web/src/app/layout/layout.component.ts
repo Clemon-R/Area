@@ -16,9 +16,7 @@ export class LayoutComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private layoutService: LayoutService) { }
-
-  async ngOnInit() {
+  constructor(private layoutService: LayoutService) {
     this.username = '';
     this.password = '';
     this.connected = false;
@@ -26,19 +24,30 @@ export class LayoutComponent implements OnInit {
       console.log('Token found: ' + document.cookie);
       this.account = new Account();
       this.account.token = document.cookie.split(';')[0].trim();
-      console.log('Getting account...');
-      this.layoutService.getAccount(this.account).then(
-        (result: Account) => {
-          this.account = result;
-          if (this.account) {
-            this.connected = true;
-            console.log('Account loaded');
-            console.log(this.account);
-          } else
-            document.cookie = null;
-        }
-      );
+      if (this.account.token && this.account.token !== 'null') {
+        console.log('Getting account...');
+        this.layoutService.getAccount(this.account).then(
+          (result: Account) => {
+            this.account = result;
+            if (!this.account) {
+              document.cookie = null;
+              localStorage.clear();
+            } else {
+              this.connected = true;
+              localStorage.setItem('account', JSON.stringify(this.account));
+              console.log('Account loaded');
+              console.log(this.account);
+            }
+          }
+        );
+      } else {
+        this.account = null;
+        localStorage.clear();
+      }
     }
+  }
+
+  ngOnInit() {
   }
 
   public disconnect() {

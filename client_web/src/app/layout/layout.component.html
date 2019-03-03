@@ -168,21 +168,17 @@
                 </div>
               </div>
             </form>
+            <hr/>
+            <a href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/login"><button class="btn btn-success">Connexion avec Spotify</button></a>
           </div>
         </li>
 
       </ul>
       <!-- Topbar Connection -->
-      <form class="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search" *ngIf="!connected">
-        <div class="input-group">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="Nom de compte" aria-label="Username" aria-describedby="basic-addon2" [value]="username" (input)="username = $event.target.value">
-          <input type="password" class="form-control bg-light border-0 small" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon2" [value]="password" (input)="password = $event.target.value">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit" (click)="connect()">
-              <i class="fas fa-key fa-sm"></i>
-            </button>
-          </div>
-        </div>
+      <form class="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="width: 110px" *ngIf="!connected">
+        <a href="#" data-toggle="modal" data-target="#loginModal"><button class="btn btn-primary">
+          Connexion
+        </button></a>
       </form>
 
     </nav>
@@ -223,6 +219,39 @@
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
         <a class="btn btn-danger" (click)="disconnect()" data-dismiss="modal" color="white">Déconnecté</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Login Modal-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Connexion</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Nom de compte" aria-label="Username" aria-describedby="basic-addon2" [value]="username" (input)="username = $event.target.value">
+            <input type="password" class="form-control bg-light border-0 small" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon2" [value]="password" (input)="password = $event.target.value">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit" data-dismiss="modal" (click)="connect()">
+                <i class="fas fa-key fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <hr/>
+        <div class="text-center">
+          <a href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/login"><button class="btn btn-success">Connexion avec Spotify</button></a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
       </div>
     </div>
   </div>

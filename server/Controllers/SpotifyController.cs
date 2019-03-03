@@ -25,10 +25,23 @@ namespace Area.Controllers
         }
 
         [HttpPost("token/{code}")]
-        public IViewModel GetToken(string code, [FromBody] ConnectedViewModel model)
+        public IViewModel GenerateNewToken(string code, [FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _spotifyService.GetSpotifyToken(account, code);
+            return _spotifyService.GenerateSpotifyToken(account, code);
+        }
+
+        [HttpGet("login/{code}")]
+        public IViewModel GenerateNewToken(string code)
+        {
+            return _spotifyService.ConnectToAccount(code);
+        }
+
+        [HttpPost("available")]
+        public IViewModel IsAvailable([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _spotifyService.IsSpotifyTokenAvailable(account);
         }
     }
 }
