@@ -14,6 +14,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { Page404 } from './pages/404/404.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import {DisconnectedComponent} from './pages/disconnected/disconnected.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
     HomeComponent,
     RegisterComponent,
     DashboardComponent,
-    Page404
+    Page404,
+    DisconnectedComponent
   ],
   imports: [
     BrowserModule,

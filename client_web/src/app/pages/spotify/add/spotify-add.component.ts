@@ -20,7 +20,7 @@ export class SpotifyAddComponent implements OnInit {
   ngOnInit() {
     this.account = JSON.parse(localStorage.getItem('account')) as Account;
     if (this.account == null) {
-      this.router.navigate(['/404']);
+      this.router.navigate(['/disconnected']);
       return;
     }
   }

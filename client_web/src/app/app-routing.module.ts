@@ -6,11 +6,13 @@ import { RegisterComponent } from './pages/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { Page404 } from './pages/404/404.component';
 import {SpotifyModule} from './pages/spotify/spotify.module';
+import {DisconnectedComponent} from './pages/disconnected/disconnected.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: '404', component: Page404 },
+  { path: 'disconnected', component: DisconnectedComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'spotify', loadChildren: () => SpotifyModule},
   { path: 'register', component: RegisterComponent },
