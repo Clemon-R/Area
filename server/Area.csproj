@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Graphs\" />
     <Folder Include="Services\Actions\" />
     <Folder Include="Services\Triggers\" />
     <Folder Include="Services\Reactions\" />
+    <Folder Include="ViewModels\Spotify\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -14,11 +14,9 @@ export class LayoutService {
 
   public getAccount(account: Account): Promise<Account> {
     const body = JSON.stringify(account);
-    let data: Account = null;
     return this.http.post('/api/account/get', body).toPromise().then(
       (result: AccountResultViewModel) => {
-        data = EntityFiller.FillAccount(result);
-        return data;
+        return EntityFiller.FillAccount(result);;
       }, (error) => {
         console.log('LayoutService(getAccount): Error ' + error);
         return null;
@@ -28,11 +26,9 @@ export class LayoutService {
 
   public disconnectAccount(account: Account): Promise<ResultViewModel> {
     const body = JSON.stringify(account);
-    let data: ResultViewModel = null;
     return this.http.post('/api/account/logout', body).toPromise().then(
       (result: ResultViewModel) => {
-        data = result;
-        return data;
+        return result;
       }, (error) => {
         console.log('LayoutService(disconnectAccount): Error ' + error);
         return null;
@@ -45,12 +41,9 @@ export class LayoutService {
     model.username = username;
     model.password = password;
     const body = JSON.stringify(model);
-    let data: Account = null;
     return this.http.post('/api/account/login', body).toPromise().then(
-      (result: LoginResultViewModel) => {
-        data = new Account();
-        data.token = result.token;
-        return data;
+      (result: AccountResultViewModel) => {
+        return EntityFiller.FillAccount(result);;
       },
       (error) => {
         console.log('LayoutService(connectAccount): Error ' + error);

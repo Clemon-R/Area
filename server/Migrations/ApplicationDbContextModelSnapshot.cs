@@ -14,7 +14,7 @@ namespace Area.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -33,6 +33,23 @@ namespace Area.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Area.Models.Token", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccessToken");
+
+                    b.Property<int>("ExpireIn");
+
+                    b.Property<string>("RefreshToken");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tokens");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,6 +12,7 @@ namespace Area
             optionsBuilder.UseSqlServer(@"Server=db;Database=master;User=sa;Password=Your_password123;");
         }
 
-        public DbSet<Account> Accounts{get;set;}
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }

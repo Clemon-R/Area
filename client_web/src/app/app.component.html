@@ -47,13 +47,13 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
-        <span>Facebook</span>
+        <span>Spotify</span>
       </a>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Actions :</h6>
-          <a class="collapse-item" href="buttons.html">Nouveau post</a>
-          <a class="collapse-item" href="cards.html">Likes</a>
+          <a class="collapse-item" [routerLink]="['/spotify/add']">Nouvelle AREA</a>
+          <a class="collapse-item" [routerLink]="['/spotify/all']">Mes services</a>
         </div>
       </div>
     </li>

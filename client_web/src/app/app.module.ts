@@ -28,8 +28,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     RouterModule,
-    AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })

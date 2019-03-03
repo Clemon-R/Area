@@ -15,6 +15,9 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.Identity;
 using Area.Services.App;
 using Area.Models;
+using System.Reflection;
+using Area.Services;
+using Area.Wrappers;
 
 namespace Area
 {
@@ -35,7 +38,20 @@ namespace Area
             // with the connection string defined above.
             services.AddDbContext<ApplicationDbContext>();
 
-            services.AddScoped<AccountService>();
+            var resultServices = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IService)));
+            foreach (var service in resultServices)
+            {
+                Console.WriteLine($"Serivce found({service.FullName})");
+                services.Add(new ServiceDescriptor(service, service, ServiceLifetime.Scoped));
+            }
+
+            var resultWrappers = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IWrapper)));
+            foreach (var wrapper in resultWrappers)
+            {
+                Console.WriteLine($"Wrapper found({wrapper.FullName})");
+                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Scoped));
+            }
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin1",

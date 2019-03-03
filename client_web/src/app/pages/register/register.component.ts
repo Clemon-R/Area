@@ -3,7 +3,7 @@ import {RegisterService} from './register.service';
 import {ResultViewModel} from '../../viewModels/ResultViewModel';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   providers: [RegisterService]

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Area.Services.App
 {
-    public class AccountService
+    public class AccountService : IService
     {
         private readonly ApplicationDbContext _context;
         public AccountService(ApplicationDbContext context)
@@ -31,7 +31,8 @@ namespace Area.Services.App
         {
             AccountViewModel result = new AccountViewModel()
             {
-                Token = account.Token
+                Token = account.Token,
+                Username = account.UserName
             };
             return result;
         }
