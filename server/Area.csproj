@@ -5,15 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <Folder Include="Graphs\" />
-    <Folder Include="Services\Triggers\" />
-=======
-    <Folder Include="Services\Actions\" />
     <Folder Include="Services\Triggers\" />
     <Folder Include="Services\Reactions\" />
     <Folder Include="ViewModels\Spotify\" />
->>>>>>> 63b37fae252b2326c443338a3e7859cc367fbc54
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -22,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Narochno.Steam" Version="2.2.0" />
     <PackageReference Include="Reddit" Version="1.0.0" />
     <PackageReference Include="SpotifyAPI.Web" Version="3.1.2" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="3.1.2" />

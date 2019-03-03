@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Area.Services.Reactions
 {
-    public class IReaction
+    public interface IReaction
     {
     }
 }
