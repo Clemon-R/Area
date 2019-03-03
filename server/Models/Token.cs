@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Area.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace Area.Models
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
         public int ExpireIn { get; set; }
+        public Account Owner { get; set; }
+        public ServiceTypeEnum Type { get; set; }
     }
 }

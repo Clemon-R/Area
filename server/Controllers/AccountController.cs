@@ -24,7 +24,7 @@ namespace Area.Controllers
         public IViewModel Get([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _accountService.Get(account);
+            return _accountService.GetModel(account);
         }
 
         [HttpPost("register")]

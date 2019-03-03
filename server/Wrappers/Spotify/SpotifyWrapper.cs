@@ -20,6 +20,7 @@ namespace Area.Graphs.Spotify
             data.Add("redirect_uri", "http://127.0.0.1:8081/spotify/callback");
             data.Add("client_id", "a42c9625d0534a27911d6d708531b4b9");
             data.Add("client_secret", "94618a312bf14e478c0e7c77d29312be");
+
             using (var httpClient = new HttpClient())
             {
                 using (var content = new FormUrlEncodedContent(data.AsEnumerable()))

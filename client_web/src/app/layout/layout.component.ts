@@ -12,7 +12,7 @@ import {ResultViewModel} from '../viewModels/ResultViewModel';
 export class LayoutComponent implements OnInit {
   account: Account;
 
-  connected: boolean;
+  public connected: boolean;
   username: string;
   password: string;
 
@@ -25,7 +25,7 @@ export class LayoutComponent implements OnInit {
     if (document.cookie) {
       console.log('Token found: ' + document.cookie);
       this.account = new Account();
-      this.account.token = document.cookie;
+      this.account.token = document.cookie.split(';')[0].trim();
       console.log('Getting account...');
       this.layoutService.getAccount(this.account).then(
         (result: Account) => {
@@ -34,7 +34,8 @@ export class LayoutComponent implements OnInit {
             this.connected = true;
             console.log('Account loaded');
             console.log(this.account);
-          }
+          } else
+            document.cookie = null;
         }
       );
     }
@@ -48,6 +49,7 @@ export class LayoutComponent implements OnInit {
           if (result.success) {
             this.connected = false;
             document.cookie = null;
+            localStorage.clear();
             console.log('Disconnected successfully');
           }
         }

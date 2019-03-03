@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SpotifyService} from '../spotify.service';
+import {Account} from '../../../models/account';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-spotify-all',
@@ -7,10 +9,18 @@ import {SpotifyService} from '../spotify.service';
   styleUrls: ['./spotify-all.component.css']
 })
 export class SpotifyAllComponent implements OnInit {
-  constructor(private spotifyService: SpotifyService) {
+  account: Account;
+  constructor(
+    private router: Router,
+    private spotifyService: SpotifyService) {
 
   }
 
   ngOnInit() {
+    this.account = JSON.parse(localStorage.getItem('account')) as Account;
+    if (this.account == null) {
+      this.router.navigate(['/404']);
+      return;
+    }
   }
 }

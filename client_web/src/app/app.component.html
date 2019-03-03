@@ -36,15 +36,15 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider" *ngIf="layout.connected">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading" *ngIf="layout.connected">
       Services
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="layout.connected">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
         <span>Spotify</span>
@@ -68,7 +68,7 @@
 
   </ul>
   <!-- End of Sidebar -->
-  <app-layout></app-layout>
+  <app-layout #layoutComponent></app-layout>
 </div>
 <!-- End of Page Wrapper -->
 

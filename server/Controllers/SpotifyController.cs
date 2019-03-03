@@ -1,5 +1,6 @@
 ﻿using Area.Services.App;
 using Area.ViewModels;
+using Area.ViewModels.Account;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,21 @@ namespace Area.Controllers
     public class SpotifyController : ControllerBase
     {
         private readonly SpotifyService _spotifyService;
-        public SpotifyController(SpotifyService spotifyService)
+        private readonly AccountService _accountService;
+
+        public SpotifyController(
+            AccountService accountService,
+            SpotifyService spotifyService)
         {
             _spotifyService = spotifyService;
+            _accountService = accountService;
         }
 
-        [HttpGet("token/{code}")]
-        public IViewModel GetToken(string code)
+        [HttpPost("token/{code}")]
+        public IViewModel GetToken(string code, [FromBody] ConnectedViewModel model)
         {
-            Console.WriteLine($"Code: {code}");
-            _spotifyService.GetSpotifyToken(code);
-            return null;
+            var account = _accountService.GetAccount(model);
+            return _spotifyService.GetSpotifyToken(account, code);
         }
     }
 }

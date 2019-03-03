@@ -27,7 +27,7 @@ namespace Area.Services.App
             return current;
         }
 
-        public AccountViewModel Get(Account account)
+        public AccountViewModel GetModel(Account account)
         {
             AccountViewModel result = new AccountViewModel()
             {
@@ -99,7 +99,7 @@ namespace Area.Services.App
                     current.Token = encoded;
                     Save(current);
                 }
-                result = Get(current);
+                result = GetModel(current);
                 Console.WriteLine($"AccountService(Login): Account({current.Id}) connected");
             }
             catch (Exception e)

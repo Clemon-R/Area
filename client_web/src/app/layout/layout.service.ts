@@ -43,7 +43,9 @@ export class LayoutService {
     const body = JSON.stringify(model);
     return this.http.post('/api/account/login', body).toPromise().then(
       (result: AccountResultViewModel) => {
-        return EntityFiller.FillAccount(result);;
+        const account = EntityFiller.FillAccount(result);
+        localStorage.setItem('account', JSON.stringify(account));
+        return EntityFiller.FillAccount(result);
       },
       (error) => {
         console.log('LayoutService(connectAccount): Error ' + error);
