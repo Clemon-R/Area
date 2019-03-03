@@ -1,0 +1,8 @@
+<!-- Page Heading -->
+<h1 class="h3 mb-4 text-gray-800">Spotify - Nouvelle AREA</h1>
+<div>
+  <div class="alert alert-success" role="alert" *ngIf="connected">
+    Vous êtes déjà connecté à votre compte Spotify
+  </div>
+  <a *ngIf="!connected" href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/callback"><button class="btn btn-success">Ce connecter à Spotify</button></a>
+</div>

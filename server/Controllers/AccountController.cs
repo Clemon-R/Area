@@ -20,6 +20,13 @@ namespace Area.Controllers
             _accountService = accountService;
         }
 
+        [HttpPost("get")]
+        public IViewModel Get([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _accountService.GetModel(account);
+        }
+
         [HttpPost("register")]
         public IViewModel Register([FromBody] RegisterViewModel model)
         {
@@ -33,10 +40,10 @@ namespace Area.Controllers
         }
 
         [HttpPost("logout")]
-        public void Logout([FromBody] ConnectedViewModel model)
+        public IViewModel Logout([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            _accountService.Logout(account);
+            return _accountService.Logout(account);
         }
     }
 }

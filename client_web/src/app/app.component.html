@@ -5,7 +5,7 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="['/home']" routerLinkActive="active">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="['/home']">
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
       </div>
@@ -17,7 +17,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="active">
+      <a class="nav-link" [routerLink]="['/dashboard']">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
@@ -28,29 +28,32 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <i class="fas fa-fw fa-home"></i>
         <span>Home</span></a>
+      <a class="nav-link" [routerLink]="['/register']" *ngIf="!layout.connected">
+        <i class="fas fa-fw fa-user"></i>
+        <span>Inscription</span></a>
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider" *ngIf="layout.connected">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading" *ngIf="layout.connected">
       Services
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="layout.connected">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
-        <span>Facebook</span>
+        <span>Spotify</span>
       </a>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Actions :</h6>
-          <a class="collapse-item" href="buttons.html">Nouveau post</a>
-          <a class="collapse-item" href="cards.html">Likes</a>
+          <a class="collapse-item" [routerLink]="['/spotify/add']">Nouvelle AREA</a>
+          <a class="collapse-item" [routerLink]="['/spotify/all']">Mes services</a>
         </div>
       </div>
     </li>
@@ -65,7 +68,7 @@
 
   </ul>
   <!-- End of Sidebar -->
-  <app-layout></app-layout>
+  <app-layout #layoutComponent></app-layout>
 </div>
 <!-- End of Page Wrapper -->
 

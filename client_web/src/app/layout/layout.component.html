@@ -12,40 +12,8 @@
         <i class="fa fa-bars"></i>
       </button>
 
-      <!-- Topbar Search -->
-      <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search fa-sm"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-
       <!-- Topbar Navbar -->
       <ul class="navbar-nav ml-auto">
-
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-          <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-search fa-fw"></i>
-          </a>
-          <!-- Dropdown - Messages -->
-          <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-            <form class="form-inline mr-auto w-100 navbar-search">
-              <div class="input-group">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
 
         <!-- Nav Item - Alerts -->
         <li class="nav-item dropdown no-arrow mx-1">
@@ -155,9 +123,9 @@
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
+        <li class="nav-item dropdown no-arrow" *ngIf="connected">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{account.userName}}</span>
             <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
           </a>
           <!-- Dropdown - User Information -->
@@ -182,20 +150,36 @@
           </div>
         </li>
 
-        <!-- Topbar Connection -->
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-connection">
-          <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Nom de compte" aria-label="Username" aria-describedby="basic-addon2">
-            <input type="password" class="form-control bg-light border-0 small" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <i class="fas fa-key fa-sm"></i>
-              </button>
-            </div>
+        <!-- Nav Item Connection -->
+        <li class="nav-item dropdown no-arrow d-sm-none" *ngIf="!connected">
+          <a class="nav-link dropdown-toggle" href="#" id="connectionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user fa-fw"></i>
+          </a>
+          <!-- Dropdown - Messages -->
+          <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="connectionDropdown">
+            <form class="form-inline mr-auto w-100 navbar-search">
+              <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="Nom de compte" aria-label="Username" aria-describedby="basic-addon2" [value]="username" (input)="username = $event.target.value">
+                <input type="password" class="form-control bg-light border-0 small" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon2" [value]="password" (input)="password = $event.target.value">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" (click)="connect()">
+                    <i class="fas fa-key fa-sm"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <hr/>
+            <a href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/login"><button class="btn btn-success">Connexion avec Spotify</button></a>
           </div>
-        </form>
+        </li>
 
       </ul>
+      <!-- Topbar Connection -->
+      <form class="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="width: 110px" *ngIf="!connected">
+        <a href="#" data-toggle="modal" data-target="#loginModal"><button class="btn btn-primary">
+          Connexion
+        </button></a>
+      </form>
 
     </nav>
     <!-- End of Topbar -->
@@ -235,6 +219,39 @@
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
         <a class="btn btn-danger" (click)="disconnect()" data-dismiss="modal" color="white">Déconnecté</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Login Modal-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Connexion</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Nom de compte" aria-label="Username" aria-describedby="basic-addon2" [value]="username" (input)="username = $event.target.value">
+            <input type="password" class="form-control bg-light border-0 small" placeholder="Mot de passe" aria-label="Password" aria-describedby="basic-addon2" [value]="password" (input)="password = $event.target.value">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit" data-dismiss="modal" (click)="connect()">
+                <i class="fas fa-key fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <hr/>
+        <div class="text-center">
+          <a href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/login"><button class="btn btn-success">Connexion avec Spotify</button></a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { LayoutComponent } from './layout/layout.component';
+import {Component, ViewChild} from '@angular/core';
+import {LayoutComponent} from './layout/layout.component';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +8,6 @@ import { LayoutComponent } from './layout/layout.component';
 })
 export class AppComponent {
   title = 'area';
+
+  @ViewChild('layoutComponent') layout: LayoutComponent;
 }
