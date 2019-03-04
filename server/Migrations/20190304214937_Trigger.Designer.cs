@@ -4,14 +4,16 @@ using Area;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Area.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190304214937_Trigger")]
+    partial class Trigger
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,7 @@ namespace Area.Migrations
 
                     b.Property<DateTime>("LastVerificationDate");
 
-                    b.Property<int>("OwnerId");
+                    b.Property<int?>("OwnerId");
 
                     b.HasKey("Id");
 
@@ -86,9 +88,8 @@ namespace Area.Migrations
             modelBuilder.Entity("Area.Models.Trigger", b =>
                 {
                     b.HasOne("Area.Models.Account", "Owner")
-                        .WithMany("Triggers")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
                 });
 #pragma warning restore 612, 618
         }

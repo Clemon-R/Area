@@ -18,6 +18,8 @@ using Area.Models;
 using System.Reflection;
 using Area.Services;
 using Area.Wrappers;
+using Area.Services.Actions;
+using Area.Services.Reactions;
 
 namespace Area
 {
@@ -42,14 +44,28 @@ namespace Area
             foreach (var service in resultServices)
             {
                 Console.WriteLine($"Serivce found({service.FullName})");
-                services.Add(new ServiceDescriptor(service, service, ServiceLifetime.Scoped));
+                services.Add(new ServiceDescriptor(service, service, ServiceLifetime.Singleton));
             }
 
             var resultWrappers = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IWrapper)));
             foreach (var wrapper in resultWrappers)
             {
                 Console.WriteLine($"Wrapper found({wrapper.FullName})");
-                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Scoped));
+                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Singleton));
+            }
+
+            var resultActions = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IAction)));
+            foreach (var wrapper in resultActions)
+            {
+                Console.WriteLine($"Action found({wrapper.FullName})");
+                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Singleton));
+            }
+
+            var resultReactions = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IReaction)));
+            foreach (var wrapper in resultReactions)
+            {
+                Console.WriteLine($"Reaction found({wrapper.FullName})");
+                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Singleton));
             }
 
             services.AddCors(options =>

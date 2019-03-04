@@ -14,5 +14,6 @@ namespace Area
 
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Token> Tokens { get; set; }
+        public DbSet<Trigger> Triggers { get; set; }
     }
 }

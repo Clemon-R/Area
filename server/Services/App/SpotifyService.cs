@@ -1,5 +1,8 @@
 ﻿using Area.Graphs.Spotify;
 using Area.Models;
+using Area.Services.Actions.Spotify;
+using Area.Services.Reactions.Spotify;
+using Area.Services.Triggers;
 using Area.ViewModels;
 using Area.Wrappers.Models;
 using Area.Wrappers.Spotify.Models;
@@ -114,9 +117,9 @@ namespace Area.Services.App
             if (tokenModel == null)
                 return new ErrorViewModel() { Error = "Problem avec token" };
             var token = GetSpotifyWebApi(tokenModel);
-            var result = GetFollowedArtists(token);
-            var json = JsonConvert.SerializeObject(result);
-            Console.WriteLine($"SpotifyWebApi Result({json})");
+
+            var trigger = new TriggerTemplate<FollowedArtistNewReleaseSpotifyAction, AddToPlaylistSpotifyReaction>(this);
+            trigger.TryActivate(owner);
             return new SuccessViewModel();
         }
 
@@ -176,7 +179,7 @@ namespace Area.Services.App
             return tracks;
         }
 
-        public static DateTime GetDateFromString(string date, string precision)
+        public DateTime GetDateFromString(string date, string precision)
         {
             List<string> dateValues = date.Split("-").ToList<string>();
             int year = 0;

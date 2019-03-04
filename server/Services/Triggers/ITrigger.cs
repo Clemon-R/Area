@@ -1,4 +1,5 @@
-﻿using Area.Services.Actions;
+﻿using Area.Models;
+using Area.Services.Actions;
 using Area.Services.Reactions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Area.Services.Triggers
 {
     public interface ITrigger
     {
-        bool TryActivate();
-        string GetTriggerID();
+        bool TryActivate(Account user);
+        string Id { get; }
     }
 }

@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Graphs\" />
-    <Folder Include="Services\Triggers\" />
+    <Compile Remove="Graphs\**" />
+    <Content Remove="Graphs\**" />
+    <EmbeddedResource Remove="Graphs\**" />
+    <None Remove="Graphs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Services\Reactions\" />
     <Folder Include="ViewModels\Spotify\" />
     <Folder Include="Wrappers\Twitch\" />

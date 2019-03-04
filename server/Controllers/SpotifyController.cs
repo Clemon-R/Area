@@ -43,5 +43,12 @@ namespace Area.Controllers
             var account = _accountService.GetAccount(model);
             return _spotifyService.IsSpotifyTokenAvailable(account);
         }
+
+        [HttpPost("test")]
+        public IViewModel test([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _spotifyService.TestApi(account);
+        }
     }
 }
