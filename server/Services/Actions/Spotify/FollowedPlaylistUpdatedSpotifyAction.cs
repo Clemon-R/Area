@@ -11,7 +11,7 @@ namespace Area.Services.Actions.Spotify
     {
         public bool IsTriggered()
         {
-            string currentUserId = "?";
+            /*string currentUserId = "?";
             DateTime lastCheckDate = new DateTime();
             List<PlaylistTrack> newTracks = new List<PlaylistTrack>();
             // Check the last time this trigger was checked in the database, if value is null set it to current time
@@ -29,7 +29,8 @@ namespace Area.Services.Actions.Spotify
                     }
                 }
             }
-            return newTracks.Count > 0;
+            return newTracks.Count > 0;*/
+            return false;
         }
     }
 }

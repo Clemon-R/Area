@@ -8,9 +8,14 @@ namespace Area.Services.Triggers
 {
     public class NewReleaseToPlaylistAddTrigger : ITrigger
     {
+        public string GetTriggerID()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool TryActivate()
         {
-            FollowedArtistNewReleaseSpotifyAction action = new FollowedArtistNewReleaseSpotifyAction();
+            //FollowedArtistNewReleaseSpotifyAction action = new FollowedArtistNewReleaseSpotifyAction();
             throw new NotImplementedException();
         }
     }

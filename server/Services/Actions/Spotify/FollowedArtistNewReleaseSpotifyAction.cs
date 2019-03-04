@@ -5,15 +5,22 @@ using System.Threading.Tasks;
 
 using SpotifyAPI.Web.Models;
 using Area.Services.APIs;
+using Area.Services.App;
 
 namespace Area.Services.Actions.Spotify
 {
     public class FollowedArtistNewReleaseSpotifyAction : IAction
     {
+        private readonly SpotifyService _spotifyService;
+        public FollowedArtistNewReleaseSpotifyAction(SpotifyService spotifyService)
+        {
+            _spotifyService = spotifyService;
+        }
+
         public bool IsTriggered()
         {
-            FollowedArtists followedArtists = SpotifyService.GetFollowedArtists();
-            NewAlbumReleases releases = SpotifyService.GetNewReleases();
+            /*FollowedArtists followedArtists = _spotifyService.GetFollowedArtists();
+            NewAlbumReleases releases = _spotifyService.GetNewReleases();
             List<SimpleAlbum> followedReleases = new List<SimpleAlbum>();
             for (int i = 0; i < followedArtists.Artists.Items.Count; i++)
             {
@@ -28,7 +35,8 @@ namespace Area.Services.Actions.Spotify
                     }
                 }
             }
-            return followedReleases.Count != 0;
+            return followedReleases.Count != 0;*/
+            return false;
         }
     }
 }
