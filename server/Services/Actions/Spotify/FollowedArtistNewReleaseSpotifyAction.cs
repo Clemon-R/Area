@@ -10,7 +10,9 @@ namespace Area.Services.Actions.Spotify
 {
     public class FollowedArtistNewReleaseSpotifyAction : IAction
     {
-        public bool IsTriggered()
+        private List<SimpleAlbum> _newReleases = new List<SimpleAlbum>();
+
+        public void CheckReleases(SpotifyService service)
         {
             FollowedArtists followedArtists = SpotifyService.GetFollowedArtists();
             NewAlbumReleases releases = SpotifyService.GetNewReleases();
@@ -21,14 +23,19 @@ namespace Area.Services.Actions.Spotify
                 {
                     for (int k = 0; k < releases.Albums.Items[j].Artists.Count; k++)
                     {
-                        if (followedArtists.Artists.Items[i].Id == releases.Albums.Items[j].Artists[k].Id)
+                        if (followedArtists.Artists.Items[i].Id == releases.Albums.Items[j].Artists[k].Id
+                       && lastCheck < SpotifyService.GetDateFromString(releases.Albums.Items[j].ReleaseDate, releases.Albums.Items[j].ReleaseDatePrecision))
                         {
                             followedReleases.Add(releases.Albums.Items[j]);
                         }
                     }
                 }
             }
-            return followedReleases.Count != 0;
+        }
+
+        public bool IsTriggered()
+        {
+            return _newReleases.Count != 0;
         }
     }
 }

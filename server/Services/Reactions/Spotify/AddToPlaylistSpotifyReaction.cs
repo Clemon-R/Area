@@ -8,9 +8,9 @@ namespace Area.Services.Reactions.Spotify
 {
     public class AddToPlaylistSpotifyReaction
     {
-        public void AddTracksToPlaylist(List<PlaylistTrack> tracks)
+        public void AddTracksToPlaylist(SpotifyService service, List<PlaylistTrack> tracks, string playlistId)
         {
-
+            service.AddTracksToPlaylist(null, tracks, playlistId);
         }
     }
 }
