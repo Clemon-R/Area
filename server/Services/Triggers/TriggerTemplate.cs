@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Area.Services.Triggers
 {
-    public class TriggerTemplate<T, F> : ITrigger where T : IAction where F : IReaction 
+    public class TriggerTemplate : ITrigger
     {
         private readonly IService _service;
 
@@ -19,11 +19,13 @@ namespace Area.Services.Triggers
         private readonly IReaction _reaction;
 
         public TriggerTemplate(
+            Type action,
+            Type reaction,
             IService service)
         {
             _service = service;
-            _action = (IAction)Activator.CreateInstance(typeof(T));
-            _reaction = (IReaction)Activator.CreateInstance(typeof(F));
+            _action = (IAction)Activator.CreateInstance(action);
+            _reaction = (IReaction)Activator.CreateInstance(reaction);
         }
 
         public string Id => $"{nameof(_action)} and {nameof(_reaction)}";
