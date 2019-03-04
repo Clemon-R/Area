@@ -4,6 +4,8 @@ using Area.ViewModels;
 using Area.Wrappers.Models;
 using Area.Wrappers.Spotify.Models;
 using Newtonsoft.Json;
+using SpotifyAPI.Web;
+using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +48,7 @@ namespace Area.Services.App
             }
             _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify));
             SpotifyTokenModel tokenModel = result as SpotifyTokenModel;
-            var token = new Token()
+            var token = new Models.Token()
             {
                 AccessToken = tokenModel.Access_Token,
                 RefreshToken = tokenModel.Refresh_Token,
@@ -93,6 +95,101 @@ namespace Area.Services.App
             }
             Console.WriteLine($"SpotifyService(GetSpotifyToken): Account({account.Id})");
             return _accountService.Login(account);
+        }
+
+        public SpotifyWebAPI GetSpotifyWebApi(SpotifyTokenModel model)
+        {
+            SpotifyWebAPI api = new SpotifyWebAPI()
+            {
+                AccessToken = model.Access_Token,
+                TokenType = model.Token_Type,
+                UseAuth = true
+            };
+            return api;
+        }
+
+        public IViewModel TestApi(Account owner)
+        {
+            var tokenModel = GetSpotifyToken(owner);
+            if (tokenModel == null)
+                return new ErrorViewModel() { Error = "Problem avec token" };
+            var token = GetSpotifyWebApi(tokenModel);
+            var result = GetFollowedArtists(token);
+            var json = JsonConvert.SerializeObject(result);
+            Console.WriteLine($"SpotifyWebApi Result({json})");
+            return new SuccessViewModel();
+        }
+
+        public SpotifyTokenModel GetSpotifyToken(Account owner)
+        {
+            var tokenModel = _context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify).FirstOrDefault();
+            if (tokenModel == null)
+                return null;
+            var token = _spotifyWrapper.RefreshSpotifyToken(tokenModel.RefreshToken);
+            if (!token.Success)
+                return null;
+            return token as SpotifyTokenModel;
+        }
+
+        public FollowedArtists GetFollowedArtists(SpotifyWebAPI api)
+        {
+            return api.GetFollowedArtists(SpotifyAPI.Web.Enums.FollowType.Artist, 50);
+        }
+
+        public NewAlbumReleases GetNewReleases(SpotifyWebAPI api)
+        {
+            return api.GetNewAlbumReleases("", 50);
+        }
+
+        public Paging<SimplePlaylist> GetUserPlaylists(SpotifyWebAPI api)
+        {
+            return api.GetUserPlaylists("?", 50);
+        }
+
+        public Paging<PlaylistTrack> GetPlaylistTracks(SpotifyWebAPI api, string playlistId)
+        {
+            return api.GetPlaylistTracks("?", playlistId);
+        }
+
+        public void AddTracksToPlaylist(SpotifyWebAPI api, List<SimpleTrack> tracks, string playlistId)
+        {
+            List<string> trackUris = new List<string>();
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                trackUris.Add(tracks[i].Uri);
+            }
+            api.AddPlaylistTracks("?", playlistId, trackUris);
+        }
+
+        public List<SimpleTrack> GetTracksFromAlbums(SpotifyWebAPI api, List<SimpleAlbum> albums)
+        {
+            List<SimpleTrack> tracks = new List<SimpleTrack>();
+
+            for (int i = 0; i < albums.Count; i++)
+            {
+                List<SimpleTrack> albumTracks = api.GetAlbumTracks(albums[i].Id).Items;
+                for (int j = 0; j < albumTracks.Count; j++)
+                {
+                    tracks.Add(albumTracks[j]);
+                }
+            }
+            return tracks;
+        }
+
+        public static DateTime GetDateFromString(string date, string precision)
+        {
+            List<string> dateValues = date.Split("-").ToList<string>();
+            int year = 0;
+            int month = 0;
+            int day = 0;
+
+            if (precision == "day" && dateValues.Count >= 3)
+                day = Convert.ToInt32(dateValues[2]);
+            if ((precision == "day" || precision == "month") && dateValues.Count >= 2)
+                month = Convert.ToInt32(dateValues[1]);
+            if (dateValues.Count >= 1)
+                year = Convert.ToInt32(dateValues[0]);
+            return new DateTime(year, month, day);
         }
     }
 }
