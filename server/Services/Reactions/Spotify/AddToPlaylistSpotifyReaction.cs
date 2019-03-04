@@ -22,7 +22,7 @@ namespace Area.Services.Reactions.Spotify
             _spotifyService = spotifyService;
         }
 
-        public bool Execute(Account user, object result)
+        public bool Execute(Account user, object result, string args)
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             var tracks = _spotifyService.GetTracksFromAlbums(api, result as List<SimpleAlbum>);

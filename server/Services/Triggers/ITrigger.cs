@@ -10,7 +10,7 @@ namespace Area.Services.Triggers
 {
     public interface ITrigger
     {
-        bool TryActivate(Account user);
+        bool TryActivate(Account user, string args);
         string Id { get; }
     }
 }

@@ -13,28 +13,24 @@ namespace Area.Services.Triggers
 {
     public class TriggerTemplate : ITrigger
     {
-        private readonly IService _service;
-
         private readonly IAction _action;
         private readonly IReaction _reaction;
 
         public TriggerTemplate(
             Type action,
-            Type reaction,
-            IService service)
+            Type reaction)
         {
-            _service = service;
             _action = (IAction)Activator.CreateInstance(action);
             _reaction = (IReaction)Activator.CreateInstance(reaction);
         }
 
         public string Id => $"{nameof(_action)} and {nameof(_reaction)}";
 
-        public bool TryActivate(Account user)
+        public bool TryActivate(Account user, string args)
         {
             _action.CheckAction( user);
             if (_action.IsTriggered())
-                return _reaction.Execute(user, _action.GetResult());
+                return _reaction.Execute(user, _action.GetResult(), args);
             return false;
         }
     }

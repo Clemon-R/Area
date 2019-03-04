@@ -11,6 +11,6 @@ namespace Area.Services.Reactions
     public interface IReaction
     {
         TriggerTypeEnum Type { get; }
-        bool Execute(Account user, object result);
+        bool Execute(Account user, object result, string args);
     }
 }

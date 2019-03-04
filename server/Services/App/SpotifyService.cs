@@ -117,25 +117,29 @@ namespace Area.Services.App
             if (tokenModel == null)
                 return new ErrorViewModel() { Error = "Problem avec token" };
             var token = GetSpotifyWebApi(tokenModel);
-
-            Type action;
-            Type reaction;
-            switch (1)
+            foreach (var trigger in owner.Triggers)
             {
-                case 1:
-                    action = typeof(FollowedArtistNewReleaseSpotifyAction);
-                    break;
-            }
+                if (trigger.Template == null)
+                {
+                    Type action;
+                    Type reaction;
+                    switch (1)
+                    {
+                        case 1:
+                            action = typeof(FollowedArtistNewReleaseSpotifyAction);
+                            break;
+                    }
 
-            switch (1)
-            {
-                case 1:
-                    reaction = typeof(AddToPlaylistSpotifyReaction);
-                    break;
+                    switch (1)
+                    {
+                        case 1:
+                            reaction = typeof(AddToPlaylistSpotifyReaction);
+                            break;
+                    }
+                    trigger.Template = new TriggerTemplate(action, reaction);
+                }
+                trigger.Template.TryActivate(owner, null);
             }
-
-            var trigger = new TriggerTemplate(action, reaction, this);
-            trigger.TryActivate(owner);
             return new SuccessViewModel();
         }
 
