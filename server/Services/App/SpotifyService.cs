@@ -1,6 +1,7 @@
 ﻿using Area.Graphs.Spotify;
 using Area.Models;
 using Area.ViewModels;
+using Area.Wrappers.Models;
 using Area.Wrappers.Spotify.Models;
 using Newtonsoft.Json;
 using System;
@@ -36,12 +37,12 @@ namespace Area.Services.App
 
         public IViewModel GenerateSpotifyToken(Account owner, string code)
         {
-            Console.WriteLine($"SpotifyService(GetSpotifyToken): The user code is {code}");
-            var result = _spotifyWrapper.RefreshSpotifyToken(code);
+            Console.WriteLine($"SpotifyService(GenerateSpotifyToken): The user code is {code}");
+            var result = _spotifyWrapper.GenerateSpotifyToken(code);
             if (!result.Success)
             {
-                Console.WriteLine("SpotifyService(GetSpotifyToken): Failed to get token");
-                return new ErrorViewModel() { Error = (result as SpotifyFailedModel).Error};
+                Console.WriteLine("SpotifyService(GenerateSpotifyToken): Failed to get token");
+                return new ErrorViewModel() { Error = (result as RequestFailedModel).Error};
             }
             _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify));
             SpotifyTokenModel tokenModel = result as SpotifyTokenModel;
@@ -55,7 +56,7 @@ namespace Area.Services.App
             };
             _context.Tokens.Add(token);
             _context.SaveChanges();
-            Console.WriteLine("SpotifyService(GetSpotifyToken): Token successfully saved");
+            Console.WriteLine("SpotifyService(GenerateSpotifyToken): Token successfully saved");
             return new SuccessViewModel();
         }
 
@@ -66,13 +67,13 @@ namespace Area.Services.App
             if (!result.Success)
             {
                 Console.WriteLine("SpotifyService(GetSpotifyToken): Failed to get token");
-                return new ErrorViewModel() { Error = (result as SpotifyFailedModel).Error };
+                return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
             result = _spotifyWrapper.GetSpotifyProfile(result as SpotifyTokenModel);
             if (!result.Success)
             {
                 Console.WriteLine("SpotifyService(GetSpotifyToken): Failed to get profile");
-                return new ErrorViewModel() { Error = (result as SpotifyFailedModel).Error };
+                return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
             var profile = result as SpotifyProfileModel;
             byte[] encodedPassword = new UTF8Encoding().GetBytes($"{profile.Id}");

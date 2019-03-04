@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Area.Wrappers.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Area.Wrappers.Spotify.Models
 {
-    public class SpotifyTokenModel : SpotifySuccessModel
+    public class SpotifyTokenModel : RequestSuccessModel
     {
         public SpotifyTokenModel()
         {

@@ -20,7 +20,10 @@ export class LayoutComponent implements OnInit {
     this.username = '';
     this.password = '';
     this.connected = false;
-    if (document.cookie) {
+    this.account = JSON.parse(localStorage.getItem('account')) as Account;
+    if (this.account)
+      this.connected = true;
+    if (this.account == null && document.cookie) {
       console.log('Token found: ' + document.cookie);
       this.account = new Account();
       this.account.token = document.cookie.split(';')[0].trim();

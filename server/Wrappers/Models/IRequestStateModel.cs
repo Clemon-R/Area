@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Area.Wrappers.Spotify.Models
+namespace Area.Wrappers.Models
 {
-    public interface ISpotifyStateModel
+    public interface IRequestStateModel
     {
         bool Success { get; }
     }
