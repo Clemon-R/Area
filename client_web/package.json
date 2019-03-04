@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+
     "start": "ng serve --host 0.0.0.0 --proxy-config proxy.config.json",
     "build": "ng build",
     "test": "ng test",
@@ -20,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
+    "nodemon": "^1.18.10",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

@@ -1,0 +1,8 @@
+<!-- Page Heading -->
+<h1 class="h3 mb-4 text-gray-800">Yammer - Nouvelle AREA</h1>
+<div>
+  <div class="alert alert-success" role="alert" *ngIf="connected">
+    Vous êtes déjà connecté à votre compte Yammer
+  </div>
+  <a *ngIf="!connected" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Ce connecter à Yammer</button></a>
+</div>

@@ -8,6 +8,7 @@ import { Page404 } from './pages/404/404.component';
 import {SpotifyModule} from './pages/spotify/spotify.module';
 import {DisconnectedComponent} from './pages/disconnected/disconnected.component';
 import {TwitchModule} from './pages/twitch/twitch.module';
+import {YammerModule} from './pages/yammer/yammer.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'spotify', loadChildren: () => SpotifyModule},
   { path: 'twitch', loadChildren: () => TwitchModule},
+  { path: 'yammer', loadChildren: () => YammerModule},
   { path: 'register', component: RegisterComponent },
   { path: '**', component: Page404 }
 ];

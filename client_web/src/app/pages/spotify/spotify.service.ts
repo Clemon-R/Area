@@ -16,7 +16,7 @@ export class SpotifyService {
       (result: ResultViewModel) => {
         return result;
       }, (error) => {
-        console.log('TwitchService(getToken): Error ' + error);
+        console.log('YammerService(getToken): Error ' + error);
         return null;
       }
     );
@@ -28,7 +28,7 @@ export class SpotifyService {
       (result: ResultViewModel) => {
         return result;
       }, (error) => {
-        console.log('TwitchService(getToken): Error ' + error);
+        console.log('YammerService(getToken): Error ' + error);
         return null;
       }
     );
@@ -41,7 +41,7 @@ export class SpotifyService {
           return null;
         return EntityFiller.FillAccount(result);
       }, (error) => {
-        console.log('TwitchService(connectAccount): Error ' + error);
+        console.log('YammerService(connectAccount): Error ' + error);
         return null;
       }
     );
