@@ -4,8 +4,6 @@ using Area.ViewModels;
 using Area.Wrappers.Models;
 using Area.Wrappers.Spotify.Models;
 using Newtonsoft.Json;
-using SpotifyAPI.Web;
-using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +21,7 @@ namespace Area.Services.App
         private readonly AccountService _accountService;
         private readonly ApplicationDbContext _context;
 
-        public SpotifyService(
-            SpotifyWrapper spotifyWrapper, 
-            ApplicationDbContext context,
-            AccountService accountService)
+        public SpotifyService(SpotifyWrapper spotifyWrapper, ApplicationDbContext context, AccountService accountService)
         {
             _spotifyWrapper = spotifyWrapper;
             _accountService = accountService;
@@ -35,7 +30,7 @@ namespace Area.Services.App
 
         public IViewModel IsSpotifyTokenAvailable(Account owner)
         {
-            return !_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify).Any() 
+            return _context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify).Any() 
                 ? (IViewModel)new ErrorViewModel() 
                 : (IViewModel)new SuccessViewModel();
         }
@@ -51,7 +46,7 @@ namespace Area.Services.App
             }
             _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify));
             SpotifyTokenModel tokenModel = result as SpotifyTokenModel;
-            var token = new Models.Token()
+            var token = new Token()
             {
                 AccessToken = tokenModel.Access_Token,
                 RefreshToken = tokenModel.Refresh_Token,
@@ -74,8 +69,7 @@ namespace Area.Services.App
                 Console.WriteLine("SpotifyService(GetSpotifyToken): Failed to get token");
                 return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
-            var token = result as SpotifyTokenModel;
-            result = _spotifyWrapper.GetSpotifyProfile(token);
+            result = _spotifyWrapper.GetSpotifyProfile(result as SpotifyTokenModel);
             if (!result.Success)
             {
                 Console.WriteLine("SpotifyService(GetSpotifyToken): Failed to get profile");
@@ -99,70 +93,6 @@ namespace Area.Services.App
             }
             Console.WriteLine($"SpotifyService(GetSpotifyToken): Account({account.Id})");
             return _accountService.Login(account);
-        }
-
-        public IViewModel TestApi(Account owner)
-        {
-            var tokenModel = GetSpotifyToken(owner);
-            if (tokenModel == null)
-                return new ErrorViewModel() {Error= "Problem avec token" };
-            var token = GetSpotifyWebApi(tokenModel);
-            var result = GetFollowedArtists(token);
-            var json = JsonConvert.SerializeObject(result);
-            Console.WriteLine($"SpotifyWebApi Result({json})");
-            return new SuccessViewModel();
-        }
-
-        public SpotifyTokenModel GetSpotifyToken(Account owner)
-        {
-            var tokenModel = _context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify).FirstOrDefault();
-            if (tokenModel == null)
-                return null;
-            var token = _spotifyWrapper.RefreshSpotifyToken(tokenModel.RefreshToken);
-            if (!token.Success)
-                return null;
-            return token as SpotifyTokenModel;
-        }
-
-        public SpotifyWebAPI GetSpotifyWebApi(SpotifyTokenModel model)
-        {
-            SpotifyWebAPI api = new SpotifyWebAPI()
-            {
-                AccessToken = model.Access_Token,
-                TokenType = model.Token_Type,
-                UseAuth = true
-            };
-            return api;
-        }
-
-        public FollowedArtists GetFollowedArtists(SpotifyWebAPI api)
-        {
-            return api.GetFollowedArtists(SpotifyAPI.Web.Enums.FollowType.Artist, 50);
-        }
-
-        public NewAlbumReleases GetNewReleases(SpotifyWebAPI api)
-        {
-            return api.GetNewAlbumReleases("", 50);
-        }
-
-        public Paging<SimplePlaylist> GetUserPlaylists(SpotifyWebAPI api)
-        {
-            return api.GetUserPlaylists("?", 50);
-        }
-
-        public Paging<PlaylistTrack> GetPlaylistTracks(SpotifyWebAPI api, string playlistId)
-        {
-            return api.GetPlaylistTracks("?", playlistId);
-        }
-
-        public void AddTracksToPlaylist(SpotifyWebAPI api, List<PlaylistTrack> tracks, string playlistId)
-        {
-            List<string> trackUris = new List<string>();
-            for (int i = 0; i < tracks.Count; i++)
-            {
-                trackUris.Add(tracks[i].Track.Uri);
-            }
-            api.AddPlaylistTracks("?", playlistId, trackUris);
         }
     }
 }

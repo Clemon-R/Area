@@ -18,8 +18,6 @@ using Area.Models;
 using System.Reflection;
 using Area.Services;
 using Area.Wrappers;
-using Area.Services.Actions;
-using Area.Services.Reactions;
 
 namespace Area
 {
@@ -51,20 +49,6 @@ namespace Area
             foreach (var wrapper in resultWrappers)
             {
                 Console.WriteLine($"Wrapper found({wrapper.FullName})");
-                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Scoped));
-            }
-
-            var resultActions = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IAction)));
-            foreach (var wrapper in resultActions)
-            {
-                Console.WriteLine($"Actions found({wrapper.FullName})");
-                services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Scoped));
-            }
-
-            var resultRections = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IReaction)));
-            foreach (var wrapper in resultRections)
-            {
-                Console.WriteLine($"Reaction found({wrapper.FullName})");
                 services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Scoped));
             }
 

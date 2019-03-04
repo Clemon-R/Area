@@ -5,14 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\**" />
-    <Content Remove="wwwroot\**" />
-    <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="wwwroot\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Actions\" />
+    <Folder Include="Graphs\" />
     <Folder Include="Services\Triggers\" />
     <Folder Include="Services\Reactions\" />
     <Folder Include="ViewModels\Spotify\" />
@@ -24,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Narochno.Steam" Version="2.2.0" />
     <PackageReference Include="Reddit" Version="1.0.0" />
     <PackageReference Include="SpotifyAPI.Web" Version="3.1.2" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="3.1.2" />

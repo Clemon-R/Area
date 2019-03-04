@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using SpotifyAPI.Web.Models;
+using Area.Services.APIs;
 
 namespace Area.Services.Actions.Spotify
 {
@@ -11,7 +12,7 @@ namespace Area.Services.Actions.Spotify
     {
         public bool IsTriggered()
         {
-            /*FollowedArtists followedArtists = SpotifyService.GetFollowedArtists();
+            FollowedArtists followedArtists = SpotifyService.GetFollowedArtists();
             NewAlbumReleases releases = SpotifyService.GetNewReleases();
             List<SimpleAlbum> followedReleases = new List<SimpleAlbum>();
             for (int i = 0; i < followedArtists.Artists.Items.Count; i++)
@@ -26,8 +27,8 @@ namespace Area.Services.Actions.Spotify
                         }
                     }
                 }
-            }*/
-            return true;//followedReleases.Count != 0;
+            }
+            return followedReleases.Count != 0;
         }
     }
 }
