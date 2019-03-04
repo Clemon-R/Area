@@ -16,7 +16,7 @@ export class SpotifyService {
       (result: ResultViewModel) => {
         return result;
       }, (error) => {
-        console.log('SpotifyService(getToken): Error ' + error);
+        console.log('TwitchService(getToken): Error ' + error);
         return null;
       }
     );
@@ -28,7 +28,7 @@ export class SpotifyService {
       (result: ResultViewModel) => {
         return result;
       }, (error) => {
-        console.log('SpotifyService(getToken): Error ' + error);
+        console.log('TwitchService(getToken): Error ' + error);
         return null;
       }
     );
@@ -36,12 +36,12 @@ export class SpotifyService {
 
   public connectAccount(code: string): Promise<Account> {
     return this.http.get('/api/spotify/login/' + code).toPromise().then(
-      (result: AccountResultViewModel) =>{
+      (result: AccountResultViewModel) => {
         if (!result.success)
           return null;
         return EntityFiller.FillAccount(result);
       }, (error) => {
-        console.log('SpotifyService(connectAccount): Error ' + error);
+        console.log('TwitchService(connectAccount): Error ' + error);
         return null;
       }
     );

@@ -20,7 +20,11 @@ export class LayoutComponent implements OnInit {
     this.username = '';
     this.password = '';
     this.connected = false;
-    if (document.cookie) {
+  }
+
+  ngOnInit() {
+    this.account = JSON.parse(localStorage.getItem('account')) as Account;
+    if (this.account == null && document.cookie) {
       console.log('Token found: ' + document.cookie);
       this.account = new Account();
       this.account.token = document.cookie.split(';')[0].trim();
@@ -45,9 +49,6 @@ export class LayoutComponent implements OnInit {
         localStorage.clear();
       }
     }
-  }
-
-  ngOnInit() {
   }
 
   public disconnect() {

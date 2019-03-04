@@ -31,6 +31,11 @@ export class SpotifyCallbackComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.account = JSON.parse(localStorage.getItem('account')) as Account;
+    if (this.account == null) {
+      this.router.navigate(['/disconnected']);
+      return;
+    }
     console.log('Trying to find the code...');
     this.route.queryParams.subscribe(params => {
       if (!params.hasOwnProperty('code') || this.account == null) {
