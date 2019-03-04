@@ -1,4 +1,5 @@
-﻿using Area.Graphs.Spotify;
+﻿using Area.Enums;
+using Area.Graphs.Spotify;
 using Area.Models;
 using Area.Services.Actions.Spotify;
 using Area.Services.Reactions.Spotify;
@@ -123,9 +124,10 @@ namespace Area.Services.App
                 {
                     Type action;
                     Type reaction;
-                    switch (1)
+                    var type = ActionTypeEnum.FollowedArtistNewReleaseSpotify;
+                    switch (type)
                     {
-                        case 1:
+                        case ActionTypeEnum.FollowedArtistNewReleaseSpotify:
                             action = typeof(FollowedArtistNewReleaseSpotifyAction);
                             break;
                     }

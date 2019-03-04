@@ -15,6 +15,7 @@ namespace Area.Models
         [ForeignKey("Owner")]
         public int OwnerId { get; set; }
         public Account Owner { get; set; }
+        [NotMapped]
         public TriggerTemplate Template { get; set; }
     }
 }
