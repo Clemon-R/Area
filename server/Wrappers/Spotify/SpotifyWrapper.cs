@@ -1,4 +1,5 @@
 ﻿using Area.Wrappers;
+using Area.Wrappers.Models;
 using Area.Wrappers.Spotify.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,7 +14,7 @@ namespace Area.Graphs.Spotify
 {
     public class SpotifyWrapper : IWrapper
     {
-        public ISpotifyStateModel GenerateSpotifyToken(string code, string url = "http://127.0.0.1:8081/spotify/callback")
+        public IRequestStateModel GenerateSpotifyToken(string code, string url = "http://127.0.0.1:8081/spotify/callback")
         {
             var data = new Dictionary<string, string>();
             data.Add("code", code);
@@ -35,14 +36,14 @@ namespace Area.Graphs.Spotify
                     if (responseContent.Contains("error"))
                     {
                         var json = JObject.Parse(responseContent);
-                        return new SpotifyFailedModel() { Error = (string)json["error_description"] };
+                        return new RequestFailedModel() { Error = (string)json["error_description"] };
                     }
                     return JsonConvert.DeserializeObject<SpotifyTokenModel>(responseContent);
                 }
             }
         }
 
-        public ISpotifyStateModel RefreshSpotifyToken(string refreshToken)
+        public IRequestStateModel RefreshSpotifyToken(string refreshToken)
         {
             var data = new Dictionary<string, string>();
             data.Add("refresh_token", refreshToken);
@@ -63,14 +64,14 @@ namespace Area.Graphs.Spotify
                     if (responseContent.Contains("error"))
                     {
                         var json = JObject.Parse(responseContent);
-                        return new SpotifyFailedModel() { Error = (string)json["error_description"] };
+                        return new RequestFailedModel() { Error = (string)json["error_description"] };
                     }
                     return JsonConvert.DeserializeObject<SpotifyTokenModel>(responseContent);
                 }
             }
         }
 
-        public ISpotifyStateModel GetSpotifyProfile(SpotifyTokenModel model)
+        public IRequestStateModel GetSpotifyProfile(SpotifyTokenModel model)
         {
             using (var httpClient = new HttpClient())
             {
@@ -82,7 +83,7 @@ namespace Area.Graphs.Spotify
                 if (responseContent.Contains("error"))
                 {
                     var json = JObject.Parse(responseContent);
-                    return new SpotifyFailedModel() { Error = (string)json["error_description"] };
+                    return new RequestFailedModel() { Error = (string)json["error_description"] };
                 }
                 return JsonConvert.DeserializeObject<SpotifyProfileModel>(responseContent);
             }

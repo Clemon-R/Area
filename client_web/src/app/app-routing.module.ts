@@ -7,6 +7,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { Page404 } from './pages/404/404.component';
 import {SpotifyModule} from './pages/spotify/spotify.module';
 import {DisconnectedComponent} from './pages/disconnected/disconnected.component';
+import {TwitchModule} from './pages/twitch/twitch.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'disconnected', component: DisconnectedComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'spotify', loadChildren: () => SpotifyModule},
+  { path: 'twitch', loadChildren: () => TwitchModule},
   { path: 'register', component: RegisterComponent },
   { path: '**', component: Page404 }
 ];

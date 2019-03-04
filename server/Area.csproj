@@ -16,6 +16,7 @@
     <Folder Include="Services\Triggers\" />
     <Folder Include="Services\Reactions\" />
     <Folder Include="ViewModels\Spotify\" />
+    <Folder Include="Wrappers\Twitch\" />
   </ItemGroup>
 
   <ItemGroup>
