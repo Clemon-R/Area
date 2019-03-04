@@ -10,5 +10,6 @@ namespace Area.Services.Triggers
     public interface ITrigger
     {
         bool TryActivate();
+        string GetTriggerID();
     }
 }
