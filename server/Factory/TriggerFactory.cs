@@ -1,15 +1,17 @@
 ﻿using Area.Enums;
+using Area.Factory;
 using Area.Models;
 using Area.Services.Actions.Spotify;
 using Area.Services.Reactions.Spotify;
+using Area.Services.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Area.Services.Triggers
+namespace Area.Factory
 {
-    public class TriggerFactory
+    public class TriggerFactory : IFactory
     {
         public void CreateTriggerTemplates(Account owner)
         {
@@ -42,7 +44,7 @@ namespace Area.Services.Triggers
         {
             switch (reactionType)
             {
-                case ReactionTypeEnum.AddToPlayListSpotify:
+                case ReactionTypeEnum.AddToPlaylistSpotify:
                     return typeof(AddToPlaylistSpotifyReaction);
                 default:
                     return null;

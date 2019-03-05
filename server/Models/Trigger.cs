@@ -1,4 +1,5 @@
-﻿using Area.Services.Triggers;
+﻿using Area.Enums;
+using Area.Services.Triggers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,8 @@ namespace Area.Models
         [ForeignKey("Owner")]
         public int OwnerId { get; set; }
         public Account Owner { get; set; }
+        public ActionTypeEnum ActionType { get; set; }
+        public ReactionTypeEnum ReactionType { get; set; }
         [NotMapped]
         public TriggerTemplate Template { get; set; }
     }

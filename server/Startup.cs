@@ -20,6 +20,8 @@ using Area.Services;
 using Area.Wrappers;
 using Area.Services.Actions;
 using Area.Services.Reactions;
+using Area.Factory;
+using Area.Services.Triggers;
 
 namespace Area
 {
@@ -68,6 +70,13 @@ namespace Area
                 services.Add(new ServiceDescriptor(wrapper, wrapper, ServiceLifetime.Singleton));
             }
 
+            var resultFactory = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IFactory)));
+            foreach (var factory in resultFactory)
+            {
+                Console.WriteLine($"Factory found({factory.FullName})");
+                services.Add(new ServiceDescriptor(factory, factory, ServiceLifetime.Singleton));
+            }
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin1",
@@ -104,6 +113,23 @@ namespace Area
                 using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
                 {
                     context.Database.Migrate();
+                }
+            }
+        }
+
+        private static void GenerateTriggerTemplate(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
+                {
+                    var factory = serviceScope.ServiceProvider.GetService<TriggerFactory>();
+                    foreach (var account in context.Accounts)
+                    {
+                        factory.CreateTriggerTemplates(account);
+                    }
                 }
             }
         }
