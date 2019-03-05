@@ -28,7 +28,7 @@ namespace Area.Controllers
         public IViewModel GenerateNewToken(string code, [FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _spotifyService.GenerateSpotifyToken(account, code);
+            return _spotifyService.GenerateToken(account, code);
         }
 
         [HttpGet("login/{code}")]
@@ -41,7 +41,7 @@ namespace Area.Controllers
         public IViewModel IsAvailable([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _spotifyService.IsSpotifyTokenAvailable(account);
+            return _spotifyService.IsTokenAvailable(account);
         }
 
         [HttpPost("test")]

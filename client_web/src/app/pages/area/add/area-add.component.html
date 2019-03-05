@@ -1,0 +1,37 @@
+<!-- Page Heading -->
+<h1 class="h3 mb-4 text-gray-800">Area - Nouvelle AREA</h1>
+<div class="border border-light rounded">
+  <div class="alert alert-success" role="alert" *ngIf="spotifyConnected">
+    Vous êtes déjà connecté à votre compte Spotify
+  </div>
+  <a *ngIf="!spotifyConnected" href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/callback"><button class="btn btn-success">Ce connecter à Spotify</button><br/></a>
+  <div class="alert alert-success twitch" role="alert" *ngIf="twitchConnected">
+    Vous êtes déjà connecté à votre compte Twitch
+  </div>
+  <a *ngIf="!twitchConnected" href="https://id.twitch.tv/oauth2/authorize?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n&redirect_uri=http://127.0.0.1:8081/twitch/callback&response_type=code&scope="><button class="btn btn-success twitch">Ce connecter à Twitch</button><br/></a>
+  <div class="alert alert-primary" role="alert" *ngIf="yammerConnected">
+    Vous êtes déjà connecté à votre compte Yammer
+  </div>
+  <a *ngIf="!yammerConnected" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Ce connecter à Yammer</button><br/></a>
+  <form>
+    <div class="form-group">
+      <label for="actions">Action</label>
+      <select class="form-control" id="actions" (change)="ActionChanged($event.target.value)">
+        <option *ngFor="let action of actions" value="{{action.id}}">{{action.description}}</option>
+      </select>
+    </div>
+    <div class="form-group" [hidden]="!validReactions">
+      <label for="reactions">Reaction</label>
+      <select class="form-control" id="reactions" (change)="ReactionChanged($event.target.value)">
+          <option *ngFor="let reaction of reactions" value="{{reaction.id}}">{{reaction.description}}</option>
+      </select>
+    </div>
+    <div class="form-group" [hidden]="!validReactions">
+      <label for="comment">Paramètres :</label>
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit" [hidden]="!validReactions">
+      Enregistré
+    </button>
+  </form>
+</div>

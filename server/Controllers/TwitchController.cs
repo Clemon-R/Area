@@ -28,7 +28,14 @@ namespace Area.Controllers
         public IViewModel GenerateNewToken(string code, [FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _twitchService.GenerateTwitchToken(account, code);
+            return _twitchService.GenerateToken(account, code);
+        }
+
+        [HttpPost("available")]
+        public IViewModel IsAvailable([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _twitchService.IsTokenAvailable(account);
         }
     }
 }

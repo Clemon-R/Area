@@ -6,14 +6,17 @@
 
   <ItemGroup>
     <Compile Remove="Graphs\**" />
+    <Compile Remove="ViewModels\Spotify\**" />
     <Content Remove="Graphs\**" />
+    <Content Remove="ViewModels\Spotify\**" />
     <EmbeddedResource Remove="Graphs\**" />
+    <EmbeddedResource Remove="ViewModels\Spotify\**" />
     <None Remove="Graphs\**" />
+    <None Remove="ViewModels\Spotify\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Services\Reactions\" />
-    <Folder Include="ViewModels\Spotify\" />
     <Folder Include="Wrappers\Twitch\" />
   </ItemGroup>
 

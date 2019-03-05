@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Area.Services.App
 {
-    public class YammerService : IService
+    public class YammerService : ApiService, IService
     {
         private readonly ApplicationDbContext _context;
         private readonly YammerWrapper _yammerWrapper;
 
         public YammerService(ApplicationDbContext context,
-            YammerWrapper yammerWrapper)
+            YammerWrapper yammerWrapper) : base(context, Enums.ServiceTypeEnum.Yammer)
         {
             _context = context;
             _yammerWrapper = yammerWrapper;
         }
 
-        public IViewModel GenerateYammerToken(Account owner, string code)
+        public override IViewModel GenerateToken(Account owner, string code)
         {
             Console.WriteLine($"YammerService(GenerateYammerToken): The user code is {code}");
             var result = _yammerWrapper.GenerateYammerToken(code);

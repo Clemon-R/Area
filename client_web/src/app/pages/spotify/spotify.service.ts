@@ -24,7 +24,7 @@ export class SpotifyService {
 
   public isTokenAvailable(account: Account): Promise<ResultViewModel> {
     const body = JSON.stringify(account);
-    return this.http.post<ResultViewModel>('/api/spotify/avaibale/', body).toPromise().then(
+    return this.http.post<ResultViewModel>('/api/spotify/available/', body).toPromise().then(
       (result: ResultViewModel) => {
         return result;
       }, (error) => {

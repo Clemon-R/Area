@@ -9,7 +9,7 @@ namespace Area.Services.Actions.Steam
 {
     public class OwnedGameDlcReleaseSpotifyAction : IAction
     {
-        public TriggerTypeEnum Type => TriggerTypeEnum.None;
+        public TriggerCompatibilityEnum Type => TriggerCompatibilityEnum.None;
 
         public void CheckAction(Account user)
         {

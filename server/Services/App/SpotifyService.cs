@@ -21,27 +21,22 @@ using System.Threading.Tasks;
 
 namespace Area.Services.App
 {
-    public class SpotifyService : IService
+    public class SpotifyService : ApiService, IService
     {
         private readonly SpotifyWrapper _spotifyWrapper;
         private readonly AccountService _accountService;
         private readonly ApplicationDbContext _context;
 
-        public SpotifyService(SpotifyWrapper spotifyWrapper, ApplicationDbContext context, AccountService accountService)
+        public SpotifyService(SpotifyWrapper spotifyWrapper, 
+            ApplicationDbContext context, 
+            AccountService accountService) : base(context, ServiceTypeEnum.Spotify)
         {
             _spotifyWrapper = spotifyWrapper;
             _accountService = accountService;
             _context = context;
         }
 
-        public IViewModel IsSpotifyTokenAvailable(Account owner)
-        {
-            return _context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Spotify).Any() 
-                ? (IViewModel)new ErrorViewModel() 
-                : (IViewModel)new SuccessViewModel();
-        }
-
-        public IViewModel GenerateSpotifyToken(Account owner, string code)
+        public override IViewModel GenerateToken(Account owner, string code)
         {
             Console.WriteLine($"SpotifyService(GenerateSpotifyToken): The user code is {code}");
             var result = _spotifyWrapper.GenerateSpotifyToken(code);
@@ -122,7 +117,7 @@ namespace Area.Services.App
             {
                 if (trigger.Template == null)
                 {
-                    Type action;
+                    Type action = null;
                     Type reaction;
                     var type = ActionTypeEnum.FollowedArtistNewReleaseSpotify;
                     switch (type)

@@ -11,7 +11,8 @@ namespace Area.Services.Actions
     {
         void CheckAction(Account user);
         bool IsTriggered();
-        TriggerTypeEnum Type { get; }
+        TriggerCompatibilityEnum Type { get; }
+        ActionTypeEnum Id { get; }
         object GetResult();
     }
 }

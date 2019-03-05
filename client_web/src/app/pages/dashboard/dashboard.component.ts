@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DashboardService} from './dashboard.service';
+import {Account} from '../../models/account';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,16 @@ import {DashboardService} from './dashboard.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  account: Account;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService,
+              private router: Router) { }
 
   ngOnInit() {
+    this.account = JSON.parse(localStorage.getItem('account')) as Account;
+    if (this.account == null) {
+      this.router.navigate(['/disconnected']);
+      return;
+    }
   }
 }

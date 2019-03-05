@@ -9,6 +9,7 @@ using Area.Services.App;
 using Area.Models;
 using SpotifyAPI.Web;
 using Area.Enums;
+using Area.Helpers;
 
 namespace Area.Services.Actions.Spotify
 {
@@ -17,11 +18,14 @@ namespace Area.Services.Actions.Spotify
         private readonly SpotifyService _spotifyService;
         private List<SimpleAlbum> _newReleases = new List<SimpleAlbum>();
 
-        public TriggerTypeEnum Type => TriggerTypeEnum.ListSimpleAlbum;
+        public TriggerCompatibilityEnum Type { get; private set; }
+
+        public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
 
         public FollowedArtistNewReleaseSpotifyAction(SpotifyService spotifyService)
         {
             _spotifyService = spotifyService;
+            Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
         }
 
         public void CheckAction(Account user)

@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {SpotifyService} from '../spotify.service';
+import {AreaService} from '../area.service';
 import {Account} from '../../../models/account';
 import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-spotify-all',
-  templateUrl: './spotify-all.component.html',
-  styleUrls: ['./spotify-all.component.css']
+  templateUrl: './area-all.component.html',
+  styleUrls: ['./area-all.component.css']
 })
-export class SpotifyAllComponent implements OnInit {
+export class AreaAllComponent implements OnInit {
   account: Account;
   constructor(
     private router: Router,
-    private spotifyService: SpotifyService) {
+    private spotifyService: AreaService) {
 
   }
 

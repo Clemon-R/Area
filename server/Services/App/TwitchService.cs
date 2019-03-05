@@ -1,4 +1,5 @@
-﻿using Area.Models;
+﻿using Area.Enums;
+using Area.Models;
 using Area.ViewModels;
 using Area.Wrappers.Models;
 using Area.Wrappers.Twitch;
@@ -10,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Area.Services.App
 {
-    public class TwitchService : IService
+    public class TwitchService : ApiService, IService
     {
         private readonly ApplicationDbContext _context;
         private readonly TwitchWrapper _twitchWrapper;
 
         public TwitchService(ApplicationDbContext context,
-            TwitchWrapper twitchWrapper)
+            TwitchWrapper twitchWrapper) : base(context, ServiceTypeEnum.Twitch)
         {
             _context = context;
             _twitchWrapper = twitchWrapper;
         }
 
-        public IViewModel GenerateTwitchToken(Account owner, string code)
+        public override IViewModel GenerateToken(Account owner, string code)
         {
             Console.WriteLine($"TwitchService(GenerateTwitchToken): The user code is {code}");
             var result = _twitchWrapper.GenerateTwitchToken(code);
@@ -31,7 +32,7 @@ namespace Area.Services.App
                 Console.WriteLine("TwitchService(GenerateTwitchToken): Failed to get token");
                 return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
-            _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Twitch));
+            _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == ServiceTypeEnum.Twitch));
             var tokenModel = result as TwitchTokenModel;
             var token = new Token()
             {
@@ -39,7 +40,7 @@ namespace Area.Services.App
                 RefreshToken = tokenModel.Refresh_Token,
                 ExpireIn = tokenModel.Expires_In,
                 Owner = owner,
-                Type = Enums.ServiceTypeEnum.Twitch
+                Type = ServiceTypeEnum.Twitch
             };
             _context.Tokens.Add(token);
             _context.SaveChanges();

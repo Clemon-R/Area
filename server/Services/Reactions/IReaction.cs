@@ -10,7 +10,8 @@ namespace Area.Services.Reactions
 {
     public interface IReaction
     {
-        TriggerTypeEnum Type { get; }
+        ReactionTypeEnum Id { get; }
+        TriggerCompatibilityEnum Type { get; }
         bool Execute(Account user, object result, string args);
     }
 }

@@ -44,7 +44,7 @@ namespace Area
             foreach (var service in resultServices)
             {
                 Console.WriteLine($"Serivce found({service.FullName})");
-                services.Add(new ServiceDescriptor(service, service, ServiceLifetime.Singleton));
+                services.Add(new ServiceDescriptor(service, service, ServiceLifetime.Scoped));
             }
 
             var resultWrappers = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.GetInterfaces().Contains(typeof(IWrapper)));

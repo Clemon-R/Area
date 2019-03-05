@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Area.Enums
 {
-    public enum TriggerTypeEnum
+    public enum TriggerCompatibilityEnum
     {
         None = -1,
         ListSimpleAlbum = 0,

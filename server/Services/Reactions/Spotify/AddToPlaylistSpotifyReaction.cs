@@ -9,17 +9,22 @@ using Area.Services.Actions;
 using Area.Services.App;
 using Area.Services.Actions.Spotify;
 using Area.Enums;
+using Area.Helpers;
 
 namespace Area.Services.Reactions.Spotify
 {
     public class AddToPlaylistSpotifyReaction : IReaction
     {
         private readonly SpotifyService _spotifyService;
-        public TriggerTypeEnum Type => TriggerTypeEnum.ListSimpleAlbum;
+
+        public TriggerCompatibilityEnum Type { get; private set; }
+
+        public ReactionTypeEnum Id => ReactionTypeEnum.AddToPlaylistSpotify;
 
         public AddToPlaylistSpotifyReaction(SpotifyService spotifyService)
         {
             _spotifyService = spotifyService;
+            Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
         }
 
         public bool Execute(Account user, object result, string args)
