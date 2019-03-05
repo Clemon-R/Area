@@ -1,5 +1,6 @@
 ﻿using Area.Enums;
 using Area.Helpers;
+using Area.ViewModels;
 using Area.ViewModels.Area;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,12 @@ namespace Area.Services.App
                 result.Add(tmp);
             }
             return result;
+        }
+
+        public IViewModel NewArea(NewAreaViewModel model)
+        {
+
+            return null;
         }
     }
 }

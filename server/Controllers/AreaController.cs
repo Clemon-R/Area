@@ -14,11 +14,14 @@ namespace Area.Controllers
     public class AreaController : ControllerBase
     {
         private readonly AreaService _areaService;
+        private readonly AccountService _accountService;
 
         public AreaController(
-            AreaService areaService)
+            AreaService areaService,
+            AccountService accountService)
         {
             _areaService = areaService;
+            _accountService = accountService;
         }
 
         [HttpGet("actions")]
@@ -36,7 +39,8 @@ namespace Area.Controllers
         [HttpPost("new")]
         public IViewModel NewArea([FromBody] NewAreaViewModel model)
         {
-            return null;
+            var account = _accountService.GetAccount(model);
+            return _areaService.NewArea(account, model);
         }
     }
 }
