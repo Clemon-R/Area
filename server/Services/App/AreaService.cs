@@ -1,5 +1,7 @@
 ﻿using Area.Enums;
+using Area.Factory;
 using Area.Helpers;
+using Area.Models;
 using Area.ViewModels;
 using Area.ViewModels.Area;
 using System;
@@ -12,10 +14,13 @@ namespace Area.Services.App
     public class AreaService : IService
     {
         private readonly ApplicationDbContext _context;
+        private readonly TriggerFactory _triggerFactory;
 
-        public AreaService(ApplicationDbContext context)
+        public AreaService(ApplicationDbContext context,
+            TriggerFactory triggerFactory)
         {
             _context = context;
+            _triggerFactory = triggerFactory;
         }
 
         public List<ActionReactionViewModel> GetActions()
@@ -54,10 +59,24 @@ namespace Area.Services.App
             return result;
         }
 
-        public IViewModel NewArea(NewAreaViewModel model)
+        public IViewModel NewArea(Account account, NewAreaViewModel model)
         {
-
-            return null;
+            if (account.Triggers.Where(t => t.ActionType == model.ActionId && t.ReactionType == model.ReactionId).Any())
+                return new ErrorViewModel() {Error="AREA déjà existant, impossible de le créé" };
+            Console.WriteLine("AreaService(NewArea): Creating new AREA...");
+            var trigger = new Trigger()
+            {
+                ActionType = model.ActionId,
+                ReactionType = model.ReactionId,
+                Owner = account
+            };
+            Console.WriteLine("AreaService(NewArea): Saving new AREA...");
+            _context.Add(trigger);
+            _context.SaveChanges();
+            Console.WriteLine("AreaService(NewArea): Creating the AREA template...");
+            _triggerFactory.CreateTriggerTemplate(trigger);
+            Console.WriteLine("AreaService(NewArea): AREA created");
+            return new SuccessViewModel();
         }
     }
 }

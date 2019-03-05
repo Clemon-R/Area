@@ -17,13 +17,18 @@ namespace Area.Factory
         {
             foreach (Trigger trigger in owner.Triggers)
             {
-                if (trigger.Template == null)
-                {
-                    Type action = GetAction(trigger.ActionType);
-                    Type reaction = GetReaction(trigger.ReactionType);
+                CreateTriggerTemplate(trigger);
+            }
+        }
 
-                    trigger.Template = new TriggerTemplate(action, reaction);
-                }
+        public void CreateTriggerTemplate(Trigger trigger)
+        {
+            if (trigger.Template == null)
+            {
+                Type action = GetAction(trigger.ActionType);
+                Type reaction = GetReaction(trigger.ReactionType);
+
+                trigger.Template = new TriggerTemplate(action, reaction);
             }
         }
 

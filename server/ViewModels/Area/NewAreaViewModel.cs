@@ -1,4 +1,5 @@
-﻿using Area.ViewModels.Account;
+﻿using Area.Enums;
+using Area.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Area.ViewModels.Area
 {
     public class NewAreaViewModel : ConnectedViewModel
     {
-        public int ActionId { get; set; }
-        public int ReactionId { get; set; }
+        public ActionTypeEnum ActionId { get; set; }
+        public ReactionTypeEnum ReactionId { get; set; }
     }
 }
