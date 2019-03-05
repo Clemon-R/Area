@@ -13,25 +13,25 @@
     Vous êtes déjà connecté à votre compte Yammer
   </div>
   <a *ngIf="!yammerConnected" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Ce connecter à Yammer</button><br/></a>
-  <form>
+  <div>
     <div class="form-group">
       <label for="actions">Action</label>
       <select class="form-control" id="actions" (change)="ActionChanged($event.target.value)">
         <option *ngFor="let action of actions" value="{{action.id}}">{{action.description}}</option>
       </select>
     </div>
-    <div class="form-group" [hidden]="!validReactions">
+    <div class="form-group" *ngIf="reactionConnected">
       <label for="reactions">Reaction</label>
       <select class="form-control" id="reactions" (change)="ReactionChanged($event.target.value)">
-          <option *ngFor="let reaction of reactions" value="{{reaction.id}}">{{reaction.description}}</option>
+          <option *ngFor="let reaction of validReactions" value="{{reaction.id}}">{{reaction.description}}</option>
       </select>
     </div>
-    <div class="form-group" [hidden]="!validReactions">
+    <div class="form-group" *ngIf="reactionConnected">
       <label for="comment">Paramètres :</label>
       <textarea class="form-control" rows="5" id="comment"></textarea>
     </div>
-    <button class="btn btn-primary" type="submit" [hidden]="!validReactions">
+    <button class="btn btn-primary" (click)="Save()" *ngIf="reactionConnected">
       Enregistré
     </button>
-  </form>
+  </div>
 </div>

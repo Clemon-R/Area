@@ -1,4 +1,5 @@
 ﻿using Area.Services.App;
+using Area.ViewModels;
 using Area.ViewModels.Area;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,6 +31,12 @@ namespace Area.Controllers
         public List<ActionReactionViewModel> GetReactions()
         {
             return _areaService.GetReactions();
+        }
+
+        [HttpPost("new")]
+        public IViewModel NewArea([FromBody] NewAreaViewModel model)
+        {
+            return null;
         }
     }
 }

@@ -26,6 +26,9 @@ export class AreaAddComponent implements OnInit {
   reactions: ActionReactionViewModel[];
   validReactions: ActionReactionViewModel[];
 
+  actionId: number;
+  reactionId: number;
+
   constructor(
     private areaService: AreaService,
     private spotifyService: SpotifyService,
@@ -36,6 +39,7 @@ export class AreaAddComponent implements OnInit {
     this.twitchConnected = false;
     this.yammerConnected = false;
     this.reactionConnected = false;
+    this.validReactions = [];
     this.areaService.getActions().then(
       (result: ActionReactionViewModel[]) => {
         this.actions = result;
@@ -91,14 +95,33 @@ export class AreaAddComponent implements OnInit {
         result.push(reaction);
       }
     }
-    console.log('Refresh Reactions: ' + result);
+    console.log(result);
     this.validReactions = result;
-    if (result.length != 0) {
-      this.reactionConnected = true;
-    }
+    this.reactionConnected = result.length != 0;
+    this.actionId = tmp.id;
   }
 
   public ReactionChanged(id: number) {
     console.log('Nouvelle reaction: ' + id);
+    let tmp: ActionReactionViewModel = null;
+    for (const reaction of this.reactions) {
+      if (reaction.id == id) {
+        tmp = reaction;
+        break;
+      }
+    }
+    if (tmp === null)
+      return;
+    console.log('Reaction: ' + tmp.description);
+    this.reactionId = tmp.id;
+  }
+
+  public Save() {
+    console.log('Saving new area...');
+    this.areaService.newArea(this.account, this.actionId, this.reactionId).then(
+      (result: ResultViewModel) => {
+        console.log('saved');
+      }
+    );
   }
 }
