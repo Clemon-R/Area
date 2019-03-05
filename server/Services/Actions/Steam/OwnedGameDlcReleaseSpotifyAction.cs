@@ -11,6 +11,8 @@ namespace Area.Services.Actions.Steam
     {
         public TriggerCompatibilityEnum Type => TriggerCompatibilityEnum.None;
 
+        public ActionTypeEnum Id => throw new NotImplementedException();
+
         public void CheckAction(Account user)
         {
             throw new NotImplementedException();
