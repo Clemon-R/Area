@@ -40,7 +40,6 @@ namespace Area.Services.App
                         foreach (var trigger in account.Triggers)
                         {
                             _triggerFactory.CreateTriggerTemplate(trigger);
-                            Console.WriteLine($"BackgroundJob({trigger.Template.Id})({account.Id}): trying activate...");
                             trigger.Template.TryActivate(account, string.Empty);
                             account.LastVerificationDate = DateTime.Now;
                         }

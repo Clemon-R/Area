@@ -32,7 +32,6 @@ namespace Area.Graphs.Spotify
 
                     var response = httpClient.PostAsync("https://accounts.spotify.com/api/token", content).Result;
                     var responseContent = response.Content.ReadAsStringAsync().Result;
-                    Console.WriteLine(responseContent);
                     if (responseContent.Contains("error"))
                     {
                         var json = JObject.Parse(responseContent);
@@ -60,7 +59,6 @@ namespace Area.Graphs.Spotify
 
                     var response = httpClient.PostAsync("https://accounts.spotify.com/api/token", content).Result;
                     var responseContent = response.Content.ReadAsStringAsync().Result;
-                    Console.WriteLine(responseContent);
                     if (responseContent.Contains("error"))
                     {
                         var json = JObject.Parse(responseContent);
@@ -79,7 +77,6 @@ namespace Area.Graphs.Spotify
 
                 var response = httpClient.GetAsync("https://api.spotify.com/v1/me").Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                Console.WriteLine(responseContent);
                 if (responseContent.Contains("error"))
                 {
                     var json = JObject.Parse(responseContent);

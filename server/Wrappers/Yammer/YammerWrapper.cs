@@ -22,7 +22,6 @@ namespace Area.Wrappers.Yammer
                 $"&code={code}" +
                 "&grant_type=authorization_code", new StringContent(string.Empty)).Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                Console.WriteLine(responseContent);
                 if (!responseContent.Contains("access_token"))
                 {
                     return new RequestFailedModel() { Error = "Impossible de récupèrer votre connexion"};

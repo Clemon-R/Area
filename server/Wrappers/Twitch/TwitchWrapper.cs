@@ -23,7 +23,6 @@ namespace Area.Wrappers.Twitch
                 "&grant_type=authorization_code" +
                 $"&redirect_uri={url}", new StringContent(string.Empty)).Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                Console.WriteLine(responseContent);
                 if (responseContent.Contains("status"))
                 {
                     var json = JObject.Parse(responseContent);

@@ -32,7 +32,6 @@ namespace Area.Services.Actions.Spotify
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             FollowedArtists followedArtists = _spotifyService.GetFollowedArtists(api);
             NewAlbumReleases releases = _spotifyService.GetNewReleases(api);
-            Console.WriteLine($"{nameof(FollowedArtistNewReleaseSpotifyAction)}(CheckAction): {JsonConvert.SerializeObject(followedArtists)}");
             var lastCheck = user.LastVerificationDate;
             for (int i = 0; i < followedArtists.Artists.Items.Count; i++)
             {
