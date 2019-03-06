@@ -18,19 +18,23 @@ namespace Area.Services.Triggers
 
         public TriggerTemplate(
             Type action,
-            Type reaction)
+            Type reaction,
+            IServiceProvider serviceProvider)
         {
-            _action = (IAction)Activator.CreateInstance(action);
-            _reaction = (IReaction)Activator.CreateInstance(reaction);
+            _action = (IAction)Activator.CreateInstance(action, serviceProvider);
+            _reaction = (IReaction)Activator.CreateInstance(reaction, serviceProvider);
         }
 
-        public string Id => $"{nameof(_action)} and {nameof(_reaction)}";
+        public string Id => $"{_action.Id} and {_reaction.Id}";
 
         public bool TryActivate(Account user, string args)
         {
             _action.CheckAction( user);
             if (_action.IsTriggered())
+            {
+                Console.WriteLine($"{Id}({user.UserName}): Activate");
                 return _reaction.Execute(user, _action.GetResult(), args);
+            }
             return false;
         }
     }

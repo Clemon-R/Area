@@ -44,6 +44,13 @@ namespace Area.Controllers
             return _spotifyService.IsTokenAvailable(account);
         }
 
+        [HttpPost("delete/token")]
+        public IViewModel DeleteToken([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _spotifyService.DeleteToken(account, Enums.ServiceTypeEnum.Spotify);
+        }
+
         [HttpPost("test")]
         public IViewModel test([FromBody] ConnectedViewModel model)
         {

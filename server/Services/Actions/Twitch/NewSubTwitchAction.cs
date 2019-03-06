@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Area.Enums;
+using Area.Helpers;
 using Area.Models;
 using Area.Services.App;
 using TwitchLib.Api;
@@ -16,11 +17,15 @@ namespace Area.Services.Actions.Twitch
         List<Follow> _newFollowers = new List<Follow>();
 
         TwitchService _twitchService;
-        public TriggerTypeEnum Type => TriggerTypeEnum.ListTwitchFollowers;
 
-        public NewSubTwitchAction(TwitchService twitchService)
+        public TriggerCompatibilityEnum Type { get; private set; }
+
+        public ActionTypeEnum Id => ActionTypeEnum.NewSubTwitch; 
+
+        public NewSubTwitchAction(IServiceProvider serviceProvider)
         {
-            _twitchService = twitchService;
+            _twitchService = (TwitchService)serviceProvider.GetService(typeof(TwitchService));
+            Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
         }
 
         public void CheckAction(Account user)

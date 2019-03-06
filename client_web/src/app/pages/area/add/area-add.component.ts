@@ -99,6 +99,8 @@ export class AreaAddComponent implements OnInit {
     this.validReactions = result;
     this.reactionConnected = result.length != 0;
     this.actionId = tmp.id;
+    if (this.validReactions)
+      this.ReactionChanged(this.validReactions[0].id);
   }
 
   public ReactionChanged(id: number) {
@@ -120,7 +122,41 @@ export class AreaAddComponent implements OnInit {
     console.log('Saving new area...');
     this.areaService.newArea(this.account, this.actionId, this.reactionId).then(
       (result: ResultViewModel) => {
-        console.log('saved');
+        if (result.success)
+          console.log('Saved');
+      }
+    );
+  }
+  public DeleteSotifyToken() {
+    console.log('Deleting Spotify token...');
+    this.spotifyService.deleteToken(this.account).then(
+      (result: ResultViewModel) => {
+        if (result.success) {
+          this.spotifyConnected = false;
+          console.log('Deleted');
+        }
+      }
+    );
+  }
+  public DeleteTwitchToken() {
+    console.log('Deleting Twitch token...');
+    this.twitchService.deleteToken(this.account).then(
+      (result: ResultViewModel) => {
+        if (result.success) {
+          this.twitchConnected = false;
+          console.log('Deleted');
+        }
+      }
+    );
+  }
+  public DeleteYammerToken() {
+    console.log('Deleting Yammer token...');
+    this.yammerService.deleteToken(this.account).then(
+      (result: ResultViewModel) => {
+        if (result.success) {
+          this.yammerConnected = false;
+          console.log('Deleted');
+        }
       }
     );
   }

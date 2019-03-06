@@ -1,6 +1,7 @@
 ﻿using Area.Models;
 using Area.ViewModels;
 using Area.ViewModels.Account;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Area.Services.App
             Console.WriteLine($"AccountService(GetAccount): Getting account for token({model.Token})");
             Account current = _context.Accounts
                 .Where(account => account.Token.Equals(model.Token))
+                .Include(account => account.Tokens)
+                .Include(account => account.Triggers)
                 .FirstOrDefault();
             return current;
         }

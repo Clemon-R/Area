@@ -61,17 +61,20 @@ namespace Area.Services.App
 
         public IViewModel NewArea(Account account, NewAreaViewModel model)
         {
-            if (account.Triggers.Where(t => t.ActionType == model.ActionId && t.ReactionType == model.ReactionId).Any())
+            var action = (ActionTypeEnum)model.ActionId;
+            var reaction = (ReactionTypeEnum)model.ReactionId;
+            if (account.Triggers.Where(t => t.ActionType == action && t.ReactionType == reaction).Any())
                 return new ErrorViewModel() {Error="AREA déjà existant, impossible de le créé" };
             Console.WriteLine("AreaService(NewArea): Creating new AREA...");
             var trigger = new Trigger()
             {
-                ActionType = model.ActionId,
-                ReactionType = model.ReactionId,
-                Owner = account
+                ActionType = action,
+                ReactionType = reaction
             };
             Console.WriteLine("AreaService(NewArea): Saving new AREA...");
             _context.Add(trigger);
+            account.Triggers.Add(trigger);
+            _context.Update(account);
             _context.SaveChanges();
             Console.WriteLine("AreaService(NewArea): Creating the AREA template...");
             _triggerFactory.CreateTriggerTemplate(trigger);

@@ -8,6 +8,7 @@ using Area.Models;
 using SpotifyAPI.Web;
 using Area.Enums;
 using Area.Helpers;
+using Newtonsoft.Json;
 
 namespace Area.Services.Actions.Spotify
 {
@@ -20,9 +21,9 @@ namespace Area.Services.Actions.Spotify
 
         public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
 
-        public FollowedArtistNewReleaseSpotifyAction(SpotifyService spotifyService)
+        public FollowedArtistNewReleaseSpotifyAction(IServiceProvider serviceProvider)
         {
-            _spotifyService = spotifyService;
+            _spotifyService = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
             Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
         }
 
@@ -31,7 +32,8 @@ namespace Area.Services.Actions.Spotify
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             FollowedArtists followedArtists = _spotifyService.GetFollowedArtists(api);
             NewAlbumReleases releases = _spotifyService.GetNewReleases(api);
-            DateTime lastCheck = user.LastVerificationDate;
+            Console.WriteLine($"{nameof(FollowedArtistNewReleaseSpotifyAction)}(CheckAction): {JsonConvert.SerializeObject(followedArtists)}");
+            var lastCheck = user.LastVerificationDate;
             for (int i = 0; i < followedArtists.Artists.Items.Count; i++)
             {
                 for (int j = 0; j < releases.Albums.Items.Count; j++)

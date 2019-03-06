@@ -20,9 +20,9 @@ namespace Area.Services.Reactions.Spotify
 
         public ReactionTypeEnum Id => ReactionTypeEnum.AddToPlaylistSpotify;
 
-        public AddToPlaylistSpotifyReaction(SpotifyService spotifyService)
+        public AddToPlaylistSpotifyReaction(IServiceProvider serviceProvider)
         {
-            _spotifyService = spotifyService;
+            _spotifyService = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
             Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
         }
 

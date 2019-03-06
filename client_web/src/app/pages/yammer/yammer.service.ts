@@ -46,4 +46,16 @@ export class YammerService {
       }
     );
   }
+
+  public deleteToken(account: Account): Promise<ResultViewModel> {
+    const body = JSON.stringify(account);
+    return this.http.post<ResultViewModel>('/api/yammer/delete/token', body).toPromise().then(
+      (result: ResultViewModel) => {
+        return result;
+      }, (error) => {
+        console.log('YammerService(deleteToken): Error ' + error);
+        return null;
+      }
+    );
+  }
 }

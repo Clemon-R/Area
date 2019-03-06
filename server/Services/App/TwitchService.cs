@@ -33,17 +33,18 @@ namespace Area.Services.App
                 Console.WriteLine("TwitchService(GenerateTwitchToken): Failed to get token");
                 return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
-            _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == ServiceTypeEnum.Twitch));
+            _context.Tokens.RemoveRange(owner.Tokens.Where(t => t.Type == ServiceTypeEnum.Twitch));
             var tokenModel = result as TwitchTokenModel;
             var token = new Token()
             {
                 AccessToken = tokenModel.Access_Token,
                 RefreshToken = tokenModel.Refresh_Token,
                 ExpireIn = tokenModel.Expires_In,
-                Owner = owner,
                 Type = ServiceTypeEnum.Twitch
             };
             _context.Tokens.Add(token);
+            owner.Tokens.Add(token);
+            _context.Update(owner);
             _context.SaveChanges();
             Console.WriteLine("TwitchService(GenerateTwitchToken): Token successfully saved");
             return new SuccessViewModel();

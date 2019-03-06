@@ -13,6 +13,13 @@ namespace Area.Factory
 {
     public class TriggerFactory : IFactory
     {
+        private readonly IServiceProvider _serviceProvider;
+
+        public TriggerFactory(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
         public void CreateTriggerTemplates(Account owner)
         {
             foreach (Trigger trigger in owner.Triggers)
@@ -28,7 +35,7 @@ namespace Area.Factory
                 Type action = GetAction(trigger.ActionType);
                 Type reaction = GetReaction(trigger.ReactionType);
 
-                trigger.Template = new TriggerTemplate(action, reaction);
+                trigger.Template = new TriggerTemplate(action, reaction, _serviceProvider);
             }
         }
 

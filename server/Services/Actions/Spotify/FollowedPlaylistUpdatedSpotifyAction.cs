@@ -20,9 +20,9 @@ namespace Area.Services.Actions.Spotify
         public ActionTypeEnum Id => ActionTypeEnum.FollowedPlaylistUpdatedSpotify;
 
 
-        public FollowedPlaylistUpdatedSpotifyAction(SpotifyService spotifyService)
+        public FollowedPlaylistUpdatedSpotifyAction(IServiceProvider serviceProvider)
         {
-            _spotifyService = spotifyService;
+            _spotifyService = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
             Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
         }
 
@@ -30,7 +30,7 @@ namespace Area.Services.Actions.Spotify
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             string currentUserId = "?";
-            DateTime lastCheck = user.LastVerificationDate;
+            var lastCheck = user.LastVerificationDate;
             List<PlaylistTrack> newTracks = new List<PlaylistTrack>();
             Paging<SimplePlaylist> playlists = _spotifyService.GetUserPlaylists(api);
             for (int i = 0; i < playlists.Items.Count; i++)

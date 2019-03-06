@@ -10,6 +10,7 @@ namespace Area
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=db;Database=master;User=sa;Password=Your_password123;");
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         public DbSet<Account> Accounts { get; set; }

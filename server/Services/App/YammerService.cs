@@ -31,17 +31,18 @@ namespace Area.Services.App
                 Console.WriteLine("YammerService(GenerateYammerToken): Failed to get token");
                 return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
-            _context.Tokens.RemoveRange(_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == Enums.ServiceTypeEnum.Yammer));
+            _context.Tokens.RemoveRange(owner.Tokens.Where(t => t.Type == Enums.ServiceTypeEnum.Yammer));
             var tokenModel = result as YammerTokenModel;
             var token = new Token()
             {
                 AccessToken = tokenModel.Token,
                 RefreshToken = null,
                 ExpireIn = -1,
-                Owner = owner,
                 Type = Enums.ServiceTypeEnum.Yammer
             };
             _context.Tokens.Add(token);
+            owner.Tokens.Add(token);
+            _context.Update(owner);
             _context.SaveChanges();
             Console.WriteLine("YammerService(GenerateYammerToken): Token successfully saved");
             return new SuccessViewModel();

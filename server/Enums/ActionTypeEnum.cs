@@ -11,6 +11,8 @@ namespace Area.Enums
         [DescriptionAttribut("Test1", TriggerCompatibilityEnum.ListSimpleAlbum)]
         FollowedArtistNewReleaseSpotify = 0,
         [DescriptionAttribut("Test2", TriggerCompatibilityEnum.ListPlaylistTrack)]
-        FollowedPlaylistUpdatedSpotify = 1
+        FollowedPlaylistUpdatedSpotify = 1,
+        [DescriptionAttribut("Test3", TriggerCompatibilityEnum.ListTwitchFollowers)]
+        NewSubTwitch = 2
     }
 }

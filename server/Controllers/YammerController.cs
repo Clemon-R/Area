@@ -37,5 +37,12 @@ namespace Area.Controllers
             var account = _accountService.GetAccount(model);
             return _yammerService.IsTokenAvailable(account);
         }
+
+        [HttpPost("delete/token")]
+        public IViewModel DeleteToken([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _yammerService.DeleteToken(account, Enums.ServiceTypeEnum.Yammer);
+        }
     }
 }

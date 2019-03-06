@@ -12,10 +12,6 @@ namespace Area.Models
     public class Trigger {
         [Key]
         public int Id { get; set; }
-        public DateTime LastVerificationDate { get; set; }
-        [ForeignKey("Owner")]
-        public int OwnerId { get; set; }
-        public Account Owner { get; set; }
         public ActionTypeEnum ActionType { get; set; }
         public ReactionTypeEnum ReactionType { get; set; }
         [NotMapped]

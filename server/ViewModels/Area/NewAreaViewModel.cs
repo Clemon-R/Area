@@ -9,7 +9,7 @@ namespace Area.ViewModels.Area
 {
     public class NewAreaViewModel : ConnectedViewModel
     {
-        public ActionTypeEnum ActionId { get; set; }
-        public ReactionTypeEnum ReactionId { get; set; }
+        public int ActionId { get; set; }
+        public int ReactionId { get; set; }
     }
 }

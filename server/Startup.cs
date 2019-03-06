@@ -100,8 +100,8 @@ namespace Area
             }
 
             app.UseCors("AllowOrigin");
-            //app.UseHttpsRedirection();
             app.UseMvc();
+            LaunchBackgroundJob(app);
         }
 
         private static void UpdateDatabase(IApplicationBuilder app)
@@ -117,21 +117,12 @@ namespace Area
             }
         }
 
-        private static void GenerateTriggerTemplate(IApplicationBuilder app)
+        private static void LaunchBackgroundJob(IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
-                {
-                    var factory = serviceScope.ServiceProvider.GetService<TriggerFactory>();
-                    foreach (var account in context.Accounts)
-                    {
-                        factory.CreateTriggerTemplates(account);
-                    }
-                }
-            }
+            var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var bg = serviceScope.ServiceProvider.GetService<BackgroundJobService>();
+            bg.Start();
         }
     }
 }

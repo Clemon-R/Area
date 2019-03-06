@@ -36,9 +36,11 @@ export class AreaService {
   public newArea(account: Account, actionId: number, reactionId: number): Promise<ResultViewModel> {
     const model: NewAreaViewModel = new NewAreaViewModel();
     model.token = account.token;
-    model.actionId = actionId;
     model.reactionId = reactionId;
+    model.actionId = actionId;
+    console.log(actionId + ' ' + reactionId);
     const body = JSON.stringify(model);
+    console.log(body);
     return this.http.post('/api/area/new', body).toPromise().then(
       (result: ResultViewModel) => {
         return result;

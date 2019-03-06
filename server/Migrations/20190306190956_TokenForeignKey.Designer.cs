@@ -4,14 +4,16 @@ using Area;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Area.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190306190956_TokenForeignKey")]
+    partial class TokenForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +27,7 @@ namespace Area.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("LastVerificationDate");
+                    b.Property<DateTime>("LastVerificationDate");
 
                     b.Property<string>("Password");
 
@@ -46,9 +48,9 @@ namespace Area.Migrations
 
                     b.Property<string>("AccessToken");
 
-                    b.Property<int?>("AccountId");
-
                     b.Property<int>("ExpireIn");
+
+                    b.Property<int>("OwnerId");
 
                     b.Property<string>("RefreshToken");
 
@@ -56,7 +58,7 @@ namespace Area.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Tokens");
                 });
@@ -67,31 +69,33 @@ namespace Area.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccountId");
-
                     b.Property<int>("ActionType");
+
+                    b.Property<int>("OwnerId");
 
                     b.Property<int>("ReactionType");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Triggers");
                 });
 
             modelBuilder.Entity("Area.Models.Token", b =>
                 {
-                    b.HasOne("Area.Models.Account")
+                    b.HasOne("Area.Models.Account", "Owner")
                         .WithMany("Tokens")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Area.Models.Trigger", b =>
                 {
-                    b.HasOne("Area.Models.Account")
+                    b.HasOne("Area.Models.Account", "Owner")
                         .WithMany("Triggers")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

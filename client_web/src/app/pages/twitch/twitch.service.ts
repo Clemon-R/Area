@@ -16,7 +16,7 @@ export class TwitchService {
       (result: ResultViewModel) => {
         return result;
       }, (error) => {
-        console.log('YammerService(getToken): Error ' + error);
+        console.log('TwitchService(getToken): Error ' + error);
         return null;
       }
     );
@@ -28,7 +28,7 @@ export class TwitchService {
       (result: ResultViewModel) => {
         return result;
       }, (error) => {
-        console.log('YammerService(getToken): Error ' + error);
+        console.log('TwitchService(getToken): Error ' + error);
         return null;
       }
     );
@@ -41,7 +41,19 @@ export class TwitchService {
           return null;
         return EntityFiller.FillAccount(result);
       }, (error) => {
-        console.log('YammerService(connectAccount): Error ' + error);
+        console.log('TwitchService(connectAccount): Error ' + error);
+        return null;
+      }
+    );
+  }
+
+  public deleteToken(account: Account): Promise<ResultViewModel> {
+    const body = JSON.stringify(account);
+    return this.http.post<ResultViewModel>('/api/twitch/delete/token', body).toPromise().then(
+      (result: ResultViewModel) => {
+        return result;
+      }, (error) => {
+        console.log('TwitchService(deleteToken): Error ' + error);
         return null;
       }
     );

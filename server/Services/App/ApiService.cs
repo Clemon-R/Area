@@ -23,9 +23,20 @@ namespace Area.Services.App
 
         public IViewModel IsTokenAvailable(Account owner)
         {
-            return !_context.Tokens.Where(t => t.Owner.Id == owner.Id && t.Type == _type).Any()
+            return !owner.Tokens.Where(t => t.Type == _type).Any()
                 ? (IViewModel)new ErrorViewModel()
                 : (IViewModel)new SuccessViewModel();
+        }
+
+        public IViewModel DeleteToken(Account owner, ServiceTypeEnum type)
+        {
+            var token = owner.Tokens.Where(t => t.Type == type).FirstOrDefault();
+            if (token == null)
+                return new ErrorViewModel();
+            owner.Tokens.Remove(token);
+            _context.Remove(token);
+            _context.SaveChanges();
+            return new SuccessViewModel();
         }
 
         public abstract IViewModel GenerateToken(Account owner, string code);
