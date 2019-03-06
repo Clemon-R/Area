@@ -9,6 +9,7 @@ namespace Area.Enums
     {
         None = -1,
         ListSimpleAlbum = 0,
-        ListPlaylistTrack = 1
+        ListPlaylistTrack = 1,
+        ListTwitchFollowers = 2
     }
 }

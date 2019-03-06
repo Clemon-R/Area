@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using SpotifyAPI.Web.Models;
-using Area.Services.APIs;
 using Area.Services.App;
 using Area.Models;
 using SpotifyAPI.Web;
@@ -33,7 +31,7 @@ namespace Area.Services.Actions.Spotify
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             FollowedArtists followedArtists = _spotifyService.GetFollowedArtists(api);
             NewAlbumReleases releases = _spotifyService.GetNewReleases(api);
-            DateTime lastCheck = DateTime.Now;
+            DateTime lastCheck = user.LastVerificationDate;
             for (int i = 0; i < followedArtists.Artists.Items.Count; i++)
             {
                 for (int j = 0; j < releases.Albums.Items.Count; j++)

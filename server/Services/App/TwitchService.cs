@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitchLib.Api;
 
 namespace Area.Services.App
 {
@@ -46,6 +47,17 @@ namespace Area.Services.App
             _context.SaveChanges();
             Console.WriteLine("TwitchService(GenerateTwitchToken): Token successfully saved");
             return new SuccessViewModel();
+        }
+
+        public TwitchAPI GetApi(TwitchTokenModel token)
+        {
+            TwitchAPI api = new TwitchAPI();
+
+            /*TwitchLib.Api.Core. 
+            api.Settings.Scopes = token.Scope.ToList();*/
+            api.Settings.ClientId = "g2kkfu5px956qtxvzfvsi9jbqhip4n";
+            api.Settings.AccessToken = token.Access_Token;
+            return api;
         }
     }
 }

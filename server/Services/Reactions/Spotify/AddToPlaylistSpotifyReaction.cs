@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
-using Area.Services.APIs;
 using Area.Models;
 using Area.Services.Actions;
 using Area.Services.App;
@@ -31,7 +30,15 @@ namespace Area.Services.Reactions.Spotify
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             var tracks = _spotifyService.GetTracksFromAlbums(api, result as List<SimpleAlbum>);
-            _spotifyService.AddTracksToPlaylist(api, tracks, string.Empty);
+            var playlists = _spotifyService.GetUserPlaylists(api);
+            for (int i = 0; i < playlists.Items.Count; i++)
+            {
+                if (playlists.Items[i].Name == "AreaPlaylist")
+                {
+                    _spotifyService.AddTracksToPlaylist(api, tracks, playlists.Items[i].Id);
+                    return true;
+                }
+            }
             return true;
         }
     }
