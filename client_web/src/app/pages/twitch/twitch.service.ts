@@ -29,7 +29,10 @@ export class TwitchService {
         return result;
       }, (error) => {
         console.log('TwitchService(getToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
@@ -54,7 +57,10 @@ export class TwitchService {
         return result;
       }, (error) => {
         console.log('TwitchService(deleteToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }

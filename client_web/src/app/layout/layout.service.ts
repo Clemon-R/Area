@@ -1,10 +1,10 @@
+/* tslint:disable:curly */
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {EntityFiller} from '../entityFiller';
 
 import { Account } from '../models/account';
 import {LoginViewModel} from '../viewModels/layout/LoginViewModel';
-import {LoginResultViewModel} from '../viewModels/layout/LoginResultViewModel';
 import {AccountResultViewModel} from '../viewModels/AccountResultViewModel';
 import {ResultViewModel} from '../viewModels/ResultViewModel';
 
@@ -16,7 +16,9 @@ export class LayoutService {
     const body = JSON.stringify(account);
     return this.http.post('/api/account/get', body).toPromise().then(
       (result: AccountResultViewModel) => {
-        return EntityFiller.FillAccount(result);;
+        if (!result.success)
+          return null;
+        return EntityFiller.FillAccount(result);
       }, (error) => {
         console.log('LayoutService(getAccount): Error ' + error);
         return null;
@@ -31,7 +33,10 @@ export class LayoutService {
         return result;
       }, (error) => {
         console.log('LayoutService(disconnectAccount): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
@@ -43,8 +48,8 @@ export class LayoutService {
     const body = JSON.stringify(model);
     return this.http.post('/api/account/login', body).toPromise().then(
       (result: AccountResultViewModel) => {
-        const account = EntityFiller.FillAccount(result);
-        localStorage.setItem('account', JSON.stringify(account));
+        if (!result.success)
+          return null;
         return EntityFiller.FillAccount(result);
       },
       (error) => {

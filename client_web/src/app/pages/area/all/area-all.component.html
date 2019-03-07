@@ -1,2 +1,20 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Area - Mes services</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col" width="10%">#</th>
+    <th scope="col" width="37%">Action</th>
+    <th scope="col" width="37%">Reaction</th>
+    <th scope="col" width="15%"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let trigger of triggers">
+    <th scope="row">{{trigger.id}}</th>
+    <td>{{getActionDescriptionById(trigger.actionId)}}</td>
+    <td>{{getReactionDescriptionById(trigger.reactionId)}}</td>
+    <td><a (click)="deleteTrigger(trigger.id)"><button class="btn btn-danger"><i class="fa fa-trash"></i></button></a></td>
+  </tr>
+  </tbody>
+</table>

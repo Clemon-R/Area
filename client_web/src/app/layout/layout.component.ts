@@ -1,3 +1,4 @@
+/* tslint:disable:curly triple-equals */
 import { Component, OnInit } from '@angular/core';
 import {LayoutService} from './layout.service';
 import {Account} from '../models/account';
@@ -21,13 +22,12 @@ export class LayoutComponent implements OnInit {
     this.password = '';
     this.connected = false;
     this.account = JSON.parse(localStorage.getItem('account')) as Account;
-    if (this.account)
-      this.connected = true;
-    if (this.account == null && document.cookie) {
-      console.log('Token found: ' + document.cookie);
+    if (this.account || document.cookie) {
+      const token = this.account ? this.account.token : document.cookie;
+      console.log('Token found: ' + token);
       this.account = new Account();
-      this.account.token = document.cookie.split(';')[0].trim();
-      if (this.account.token && this.account.token !== 'null') {
+      this.account.token = token.split(';')[0].trim();
+      if (this.account.token && this.account.token != 'null') {
         console.log('Getting account...');
         this.layoutService.getAccount(this.account).then(
           (result: Account) => {
@@ -39,7 +39,6 @@ export class LayoutComponent implements OnInit {
               this.connected = true;
               localStorage.setItem('account', JSON.stringify(this.account));
               console.log('Account loaded');
-              console.log(this.account);
             }
           }
         );

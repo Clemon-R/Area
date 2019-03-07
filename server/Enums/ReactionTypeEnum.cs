@@ -8,7 +8,7 @@ namespace Area.Enums
 {
     public enum ReactionTypeEnum
     {
-        [DescriptionAttribut("Test2", TriggerCompatibilityEnum.ListSimpleAlbum)]
+        [DescriptionAttribut("Ajout l'album à votre playlist", TriggerCompatibilityEnum.ListSimpleAlbum, ServiceTypeEnum.Spotify)]
         AddToPlaylistSpotify = 0
     }
 }

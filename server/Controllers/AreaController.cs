@@ -1,5 +1,6 @@
 ﻿using Area.Services.App;
 using Area.ViewModels;
+using Area.ViewModels.Account;
 using Area.ViewModels.Area;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,6 +42,20 @@ namespace Area.Controllers
         {
             var account = _accountService.GetAccount(model);
             return _areaService.NewArea(account, model);
+        }
+
+        [HttpPost("triggers")]
+        public List<TriggerViewModel> GetTriggers([FromBody] ConnectedViewModel model)
+        {
+            var account = _accountService.GetAccount(model);
+            return _areaService.GetTriggers(account);
+        }
+
+        [HttpPost("delete/trigger/{id}")]
+        public IViewModel DeleteTrigger([FromBody] ConnectedViewModel model, int id)
+        {
+            var account = _accountService.GetAccount(model);
+            return _areaService.DeleteTrigger(account, id);
         }
     }
 }

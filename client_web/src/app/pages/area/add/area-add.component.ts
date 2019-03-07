@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+/* tslint:disable:curly triple-equals */
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AreaService} from '../area.service';
 import {Account} from '../../../models/account';
 import {Router} from '@angular/router';
@@ -8,6 +9,7 @@ import {TwitchService} from '../../twitch/twitch.service';
 import {YammerService} from '../../yammer/yammer.service';
 import {ActionReactionViewModel} from '../../../viewModels/area/ActionReactionViewModel';
 import {Action} from 'rxjs/internal/scheduler/Action';
+import {LayoutComponent} from '../../../layout/layout.component';
 
 @Component({
   selector: 'app-spotify-add',
@@ -16,9 +18,10 @@ import {Action} from 'rxjs/internal/scheduler/Action';
 })
 export class AreaAddComponent implements OnInit {
   account: Account;
-  spotifyConnected: boolean;
-  twitchConnected: boolean;
-  yammerConnected: boolean;
+  services: any[];
+  serviceTargeted: boolean[];
+  serviceConnected: boolean[];
+  submitPossible: boolean;
 
   reactionConnected: boolean;
 
@@ -26,8 +29,10 @@ export class AreaAddComponent implements OnInit {
   reactions: ActionReactionViewModel[];
   validReactions: ActionReactionViewModel[];
 
-  actionId: number;
-  reactionId: number;
+  action: ActionReactionViewModel;
+  reaction: ActionReactionViewModel;
+
+  success: boolean;
 
   constructor(
     private areaService: AreaService,
@@ -35,11 +40,22 @@ export class AreaAddComponent implements OnInit {
     private twitchService: TwitchService,
     private yammerService: YammerService,
     private router: Router) {
-    this.spotifyConnected = false;
-    this.twitchConnected = false;
-    this.yammerConnected = false;
+    this.serviceConnected = [false, false, false];
     this.reactionConnected = false;
     this.validReactions = [];
+    this.serviceTargeted = [false, false, false];
+    this.action = null;
+    this.reaction = null;
+    this.submitPossible = false;
+    this.success = false;
+    this.account = JSON.parse(localStorage.getItem('account')) as Account;
+    if (this.account == null) {
+      this.router.navigate(['/disconnected']);
+      return;
+    }
+    this.services = [this.spotifyService, this.twitchService, this.yammerService];
+    for (let i = 0; i < this.services.length; i++)
+      this.refreshTokenAvailable(i);
     this.areaService.getActions().then(
       (result: ActionReactionViewModel[]) => {
         this.actions = result;
@@ -55,30 +71,19 @@ export class AreaAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.account = JSON.parse(localStorage.getItem('account')) as Account;
-    if (this.account == null) {
-      this.router.navigate(['/disconnected']);
-      return;
-    }
-    this.spotifyService.isTokenAvailable(this.account).then(
+  }
+
+  private refreshTokenAvailable(id: number) {
+    console.log('Refresh check token for service: ' + id);
+    this.services[id].isTokenAvailable(this.account).then(
       (result: ResultViewModel) => {
-        this.spotifyConnected = result.success;
-      }
-    );
-    this.twitchService.isTokenAvailable(this.account).then(
-      (result: ResultViewModel) => {
-        this.twitchConnected = result.success;
-      }
-    );
-    this.yammerService.isTokenAvailable(this.account).then(
-      (result: ResultViewModel) => {
-        this.yammerConnected = result.success;
+        this.serviceConnected[id] = result.success;
       }
     );
   }
 
   public ActionChanged(id: number) {
-    console.log('Nouvelle action: ' + id);
+    console.log('New action: ' + id);
     let tmp: ActionReactionViewModel = null;
     for (const action of this.actions) {
       if (action.id == id) {
@@ -95,16 +100,24 @@ export class AreaAddComponent implements OnInit {
         result.push(reaction);
       }
     }
+    console.log('Reaction availables:');
     console.log(result);
     this.validReactions = result;
     this.reactionConnected = result.length != 0;
-    this.actionId = tmp.id;
-    if (this.validReactions)
-      this.ReactionChanged(this.validReactions[0].id);
+    if (this.action != null && (this.reaction == null || this.reaction.service != this.action.service))
+      this.serviceTargeted[this.action.service] = false;
+    this.action = tmp;
+    this.serviceTargeted[this.action.service] = true;
+    this.submitPossible = false;
+    if (this.validReactions.length > 0) {
+      console.log('Refresh first reaction...');
+      this.reactionChanged(this.validReactions[0].id);
+    } else if (this.reaction != null)
+      this.serviceTargeted[this.reaction.service] = false;
   }
 
-  public ReactionChanged(id: number) {
-    console.log('Nouvelle reaction: ' + id);
+  public reactionChanged(id: number) {
+    console.log('New reaction: ' + id);
     let tmp: ActionReactionViewModel = null;
     for (const reaction of this.reactions) {
       if (reaction.id == id) {
@@ -115,48 +128,37 @@ export class AreaAddComponent implements OnInit {
     if (tmp === null)
       return;
     console.log('Reaction: ' + tmp.description);
-    this.reactionId = tmp.id;
+    if (this.reaction != null && this.reaction.service != this.action.service)
+      this.serviceTargeted[this.reaction.service] = false;
+    this.reaction = tmp;
+    this.serviceTargeted[this.reaction.service] = true;
+    this.submitPossible = this.serviceConnected[this.action.service] && this.serviceConnected[this.reaction.service];
   }
 
-  public Save() {
-    console.log('Saving new area...');
-    this.areaService.newArea(this.account, this.actionId, this.reactionId).then(
+  public save() {
+    console.log('Saving new AREA...');
+    this.areaService.newArea(this.account, this.action.id, this.reaction.id).then(
       (result: ResultViewModel) => {
+        this.success = result.success;
         if (result.success)
-          console.log('Saved');
-      }
-    );
-  }
-  public DeleteSotifyToken() {
-    console.log('Deleting Spotify token...');
-    this.spotifyService.deleteToken(this.account).then(
-      (result: ResultViewModel) => {
-        if (result.success) {
-          this.spotifyConnected = false;
-          console.log('Deleted');
+          console.log('AREA has been saved');
+        else {
+          console.log('Not saved');
+          alert(result.error);
         }
       }
     );
   }
-  public DeleteTwitchToken() {
-    console.log('Deleting Twitch token...');
-    this.twitchService.deleteToken(this.account).then(
+  public deleteToken(id: number) {
+    console.log('Deleting token...');
+    this.services[id].deleteToken(this.account).then(
       (result: ResultViewModel) => {
         if (result.success) {
-          this.twitchConnected = false;
+          this.serviceConnected[id] = false;
           console.log('Deleted');
-        }
-      }
-    );
-  }
-  public DeleteYammerToken() {
-    console.log('Deleting Yammer token...');
-    this.yammerService.deleteToken(this.account).then(
-      (result: ResultViewModel) => {
-        if (result.success) {
-          this.yammerConnected = false;
-          console.log('Deleted');
-        }
+        } else
+          console.log('Not deleted');
+        this.refreshTokenAvailable(id);
       }
     );
   }

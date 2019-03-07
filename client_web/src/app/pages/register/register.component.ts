@@ -17,9 +17,7 @@ export class RegisterComponent implements OnInit {
   success: boolean;
   message: string;
 
-  constructor(private registerService: RegisterService) { }
-
-  ngOnInit() {
+  constructor(private registerService: RegisterService) {
     this.username = '';
     this.password = '';
     this.passwordConfirm = '';
@@ -27,6 +25,9 @@ export class RegisterComponent implements OnInit {
     this.error = false;
     this.success = false;
     this.message = '';
+  }
+
+  ngOnInit() {
   }
 
   public register() {

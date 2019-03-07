@@ -30,13 +30,7 @@ namespace Area.Services.App
             {
                 ActionTypeEnum type = (ActionTypeEnum)i;
                 var description = type.GetAttributeOfType<DescriptionAttribut>();
-                var tmp = new ActionReactionViewModel()
-                {
-                    Id = (int)type,
-                    Compatibility = description.Compatibility,
-                    Description = description.Description
-                };
-                result.Add(tmp);
+                result.Add(ViewModelFiller.FillActionReaction(i, description));
             }
             return result;
         }
@@ -48,15 +42,37 @@ namespace Area.Services.App
             {
                 var type = (ReactionTypeEnum)i;
                 var description = type.GetAttributeOfType<DescriptionAttribut>();
-                var tmp = new ActionReactionViewModel()
+                result.Add(ViewModelFiller.FillActionReaction(i, description));
+            }
+            return result;
+        }
+
+        public List<TriggerViewModel> GetTriggers(Account owner)
+        {
+            var result = new List<TriggerViewModel>();
+            foreach (var trigger in owner.Triggers)
+            {
+                var tmp = new TriggerViewModel()
                 {
-                    Id = (int)type,
-                    Compatibility = description.Compatibility,
-                    Description = description.Description
+                    Id = trigger.Id,
+                    ActionId = trigger.ActionType,
+                    ReactionId = trigger.ReactionType
                 };
                 result.Add(tmp);
             }
             return result;
+        }
+
+        public IViewModel DeleteTrigger(Account owner, int id)
+        {
+            var trigger = owner.Triggers.FirstOrDefault(t => t.Id == id);
+            if (trigger == null)
+                return new ErrorViewModel() { Error="AREA non trouvé"};
+            owner.Triggers.Remove(trigger);
+            _context.Remove(trigger);
+            _context.Update(owner);
+            _context.SaveChanges();
+            return new SuccessViewModel();
         }
 
         public IViewModel NewArea(Account account, NewAreaViewModel model)

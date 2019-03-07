@@ -1,18 +1,18 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Area - Nouvelle AREA</h1>
 <div class="border border-light rounded">
-  <div class="alert alert-success" role="alert" *ngIf="spotifyConnected">
-    Vous êtes déjà connecté à votre compte Spotify <button class="btn btn-danger" (click)="DeleteSotifyToken()">Déconnecté</button>
+  <div class="alert alert-success" role="alert" *ngIf="serviceConnected[0] && serviceTargeted[0]">
+    Vous êtes déjà connecté à votre compte Spotify <button class="btn btn-danger" (click)="deleteToken(0)">Déconnecté</button>
   </div>
-  <a *ngIf="!spotifyConnected" href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/callback&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20playlist-read-collaborative%20user-follow-read%20user-follow-modify"><button class="btn btn-success">Ce connecter à Spotify</button><br/></a>
-  <div class="alert alert-success twitch" role="alert" *ngIf="twitchConnected">
-    Vous êtes déjà connecté à votre compte Twitch <button class="btn btn-danger" (click)="DeleteTwitchToken()">Déconnecté</button>
+  <a *ngIf="!serviceConnected[0] && serviceTargeted[0]" href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/callback&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20playlist-read-collaborative%20user-follow-read%20user-follow-modify"><button class="btn btn-success">Ce connecter à Spotify</button><br/></a>
+  <div class="alert alert-success twitch" role="alert" *ngIf="serviceConnected[1] && serviceTargeted[1]">
+    Vous êtes déjà connecté à votre compte Twitch <button class="btn btn-danger" (click)="deleteToken(1)">Déconnecté</button>
   </div>
-  <a *ngIf="!twitchConnected" href="https://id.twitch.tv/oauth2/authorize?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n&redirect_uri=http://127.0.0.1:8081/twitch/callback&response_type=code&scope="><button class="btn btn-success twitch">Ce connecter à Twitch</button><br/></a>
-  <div class="alert alert-primary" role="alert" *ngIf="yammerConnected">
-    Vous êtes déjà connecté à votre compte Yammer <button class="btn btn-danger" (click)="DeleteYammerToken()">Déconnecté</button>
+  <a *ngIf="!serviceConnected[1] && serviceTargeted[1]" href="https://id.twitch.tv/oauth2/authorize?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n&redirect_uri=http://127.0.0.1:8081/twitch/callback&response_type=code&scope="><button class="btn btn-success twitch">Ce connecter à Twitch</button><br/></a>
+  <div class="alert alert-primary" role="alert" *ngIf="serviceConnected[2] && serviceTargeted[2]">
+    Vous êtes déjà connecté à votre compte Yammer <button class="btn btn-danger" (click)="deleteToken(2)">Déconnecté</button>
   </div>
-  <a *ngIf="!yammerConnected" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Ce connecter à Yammer</button><br/></a>
+  <a *ngIf="!serviceConnected[2] && serviceTargeted[2]" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Ce connecter à Yammer</button><br/></a>
   <div>
     <div class="form-group">
       <label for="actions">Action</label>
@@ -22,16 +22,17 @@
     </div>
     <div class="form-group" *ngIf="reactionConnected">
       <label for="reactions">Reaction</label>
-      <select class="form-control" id="reactions" (change)="ReactionChanged($event.target.value)">
+      <select class="form-control" id="reactions" (change)="reactionChanged($event.target.value)">
           <option *ngFor="let reaction of validReactions" value="{{reaction.id}}">{{reaction.description}}</option>
       </select>
     </div>
-    <div class="form-group" *ngIf="reactionConnected">
+    <div class="form-group" [hidden]="true">
       <label for="comment">Paramètres :</label>
       <textarea class="form-control" rows="5" id="comment"></textarea>
     </div>
-    <button class="btn btn-primary" (click)="Save()" *ngIf="reactionConnected">
+    <button class="btn btn-primary" (click)="save()" *ngIf="submitPossible">
       Enregistré
     </button>
+    <span class="text-success" *ngIf="success">Votre AREA à bien été sauvegarder !</span>
   </div>
 </div>

@@ -1,3 +1,4 @@
+/* tslint:disable:curly */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -17,7 +18,10 @@ export class SpotifyService {
         return result;
       }, (error) => {
         console.log('SpotifyService(getToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
@@ -29,7 +33,10 @@ export class SpotifyService {
         return result;
       }, (error) => {
         console.log('SpotifyService(getToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
@@ -54,7 +61,10 @@ export class SpotifyService {
         return result;
       }, (error) => {
         console.log('SpotifyService(deleteToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }

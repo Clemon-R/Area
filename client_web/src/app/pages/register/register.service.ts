@@ -20,7 +20,10 @@ export class RegisterService {
       },
       (error) => {
         console.log('RegisterService(registerAccount): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }

@@ -17,7 +17,10 @@ export class YammerService {
         return result;
       }, (error) => {
         console.log('YammerService(getToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
@@ -29,7 +32,10 @@ export class YammerService {
         return result;
       }, (error) => {
         console.log('YammerService(getToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
@@ -54,7 +60,10 @@ export class YammerService {
         return result;
       }, (error) => {
         console.log('YammerService(deleteToken): Error ' + error);
-        return null;
+        const result = new ResultViewModel();
+        result.error = 'Une erreur sais produite';
+        result.success = false;
+        return result;
       }
     );
   }
