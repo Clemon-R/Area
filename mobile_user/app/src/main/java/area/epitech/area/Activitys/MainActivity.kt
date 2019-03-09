@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         FuelManager.instance.apply {
-            baseHeaders = mapOf("Content-Type" to "Application/json")
+            baseHeaders = mapOf("Content-Type" to "application/json")
         }
         val editUsername = findViewById<EditText>(R.id.editUsername);
         val editPassword = findViewById<EditText>(R.id.editPassword);
