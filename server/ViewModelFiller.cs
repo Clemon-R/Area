@@ -21,9 +21,21 @@ namespace Area
             return result;
         }
 
-        public static ActionReactionViewModel FillActionReaction(int id, DescriptionAttribut description)
+        public static ActionViewModel FillAction(int id, DescriptionActionAttribute description)
         {
-            var result = new ActionReactionViewModel()
+            var result = new ActionViewModel()
+            {
+                Id = id,
+                Compatibilitys = description.Compatibilitys,
+                Description = description.Description,
+                Service = description.Service
+            };
+            return result;
+        }
+
+        public static ReactionViewModel FillReaction(int id, DescriptionReactionAttribute description)
+        {
+            var result = new ReactionViewModel()
             {
                 Id = id,
                 Compatibility = description.Compatibility,

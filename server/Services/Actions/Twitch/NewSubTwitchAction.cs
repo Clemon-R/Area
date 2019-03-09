@@ -25,7 +25,7 @@ namespace Area.Services.Actions.Twitch
         public NewSubTwitchAction(IServiceProvider serviceProvider)
         {
             _twitchService = (TwitchService)serviceProvider.GetService(typeof(TwitchService));
-            Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
+            Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
         public void CheckAction(Account user)

@@ -23,7 +23,7 @@ namespace Area.Services.Reactions.Spotify
         public AddToPlaylistSpotifyReaction(IServiceProvider serviceProvider)
         {
             _spotifyService = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
-            Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
+            Type = Id.GetAttributeOfType<DescriptionReactionAttribute>().Compatibility;
         }
 
         public bool Execute(Account user, object result, string args)

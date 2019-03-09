@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Area.Enums;
+using Area.Helpers;
 using Area.Models;
 using Area.Services.App;
 using TwitchLib.Api;
@@ -18,13 +19,14 @@ namespace Area.Services.Actions.Twitch
 
         TwitchService _twitchService;
 
-        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
+        public TriggerCompatibilityEnum Type { get; private set; }
 
-        public ActionTypeEnum Id => throw new NotImplementedException();
+        public ActionTypeEnum Id => ActionTypeEnum.NewSmashClipTwitch; 
 
         public NewSmashClipTwitchAction(TwitchService twitchService)
         {
             _twitchService = twitchService;
+            Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
         public void CheckAction(Account user)

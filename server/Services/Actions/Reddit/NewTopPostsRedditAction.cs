@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Area.Enums;
+using Area.Helpers;
 using Area.Models;
 using Reddit;
 using Reddit.Controllers;
@@ -11,11 +12,14 @@ namespace Area.Services.Actions
 {
     public class NewTopPostsRedditAction : IAction
     {
-        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
+        public TriggerCompatibilityEnum Type { get; private set; }
 
-        public ActionTypeEnum Id => throw new NotImplementedException();
+        public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
 
-        //public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
+        public NewTopPostsRedditAction()
+        {
+            Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
+        }
 
         List<Post> _newTopPosts = new List<Post>();
 

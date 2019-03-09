@@ -9,6 +9,9 @@ namespace Area.Enums
     {
         Spotify = 0,
         Twitch = 1,
-        Yammer = 2
+        Yammer = 2,
+        Reddit = 3,
+        Steam = 4,
+        
     }
 }

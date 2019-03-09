@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Area.Enums;
+using Area.Helpers;
 using Area.Models;
 
 namespace Area.Services.Actions.Steam
 {
     public class NewObjectInInventorySteamAction : IAction
     {
-        public ActionTypeEnum Id => throw new NotImplementedException();
+        public TriggerCompatibilityEnum Type { get; private set; }
 
-        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
+        public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
+
+        public NewObjectInInventorySteamAction()
+        {
+            Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
+        }
 
         public void CheckAction(Account user)
         {

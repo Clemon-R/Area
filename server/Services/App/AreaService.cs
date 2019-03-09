@@ -23,26 +23,26 @@ namespace Area.Services.App
             _triggerFactory = triggerFactory;
         }
 
-        public List<ActionReactionViewModel> GetActions()
+        public List<ActionViewModel> GetActions()
         {
-            var result = new List<ActionReactionViewModel>();
+            var result = new List<ActionViewModel>();
             foreach (int i in Enum.GetValues(typeof(ActionTypeEnum)))
             {
                 ActionTypeEnum type = (ActionTypeEnum)i;
-                var description = type.GetAttributeOfType<DescriptionAttribut>();
-                result.Add(ViewModelFiller.FillActionReaction(i, description));
+                var description = type.GetAttributeOfType<DescriptionActionAttribute>();
+                result.Add(ViewModelFiller.FillAction(i, description));
             }
             return result;
         }
 
-        public List<ActionReactionViewModel> GetReactions()
+        public List<ReactionViewModel> GetReactions()
         {
-            var result = new List<ActionReactionViewModel>();
+            var result = new List<ReactionViewModel>();
             foreach (int i in Enum.GetValues(typeof(ReactionTypeEnum)))
             {
                 var type = (ReactionTypeEnum)i;
-                var description = type.GetAttributeOfType<DescriptionAttribut>();
-                result.Add(ViewModelFiller.FillActionReaction(i, description));
+                var description = type.GetAttributeOfType<DescriptionReactionAttribute>();
+                result.Add(ViewModelFiller.FillReaction(i, description));
             }
             return result;
         }
