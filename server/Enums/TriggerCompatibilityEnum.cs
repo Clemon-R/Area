@@ -10,6 +10,7 @@ namespace Area.Enums
         None = -1,
         ListSimpleAlbum = 0,
         ListPlaylistTrack = 1,
-        ListTwitchFollowers = 2
+        ListTwitchFollowers = 2,
+        String = 3
     }
 }
