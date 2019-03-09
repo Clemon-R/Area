@@ -22,14 +22,17 @@ class AccountService {
         Log.d("AccountService", "Sending connection request...")
         val json = Gson().toJson(model)
         Log.d("AccountService", "Model Json: $json")
-        Fuel.post("http://127.0.0.1:8080/api/acocunt/login")
+        Fuel.get("http://10.0.2.2:8080/api/area/actions").response{
+            _, response, result ->
+            Log.d(TAG, "test");
+        }
+        Fuel.post("http://10.0.2.2:8080/api/account/login")
             .body(json)
             .also { Log.d(TAG, it.cUrlString()) }
-            .header(mapOf("Content-Type" to "application/json; charset=UTF-8"))
-            .responseObject(LoginViewModel.Deserializer()){
+            .response{
                     _, response, result ->
                 Log.d(TAG, "Response found")
-                Log.d(TAG, response.responseMessage)
+                Log.d(TAG, "Error code ${response.statusCode}")
                 when (response.statusCode) {
                     200 -> {
                         Log.d(TAG, response.responseMessage)
