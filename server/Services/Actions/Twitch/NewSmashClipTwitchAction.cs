@@ -17,7 +17,10 @@ namespace Area.Services.Actions.Twitch
         List<Clip> _newClips = new List<Clip>();
 
         TwitchService _twitchService;
-        public TriggerTypeEnum Type => TriggerTypeEnum.ListTwitchFollowers;
+
+        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
+
+        public ActionTypeEnum Id => throw new NotImplementedException();
 
         public NewSmashClipTwitchAction(TwitchService twitchService)
         {

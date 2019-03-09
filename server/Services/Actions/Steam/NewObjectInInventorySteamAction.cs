@@ -9,7 +9,9 @@ namespace Area.Services.Actions.Steam
 {
     public class NewObjectInInventorySteamAction : IAction
     {
-        public TriggerTypeEnum Type => throw new NotImplementedException();
+        public ActionTypeEnum Id => throw new NotImplementedException();
+
+        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
 
         public void CheckAction(Account user)
         {

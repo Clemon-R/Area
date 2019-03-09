@@ -11,7 +11,9 @@ namespace Area.Services.Actions
 {
     public class NewTopPostsRedditAction : IAction
     {
-        public TriggerTypeEnum Type => throw new NotImplementedException();
+        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
+
+        public ActionTypeEnum Id => throw new NotImplementedException();
 
         //public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
 

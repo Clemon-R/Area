@@ -11,7 +11,10 @@ namespace Area.Services.Actions.Reddit
 {
     public class NewReplyToCommentRedditAction : IAction
     {
-        public TriggerTypeEnum Type => throw new NotImplementedException();
+
+        TriggerCompatibilityEnum IAction.Type => throw new NotImplementedException();
+
+        public ActionTypeEnum Id => throw new NotImplementedException();
 
         List<Comment> _newReplies = new List<Comment>();
 
