@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import {ActionReactionViewModel} from '../../viewModels/area/ActionReactionViewModel';
+import {ReactionViewModel} from '../../viewModels/area/ReactionViewModel';
 import {ResultViewModel} from '../../viewModels/ResultViewModel';
 import {NewAreaViewModel} from '../../viewModels/area/NewAreaViewModel';
 
 import { Account } from '../../models/account';
 import {Trigger} from '../../models/trigger';
+import {ActionViewModel} from '../../viewModels/area/ActionViewModel';
 
 @Injectable({ providedIn: 'root' })
 export class AreaService {
   constructor(private http: HttpClient) {}
 
-  public getActions(): Promise<ActionReactionViewModel[]> {
-    return this.http.get<ActionReactionViewModel[]>('/api/area/actions/').toPromise().then(
-      (result: ActionReactionViewModel[]) => {
+  public getActions(): Promise<ActionViewModel[]> {
+    return this.http.get<ActionViewModel[]>('/api/area/actions/').toPromise().then(
+      (result: ActionViewModel[]) => {
         return result;
       }, (error) => {
         console.log('AreaService(getActions): Error ' + error);
@@ -23,9 +24,9 @@ export class AreaService {
     );
   }
 
-  public getReactions(): Promise<ActionReactionViewModel[]> {
-    return this.http.get<ActionReactionViewModel[]>('/api/area/reactions/').toPromise().then(
-      (result: ActionReactionViewModel[]) => {
+  public getReactions(): Promise<ReactionViewModel[]> {
+    return this.http.get<ReactionViewModel[]>('/api/area/reactions/').toPromise().then(
+      (result: ReactionViewModel[]) => {
         return result;
       }, (error) => {
         console.log('AreaService(getReactions): Error ' + error);

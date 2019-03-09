@@ -4,8 +4,9 @@ import {AreaService} from '../area.service';
 import {Account} from '../../../models/account';
 import {Router} from '@angular/router';
 import {Trigger} from '../../../models/trigger';
-import {ActionReactionViewModel} from '../../../viewModels/area/ActionReactionViewModel';
+import {ReactionViewModel} from '../../../viewModels/area/ReactionViewModel';
 import {ResultViewModel} from '../../../viewModels/ResultViewModel';
+import {ActionViewModel} from '../../../viewModels/area/ActionViewModel';
 
 @Component({
   selector: 'app-spotify-all',
@@ -16,8 +17,8 @@ export class AreaAllComponent implements OnInit {
   account: Account;
   triggers: Trigger[];
 
-  actions: ActionReactionViewModel[];
-  reactions: ActionReactionViewModel[];
+  actions: ActionViewModel[];
+  reactions: ReactionViewModel[];
 
   constructor(
     private router: Router,

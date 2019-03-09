@@ -7,9 +7,10 @@ import {ResultViewModel} from '../../../viewModels/ResultViewModel';
 import {SpotifyService} from '../../spotify/spotify.service';
 import {TwitchService} from '../../twitch/twitch.service';
 import {YammerService} from '../../yammer/yammer.service';
-import {ActionReactionViewModel} from '../../../viewModels/area/ActionReactionViewModel';
+import {ReactionViewModel} from '../../../viewModels/area/ReactionViewModel';
 import {Action} from 'rxjs/internal/scheduler/Action';
 import {LayoutComponent} from '../../../layout/layout.component';
+import {ActionViewModel} from '../../../viewModels/area/ActionViewModel';
 
 @Component({
   selector: 'app-spotify-add',
@@ -25,12 +26,12 @@ export class AreaAddComponent implements OnInit {
 
   reactionConnected: boolean;
 
-  actions: ActionReactionViewModel[];
-  reactions: ActionReactionViewModel[];
-  validReactions: ActionReactionViewModel[];
+  actions: ActionViewModel[];
+  reactions: ReactionViewModel[];
+  validReactions: ReactionViewModel[];
 
-  action: ActionReactionViewModel;
-  reaction: ActionReactionViewModel;
+  action: ActionViewModel;
+  reaction: ReactionViewModel;
 
   success: boolean;
 
@@ -57,11 +58,11 @@ export class AreaAddComponent implements OnInit {
     for (let i = 0; i < this.services.length; i++)
       this.refreshTokenAvailable(i);
     this.areaService.getActions().then(
-      (result: ActionReactionViewModel[]) => {
+      (result: ActionViewModel[]) => {
         this.actions = result;
 
         this.areaService.getReactions().then(
-          (data: ActionReactionViewModel[]) => {
+          (data: ReactionViewModel[]) => {
             this.reactions = data;
             this.ActionChanged(this.actions[0].id);
           }
@@ -84,7 +85,7 @@ export class AreaAddComponent implements OnInit {
 
   public ActionChanged(id: number) {
     console.log('New action: ' + id);
-    let tmp: ActionReactionViewModel = null;
+    let tmp: ActionViewModel = null;
     for (const action of this.actions) {
       if (action.id == id) {
         tmp = action;
@@ -94,9 +95,9 @@ export class AreaAddComponent implements OnInit {
     if (tmp === null)
       return;
     console.log('Action: ' + tmp.description);
-    const result: ActionReactionViewModel[] = [];
+    const result: ReactionViewModel[] = [];
     for (const reaction of this.reactions) {
-      if (reaction.compatibility == -1 || reaction.compatibility == tmp.compatibility) {
+      if (reaction.compatibility == -1 || tmp.compatibilitys.includes(reaction.compatibility)) {
         result.push(reaction);
       }
     }
@@ -118,7 +119,7 @@ export class AreaAddComponent implements OnInit {
 
   public reactionChanged(id: number) {
     console.log('New reaction: ' + id);
-    let tmp: ActionReactionViewModel = null;
+    let tmp: ReactionViewModel = null;
     for (const reaction of this.reactions) {
       if (reaction.id == id) {
         tmp = reaction;
