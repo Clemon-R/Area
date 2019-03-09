@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Area.Services.App
 {
-    public class BackgroundJobService : IBackgroundJob, IService
+    public class BackgroundJobService : IService
     {
         private readonly ApplicationDbContext _context;
         private readonly TriggerFactory _triggerFactory;

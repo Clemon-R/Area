@@ -4,8 +4,6 @@ services:
         build: 
             context: ./server
         depends_on: 
-            - dotnet
-            - dotnet_asp
             - db
         links:
             - db
@@ -23,10 +21,6 @@ services:
             context: ./mobile_user
         volumes:
             - ".:/app/app/build/outputs/apk/release"
-    dotnet:
-        image: microsoft/dotnet:2.1.300-sdk
-    dotnet_asp:
-        image: microsoft/dotnet:2.1.0-aspnetcore-runtime
     db:
         image: "mcr.microsoft.com/mssql/server"
         environment:

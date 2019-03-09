@@ -13,5 +13,7 @@ RUN dotnet publish -c Release -o out
 FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
+COPY ./entry.sh .
 EXPOSE 80/tcp
-ENTRYPOINT ["dotnet", "Area.dll"]
+RUN chmod +x ./entry.sh
+ENTRYPOINT /bin/bash ./entry.sh

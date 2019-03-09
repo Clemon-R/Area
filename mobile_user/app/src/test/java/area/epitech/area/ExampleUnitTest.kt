@@ -1,4 +1,4 @@
-package com.example.rgoul.area
+package area.epitech.area
 
 import org.junit.Test
 

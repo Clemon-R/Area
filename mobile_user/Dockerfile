@@ -15,7 +15,7 @@ RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSIO
     "platforms;android-${ANDROID_VERSION}" \
     "platform-tools"
 WORKDIR /app
-COPY . /app
+COPY . .
 
 RUN ./gradlew tasks
 RUN ./gradlew build
