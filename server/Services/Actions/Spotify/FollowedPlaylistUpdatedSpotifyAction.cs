@@ -23,7 +23,7 @@ namespace Area.Services.Actions.Spotify
         public FollowedPlaylistUpdatedSpotifyAction(IServiceProvider serviceProvider)
         {
             _spotifyService = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
-            Type = Id.GetAttributeOfType<DescriptionAttribut>().Compatibility;
+            Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
         public void CheckAction(Account user)

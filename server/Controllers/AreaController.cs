@@ -26,13 +26,13 @@ namespace Area.Controllers
         }
 
         [HttpGet("actions")]
-        public List<ActionReactionViewModel> GetActions()
+        public List<ActionViewModel> GetActions()
         {
             return _areaService.GetActions();
         }
 
         [HttpGet("reactions")]
-        public List<ActionReactionViewModel> GetReactions()
+        public List<ReactionViewModel> GetReactions()
         {
             return _areaService.GetReactions();
         }

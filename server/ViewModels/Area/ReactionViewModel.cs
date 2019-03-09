@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Area.ViewModels.Area
 {
-    public class ActionReactionViewModel : SuccessViewModel
+    public class ReactionViewModel : SuccessViewModel
     {
         public string Description { get; set; }
         public TriggerCompatibilityEnum Compatibility { get; set; }
