@@ -12,7 +12,7 @@ namespace Area.Enums
         Yammer = 2,
         Reddit = 3,
         Steam = 4,
-        Area = 5,
-        Youtube = 6
+        Youtube = 5,
+        
     }
 }

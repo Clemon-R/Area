@@ -133,7 +133,7 @@ class AddFragment : Fragment() {
             if (this.selectedReaction == null || changed) {
                 var result: MutableList<ReactionViewModel> = mutableListOf()
                 for (reaction in this.reactions){
-                    if (reaction.service == this.selectedAction!!.service)
+                    if (this.selectedAction!!.compatibilitys.contains(reaction.compatibility))
                         result.add(reaction)
                 }
                 this.validReactions = result
