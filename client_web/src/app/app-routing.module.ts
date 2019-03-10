@@ -10,6 +10,7 @@ import {DisconnectedComponent} from './pages/disconnected/disconnected.component
 import {TwitchModule} from './pages/twitch/twitch.module';
 import {YammerModule} from './pages/yammer/yammer.module';
 import {AreaModule} from './pages/area/area.module';
+import {YoutubeModule} from './pages/youtube/youtube.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'twitch', loadChildren: () => TwitchModule},
   { path: 'yammer', loadChildren: () => YammerModule},
   { path: 'area', loadChildren: () => AreaModule},
+  { path: 'youtube', loadChildren: () => YoutubeModule},
   { path: 'register', component: RegisterComponent },
   { path: '**', component: Page404 }
 ];
