@@ -33,17 +33,19 @@ namespace Area.Services.App
             {
                 try
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                     var accounts = _context.Accounts.Include(t => t.Tokens).Include(t => t.Triggers).Where(t => t.Triggers.Count > 0);
                     foreach (var account in accounts)
                     {
+                        Console.WriteLine("Checking triggers for account " + account.UserName);
                         foreach (var trigger in account.Triggers)
                         {
+                            Console.WriteLine("Checking trigger...");
                             _triggerFactory.CreateTriggerTemplate(trigger);
                             trigger.Template.TryActivate(account, string.Empty);
-                            account.LastVerificationDate = DateTime.Now;
                             _context.Update(trigger);
                         }
+                        account.LastVerificationDate = DateTime.Now;
                     }
                     try {
                         _context.SaveChanges();

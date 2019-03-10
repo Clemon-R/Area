@@ -20,8 +20,8 @@ namespace Area.ActionDataConverter
         {
             switch (reaction)
             {
-                case TriggerCompatibilityEnum.ListPlaylistTrack:
-                    return ConvertToListPlaylistTracks(data, action, serviceProvider, user);
+                case TriggerCompatibilityEnum.ListSimpleTrack:
+                    return ConverToListSimpleTracks(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.RedditPosts:
                     return ConvertToRedditPosts(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.RedditComments:
@@ -33,13 +33,14 @@ namespace Area.ActionDataConverter
             }
         }
 
-        private object ConvertToListPlaylistTracks(object data, TriggerCompatibilityEnum action, IServiceProvider serviceProvider,Models.Account user)
+        private object ConverToListSimpleTracks(object data, TriggerCompatibilityEnum action, IServiceProvider serviceProvider,Models.Account user)
         {
+            Console.WriteLine("Convert to simple tracks list");
             switch (action)
             {
                 case TriggerCompatibilityEnum.ListSimpleAlbum:
                     return ListAlbumToListTracks(data, serviceProvider, user);
-                case TriggerCompatibilityEnum.ListSimpleTrack:
+                case TriggerCompatibilityEnum.ListPlaylistTrack:
                     return ListPlaylistTracksToListTracks(data, serviceProvider, user);
                 default:
                     return null;
@@ -187,11 +188,13 @@ namespace Area.ActionDataConverter
         {
             List<PlaylistTrack> playlistTracks = data as List<PlaylistTrack>;
             List<SimpleTrack> tracks = new List<SimpleTrack>();
-            SpotifyService service = serviceProvider as SpotifyService;
+            SpotifyService service = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
             SpotifyWebAPI api = service.GetSpotifyWebApi(service.GetSpotifyToken(user));
 
+            Console.WriteLine("Adding tracks from playlist");
             for (int i = 0; i < playlistTracks.Count; i++)
             {
+                Console.WriteLine("Adding track " + playlistTracks[i].Track.Name);
                 SimpleTrack track = new SimpleTrack();
 
                 track.Artists = playlistTracks[i].Track.Artists;
@@ -219,7 +222,7 @@ namespace Area.ActionDataConverter
         {
             List<SimpleAlbum> albums = data as List<SimpleAlbum>;
             List<SimpleTrack> tracks = new List<SimpleTrack>();
-            SpotifyService service = serviceProvider as SpotifyService;
+            SpotifyService service = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
             SpotifyWebAPI api = service.GetSpotifyWebApi(service.GetSpotifyToken(user));
 
             for (int i = 0; i < albums.Count; i++)

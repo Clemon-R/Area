@@ -166,24 +166,36 @@ namespace Area.Services.App
             return api.GetNewAlbumReleases("", 50);
         }
 
-        public Paging<SimplePlaylist> GetUserPlaylists(SpotifyWebAPI api)
+        public Paging<SimplePlaylist> GetUserPlaylists(SpotifyWebAPI api, Account user)
         {
-            return api.GetUserPlaylists("?", 50);
+            string id = (_spotifyWrapper.GetSpotifyProfile(GetSpotifyToken(user)) as SpotifyProfileModel).Id;
+
+            return api.GetUserPlaylists(id, 50);
         }
 
-        public Paging<PlaylistTrack> GetPlaylistTracks(SpotifyWebAPI api, string playlistId)
+        public Paging<PlaylistTrack> GetPlaylistTracks(SpotifyWebAPI api, string playlistId, Account user)
         {
-            return api.GetPlaylistTracks("?", playlistId);
+            string id = (_spotifyWrapper.GetSpotifyProfile(GetSpotifyToken(user)) as SpotifyProfileModel).Id;
+
+            return api.GetPlaylistTracks(id, playlistId);
         }
 
-        public void AddTracksToPlaylist(SpotifyWebAPI api, List<SimpleTrack> tracks, string playlistId)
+
+        public FullPlaylist CreatePlaylist(SpotifyWebAPI api, string name, Account user)
+        {
+            string id = (_spotifyWrapper.GetSpotifyProfile(GetSpotifyToken(user)) as SpotifyProfileModel).Id;
+            return api.CreatePlaylist(id, name);
+        }
+
+        public void AddTracksToPlaylist(SpotifyWebAPI api, List<SimpleTrack> tracks, string playlistId, Account user)
         {
             List<string> trackUris = new List<string>();
             for (int i = 0; i < tracks.Count; i++)
             {
                 trackUris.Add(tracks[i].Uri);
             }
-            api.AddPlaylistTracks("?", playlistId, trackUris);
+            string id = (_spotifyWrapper.GetSpotifyProfile(GetSpotifyToken(user)) as SpotifyProfileModel).Id;
+            api.AddPlaylistTracks(id, playlistId, trackUris);
         }
 
         public List<SimpleTrack> GetTracksFromAlbums(SpotifyWebAPI api, List<SimpleAlbum> albums)

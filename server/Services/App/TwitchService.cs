@@ -54,8 +54,7 @@ namespace Area.Services.App
         {
             TwitchAPI api = new TwitchAPI();
 
-            /*TwitchLib.Api.Core. 
-            api.Settings.Scopes = token.Scope.ToList();*/
+            api.Settings.Scopes.Add(TwitchLib.Api.Core.Enums.AuthScopes.Channel_Subscriptions);
             api.Settings.ClientId = "g2kkfu5px956qtxvzfvsi9jbqhip4n";
             api.Settings.AccessToken = token.Access_Token;
             return api;

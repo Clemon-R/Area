@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Area.Enums;
 using Area.Helpers;
 using Area.Models;
+using Area.Services.App;
 using Reddit;
 using Reddit.Controllers;
 
@@ -12,12 +13,15 @@ namespace Area.Services.Actions.Reddit
 {
     public class NewReplyToCommentRedditAction : IAction
     {
+        private readonly RedditService _redditService;
+
         public TriggerCompatibilityEnum Type { get; private set; }
 
         public ActionTypeEnum Id => ActionTypeEnum.NewReplyToCommentReddit;
 
-        public NewReplyToCommentRedditAction()
+        public NewReplyToCommentRedditAction(IServiceProvider serviceProvider)
         {
+            _redditService = (RedditService)serviceProvider.GetService(typeof(RedditService));
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
@@ -25,7 +29,7 @@ namespace Area.Services.Actions.Reddit
 
         public void CheckAction(Models.Account user)
         {
-            RedditAPI api = new RedditAPI("");
+            RedditAPI api = _redditService.GetApi(user);
 
             var comments = api.Account.Me.CommentHistory();
 

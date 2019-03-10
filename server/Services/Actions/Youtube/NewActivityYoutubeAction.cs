@@ -13,18 +13,21 @@ namespace Area.Services.Actions.Youtube
 {
     public class NewActivityYoutubeAction : IAction
     {
-        public TriggerCompatibilityEnum Type => throw new NotImplementedException();
+        private readonly App.YoutubeService _youtubeService;
+        public TriggerCompatibilityEnum Type => TriggerCompatibilityEnum.YoutubeActivity;
         List<Activity> _newActivites = new List<Activity>();
 
-        public ActionTypeEnum Id => throw new NotImplementedException();
+        public ActionTypeEnum Id => ActionTypeEnum.NewYoutubeActivity;
+
+        public NewActivityYoutubeAction(IServiceProvider serviceProvider)
+        {
+            _youtubeService = (App.YoutubeService)serviceProvider.GetService(typeof(App.YoutubeService));
+        }
 
         public void CheckAction(Account user)
         {
-            var api = new YouTubeService(new BaseClientService.Initializer()
-            {
-                ApplicationName = "Area",
-                ApiKey = "devkey",
-            });
+            var api = _youtubeService.GetApi(user);
+
             var request = api.Activities.List("snippet");
             request.PublishedAfter = user.LastVerificationDate;
             var result = request.Execute();
