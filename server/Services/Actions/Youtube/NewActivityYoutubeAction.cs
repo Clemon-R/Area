@@ -7,12 +7,14 @@ using Area.Models;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using Google.Apis.YouTube.v3.Data;
 
 namespace Area.Services.Actions.Youtube
 {
     public class NewActivityYoutubeAction : IAction
     {
         public TriggerCompatibilityEnum Type => throw new NotImplementedException();
+        List<Activity> _newActivites = new List<Activity>();
 
         public ActionTypeEnum Id => throw new NotImplementedException();
 
@@ -23,17 +25,24 @@ namespace Area.Services.Actions.Youtube
                 ApplicationName = "Area",
                 ApiKey = "devkey",
             });
-            api.Activities.List("");
+            var request = api.Activities.List("snippet");
+            request.PublishedAfter = user.LastVerificationDate;
+            var result = request.Execute();
+
+            foreach(var searchRes in result.Items)
+            {
+                _newActivites.Add(searchRes);
+            }
         }
 
         public object GetResult()
         {
-            throw new NotImplementedException();
+            return _newActivites;
         }
 
         public bool IsTriggered()
         {
-            throw new NotImplementedException();
+            return _newActivites.Count > 0;
         }
     }
 }

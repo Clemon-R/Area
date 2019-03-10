@@ -1,6 +1,7 @@
 ﻿using Area.Enums;
 using Area.Models;
 using Area.Services.App;
+using Google.Apis.YouTube.v3.Data;
 using Reddit.Controllers;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
@@ -72,10 +73,22 @@ namespace Area.ActionDataConverter
                     return SteamNewsToString(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.SteamInventoryItem:
                     return SteamInventoryItemToString(data, action, serviceProvider, user);
+                case TriggerCompatibilityEnum.YoutubeActivity:
+                    return YoutubeActivityToString(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.None:
                 default:
                     return null;
             }
+        }
+
+        private object YoutubeActivityToString(object data, TriggerCompatibilityEnum action, IServiceProvider serviceProvider, Models.Account user)
+        {
+            List<Activity> activities = data as List<Activity>;
+            string msg = "There are new activites for some of your subscribed channels : ";
+
+            foreach (Activity activity in activities)
+                msg += Environment.NewLine + activity.Snippet.ChannelTitle;
+            return msg as object;
         }
 
         private object RedditCommentToString(object data, TriggerCompatibilityEnum action, IServiceProvider serviceProvider, Models.Account user)
