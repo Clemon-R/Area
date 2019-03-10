@@ -11,6 +11,7 @@ import {ReactionViewModel} from '../../../viewModels/area/ReactionViewModel';
 import {Action} from 'rxjs/internal/scheduler/Action';
 import {LayoutComponent} from '../../../layout/layout.component';
 import {ActionViewModel} from '../../../viewModels/area/ActionViewModel';
+import {YoutubeService} from '../../youtube/youtube.service';
 
 @Component({
   selector: 'app-spotify-add',
@@ -40,11 +41,12 @@ export class AreaAddComponent implements OnInit {
     private spotifyService: SpotifyService,
     private twitchService: TwitchService,
     private yammerService: YammerService,
+    private youtubeService: YoutubeService,
     private router: Router) {
-    this.serviceConnected = [false, false, false];
+    this.serviceConnected = [false, false, false, false, false, false];
     this.reactionConnected = false;
     this.validReactions = [];
-    this.serviceTargeted = [false, false, false];
+    this.serviceTargeted = [false, false, false, false, false, false];
     this.action = null;
     this.reaction = null;
     this.submitPossible = false;
@@ -54,7 +56,7 @@ export class AreaAddComponent implements OnInit {
       this.router.navigate(['/disconnected']);
       return;
     }
-    this.services = [this.spotifyService, this.twitchService, this.yammerService];
+    this.services = [this.spotifyService, this.twitchService, this.yammerService, null, null, this.youtubeService];
     for (let i = 0; i < this.services.length; i++)
       this.refreshTokenAvailable(i);
     this.areaService.getActions().then(
