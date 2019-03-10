@@ -11,10 +11,10 @@ namespace Area.Enums
         [DescriptionReactionAttribute("Ajout de tracks à une playlist spéciale", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleTrack)]
         AddToPlaylistSpotify = 0,
         [DescriptionReactionAttribute("Upvote le commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditComments)]
-        UpvoteCommentReddit,
+        UpvoteCommentReddit = 1,
         [DescriptionReactionAttribute("Upvote le post", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts)]
-        UpvotePostReddit,
-        [DescriptionReactionAttribute("Ecris un message sur le dashboard de l'utilisateur", ServiceTypeEnum.Area, TriggerCompatibilityEnum.String)]
-        AddDashboardMessage,
+        UpvotePostReddit = 2,
+        [DescriptionReactionAttribute("Ecris un message sur le dashboard de l'utilisateur", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.String)]
+        AddDashboardMessage = 3
     }
 }
