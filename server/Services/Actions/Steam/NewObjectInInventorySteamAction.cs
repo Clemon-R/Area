@@ -21,6 +21,9 @@ namespace Area.Services.Actions.Steam
 
         public void CheckAction(Account user)
         {
+            var api = new SteamWebAPI2.Interfaces.PlayerService("devkey");
+            //var iventoryApi = new SteamWebAPI2.Interfaces.I
+
             throw new NotImplementedException();
         }
 

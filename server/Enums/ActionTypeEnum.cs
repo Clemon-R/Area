@@ -12,15 +12,19 @@ namespace Area.Enums
         FollowedArtistNewReleaseSpotify = 0,
         [DescriptionActionAttribute("Mise à jour d'une playlist suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListPlaylistTrack)]
         FollowedPlaylistUpdatedSpotify = 1,
-        [DescriptionActionAttribute("Nouvelle abonnement", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.None)]
+        [DescriptionActionAttribute("Nouvel abonnement", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.None)]
         NewSubTwitch = 2,
-        [DescriptionActionAttribute("Nouvelle réponse à un commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None)]
+        [DescriptionActionAttribute("Nouveau clip smash sur Twitch", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None)]
         NewSmashClipTwitch = 3,
-        [DescriptionActionAttribute("Nouvelle réponse à un commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None)]
+        [DescriptionActionAttribute("Nouvelle réponse à un commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditComments)]
         NewReplyToCommentReddit = 4,
-        [DescriptionActionAttribute("Nouveau 'top post'", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None)]
+        [DescriptionActionAttribute("Nouveau 'top post' des subreddits suivis", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts)]
         NewTopPostsReddit = 5,
-        [DescriptionActionAttribute("Nouveau jeu", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
-        GameNewsSteam = 6
+        [DescriptionActionAttribute("News des jeux Steam achetés", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
+        GameNewsSteam = 6,
+        [DescriptionActionAttribute("Nouvel item dans l'inventaire Steam", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
+        NewInventoryItemSteam = 7,
+        [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity)]
+        NewYoutubeActivity = 7,
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Area.Enums;
 using Area.Helpers;
 using Area.Models;
+using Steam.Models;
 using SteamWebAPI2;
 using SteamWebAPI2.Models;
 
@@ -15,6 +16,7 @@ namespace Area.Services.Actions.Steam
         public TriggerCompatibilityEnum Type { get; private set; }
 
         public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
+        List<NewsItemModel> _news = new List<NewsItemModel>();
 
         public GameNewsSteamAction()
         {
@@ -38,7 +40,7 @@ namespace Area.Services.Actions.Steam
                 {
                     if (FromUnixTime(gameNews.ElementAt(j).Date) > user.LastVerificationDate)
                     {
-                        //gameNews.ElementAt(j).
+                        _news.Add(gameNews.ElementAt(j));
                     }
                 }
             }
@@ -46,12 +48,12 @@ namespace Area.Services.Actions.Steam
 
         public object GetResult()
         {
-            throw new NotImplementedException();
+            return _news;
         }
 
         public bool IsTriggered()
         {
-            throw new NotImplementedException();
+            return _news.Count > 0;
         }
 
         public DateTime FromUnixTime(ulong unixTime)
