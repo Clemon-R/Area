@@ -17,17 +17,21 @@
     Vous êtes déjà connecté à votre compte Youtube <button class="btn btn-danger" (click)="deleteToken(5)">Déconnecté</button>
   </div>
   <a *ngIf="!serviceConnected[5] && serviceTargeted[5]" href="https://accounts.google.com/o/oauth2/v2/auth?client_id=473291186491-5tiqjh1gb7uoiv717utbf8ibjgcvfbj0.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8081/youtube/callback&scope=https://www.googleapis.com/auth/youtube&response_type=code"><button class="btn btn-danger">Se connecter à Youtube</button><br/></a>
+  <div class="alert alert-danger" role="alert" *ngIf="serviceConnected[3] && serviceTargeted[3]">
+    Vous êtes déjà connecté à votre compte Reddit <button class="btn btn-danger" (click)="deleteToken(3)">Déconnecté</button>
+  </div>
+  <a *ngIf="!serviceConnected[3] && serviceTargeted[3]" href="https://www.reddit.com/api/v1/authorize?client_id=hfTIumnrQMLA_A&response_type=code&state=dzeydzduihzdzelkdzmskiez&redirect_uri=http://127.0.0.1:8081/reddit/callback&duration=permanent&scope=identity"><button class="btn btn-danger">Se connecter à Reddit</button><br/></a>
   <div>
     <div class="form-group">
       <label for="actions">Action</label>
       <select class="form-control" id="actions" (change)="ActionChanged($event.target.value)">
-        <option *ngFor="let action of actions" value="{{action.id}}">{{action.description}}</option>
+        <option *ngFor="let action of actions" value="{{action.id}}">{{getService(action.service)}} - {{action.description}}</option>
       </select>
     </div>
     <div class="form-group" *ngIf="reactionConnected">
       <label for="reactions">Reaction</label>
       <select class="form-control" id="reactions" (change)="reactionChanged($event.target.value)">
-          <option *ngFor="let reaction of validReactions" value="{{reaction.id}}">{{reaction.description}}</option>
+          <option *ngFor="let reaction of validReactions" value="{{reaction.id}}">{{getService(action.service)}} - {{reaction.description}}</option>
       </select>
     </div>
     <div class="form-group" [hidden]="true">

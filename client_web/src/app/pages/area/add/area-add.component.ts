@@ -12,6 +12,7 @@ import {Action} from 'rxjs/internal/scheduler/Action';
 import {LayoutComponent} from '../../../layout/layout.component';
 import {ActionViewModel} from '../../../viewModels/area/ActionViewModel';
 import {YoutubeService} from '../../youtube/youtube.service';
+import {RedditService} from '../../reddit/reddit.service';
 
 @Component({
   selector: 'app-spotify-add',
@@ -42,6 +43,7 @@ export class AreaAddComponent implements OnInit {
     private twitchService: TwitchService,
     private yammerService: YammerService,
     private youtubeService: YoutubeService,
+    private redditService: RedditService,
     private router: Router) {
     this.serviceConnected = [false, false, false, false, false, false];
     this.reactionConnected = false;
@@ -56,7 +58,7 @@ export class AreaAddComponent implements OnInit {
       this.router.navigate(['/disconnected']);
       return;
     }
-    this.services = [this.spotifyService, this.twitchService, this.yammerService, null, null, this.youtubeService];
+    this.services = [this.spotifyService, this.twitchService, this.yammerService, this.redditService, null, this.youtubeService];
     for (let i = 0; i < this.services.length; i++)
       this.refreshTokenAvailable(i);
     this.areaService.getActions().then(
@@ -168,5 +170,22 @@ export class AreaAddComponent implements OnInit {
         this.refreshTokenAvailable(id);
       }
     );
+  }
+  public getService(id: number): string{
+    switch (id) {
+      case 0:
+        return 'Spotify';
+      case 1:
+        return 'Twitch';
+      case 2:
+        return 'Yammer';
+      case 3:
+        return 'Reddit';
+      case 4:
+        return 'Steam';
+      case 5:
+        return 'Youtube';
+    }
+    return 'Inconnu';
   }
 }
