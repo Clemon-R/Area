@@ -1,5 +1,5 @@
 package area.epitech.area.ViewModels
 
-class ConnectedViewModel {
+open class ConnectedViewModel {
     public var Token = ""
 }

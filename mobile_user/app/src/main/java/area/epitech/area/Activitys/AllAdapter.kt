@@ -13,12 +13,12 @@ import area.epitech.area.R
 import area.epitech.area.Services.AreaService
 import area.epitech.area.ViewModels.Area.ActionViewModel
 import area.epitech.area.ViewModels.Area.ReactionViewModel
-import area.epitech.area.ViewModels.Area.TriggerViewModel
+import area.epitech.area.ViewModels.Area.TriggerResultViewModel
 import area.epitech.area.ViewModels.ResultViewModel
 import com.github.kittinunf.fuel.core.isSuccessful
 import com.github.kittinunf.fuel.core.response
 
-class AllAdapter(public var items : List<TriggerViewModel>, public var actions : List<ActionViewModel>, public var reactions : List<ReactionViewModel>, public var token: String, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AllAdapter(public var items : List<TriggerResultViewModel>, public var actions : List<ActionViewModel>, public var reactions : List<ReactionViewModel>, public var token: String, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
@@ -57,7 +57,7 @@ class AllAdapter(public var items : List<TriggerViewModel>, public var actions :
                 if (!response.isSuccessful || !result.get().success)
                     return@response
                 Log.d("AllAdapter", "Trigger "+ model.id + " as been deleted")
-                AreaService.instance.getTriggers(token).response(TriggerViewModel.ListDeserializer()) {
+                AreaService.instance.getTriggers(token).response(TriggerResultViewModel.ListDeserializer()) {
                         _, response, result ->
                     if (!response.isSuccessful)
                         return@response

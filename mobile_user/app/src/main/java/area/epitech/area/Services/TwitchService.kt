@@ -7,27 +7,20 @@ import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.extensions.cUrlString
 import com.google.gson.Gson
 
-class SpotifyService {
-    private val TAG = SpotifyService::class.java.simpleName
+class TwitchService {
+    private val TAG = TwitchService::class.java.simpleName
     companion object {
-        val instance: SpotifyService = SpotifyService()
+        val instance: TwitchService = TwitchService()
     }
 
-
-    fun connectLogin(code: String): Request {
-        Log.d(TAG, "Getting account request...")
-        return Fuel.get("/api/spotify/login/$code")
-            .also { Log.d(TAG, it.cUrlString()) }
-
-    }
 
     fun isAvailable(token: String): Request {
         val model = ConnectedViewModel()
         model.Token = token
-        Log.d(TAG, "Getting spotify available request...")
+        Log.d(TAG, "Getting twitch available request...")
         val json = Gson().toJson(model)
         Log.d(TAG, "Model Json: $json")
-        return Fuel.post("/api/spotify/available/")
+        return Fuel.post("/api/twitch/available/")
             .body(json)
             .also { Log.d(TAG, it.cUrlString()) }
 
