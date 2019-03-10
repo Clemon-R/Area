@@ -8,17 +8,17 @@ namespace Area.Enums
 {
     public enum ActionTypeEnum
     {
-        [DescriptionActionAttribute("Un nouvelle album d'un artiste suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleAlbum, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack })]
+        [DescriptionActionAttribute("Un nouvelle album d'un artiste suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleAlbum, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack )]
         FollowedArtistNewReleaseSpotify = 0,
-        [DescriptionActionAttribute("Mise à jour d'une playlist suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListPlaylistTrack, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack })]
+        [DescriptionActionAttribute("Mise à jour d'une playlist suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListPlaylistTrack, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack )]
         FollowedPlaylistUpdatedSpotify = 1,
-        [DescriptionActionAttribute("Nouvel abonnement", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.ListTwitchFollowers, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListTwitchFollowers })]
+        [DescriptionActionAttribute("Nouvel abonnement", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.ListTwitchFollowers, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListTwitchFollowers )]
         NewSubTwitch = 2,
-        [DescriptionActionAttribute("Nouveau clip smash sur Twitch", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String })]
+        [DescriptionActionAttribute("Nouveau clip smash sur Twitch", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None, TriggerCompatibilityEnum.String )]
         NewSmashClipTwitch = 3,
-        [DescriptionActionAttribute("Nouvelle réponse à un commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditComments, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.RedditComments })]
+        [DescriptionActionAttribute("Nouvelle réponse à un commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditComments, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.RedditComments )]
         NewReplyToCommentReddit = 4,
-        [DescriptionActionAttribute("Nouveau 'top post' des subreddits suivis", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.RedditPosts })]
+        [DescriptionActionAttribute("Nouveau 'top post' des subreddits suivis", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.RedditPosts )]
         NewTopPostsReddit = 5,
         [DescriptionActionAttribute("News des jeux Steam achetés", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
         GameNewsSteam = 6,
@@ -28,3 +28,6 @@ namespace Area.Enums
         NewYoutubeActivity = 8
     }
 }
+
+        NewInventoryItemSteam = 7,
+        [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity, TriggerCompatibilityEnum.String )]
