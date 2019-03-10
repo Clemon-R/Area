@@ -20,11 +20,11 @@ namespace Area.Enums
         NewReplyToCommentReddit = 4,
         [DescriptionActionAttribute("Nouveau 'top post' des subreddits suivis", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.RedditPosts })]
         NewTopPostsReddit = 5,
-        [DescriptionActionAttribute("News des jeux Steam achetés", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String })]
+        [DescriptionActionAttribute("News des jeux Steam achetés", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
         GameNewsSteam = 6,
-        [DescriptionActionAttribute("Nouvel item dans l'inventaire Steam", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String })]
+        [DescriptionActionAttribute("Nouvel item dans l'inventaire Steam", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
         NewInventoryItemSteam = 7,
         [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String })]
-        NewYoutubeActivity = 8,
+        NewYoutubeActivity = 8
     }
 }
