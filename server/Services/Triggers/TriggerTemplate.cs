@@ -15,12 +15,14 @@ namespace Area.Services.Triggers
     {
         private readonly IAction _action;
         private readonly IReaction _reaction;
+        private readonly IServiceProvider _serviceProvider;
 
         public TriggerTemplate(
             Type action,
             Type reaction,
             IServiceProvider serviceProvider)
         {
+            _serviceProvider = serviceProvider;
             _action = (IAction)Activator.CreateInstance(action, serviceProvider);
             _reaction = (IReaction)Activator.CreateInstance(reaction, serviceProvider);
         }
@@ -33,7 +35,9 @@ namespace Area.Services.Triggers
             if (_action.IsTriggered())
             {
                 Console.WriteLine($"{Id}({user.UserName}): Activate");
-                return _reaction.Execute(user, _action.GetResult(), args);
+                object data = new ActionDataConverter.ActionDataConverter().Convert(_action.Type, _reaction.Type, _action.GetResult(), _serviceProvider, user);
+                if (data != null)
+                    return _reaction.Execute(user, _action.GetResult(), args);
             }
             return false;
         }
