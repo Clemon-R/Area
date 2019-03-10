@@ -1,4 +1,4 @@
-package area.epitech.area.ViewModels
+package area.epitech.area.ViewModels.Account
 
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
