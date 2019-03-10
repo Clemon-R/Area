@@ -1,45 +1,44 @@
 using Area.Services.App;
 using Area.ViewModels;
 using Area.ViewModels.Account;
-using Area.ViewModels.Youtube;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Area.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class YoutubeController : ControllerBase
+    public class RedditController : ControllerBase
     {
-        private readonly YoutubeService _youtubeService;
+        private readonly RedditService _redditService;
         private readonly AccountService _accountService;
 
-        public YoutubeController(
+        public RedditController(
             AccountService accountService,
-            YoutubeService youtubeService)
+            RedditService redditService)
         {
-            _youtubeService = youtubeService;
+            _redditService = redditService;
             _accountService = accountService;
         }
 
-        [HttpPost("token")]
-        public IViewModel GenerateNewToken([FromBody] YoutubeTokenViewModel model)
+        [HttpPost("token/{code}")]
+        public IViewModel GenerateNewToken(string code, [FromBody] 	ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _youtubeService.GenerateToken(account, model.Code);
+            return _redditService.GenerateToken(account, code);
         }
 
         [HttpPost("available")]
         public IViewModel IsAvailable([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _youtubeService.IsTokenAvailable(account);
+            return _redditService.IsTokenAvailable(account);
         }
 
         [HttpPost("delete/token")]
         public IViewModel DeleteToken([FromBody] ConnectedViewModel model)
         {
             var account = _accountService.GetAccount(model);
-            return _youtubeService.DeleteToken(account, Enums.ServiceTypeEnum.Yammer);
+            return _redditService.DeleteToken(account, Enums.ServiceTypeEnum.Yammer);
         }
     }
 }

@@ -11,6 +11,7 @@ import {TwitchModule} from './pages/twitch/twitch.module';
 import {YammerModule} from './pages/yammer/yammer.module';
 import {AreaModule} from './pages/area/area.module';
 import {YoutubeModule} from './pages/youtube/youtube.module';
+import {RedditModule} from './pages/reddit/reddit.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'yammer', loadChildren: () => YammerModule},
   { path: 'area', loadChildren: () => AreaModule},
   { path: 'youtube', loadChildren: () => YoutubeModule},
+  { path: 'reddit', loadChildren: () => RedditModule},
   { path: 'register', component: RegisterComponent },
   { path: '**', component: Page404 }
 ];
