@@ -12,10 +12,9 @@ namespace Area.Services.Actions.Reddit
 {
     public class NewReplyToCommentRedditAction : IAction
     {
-
         public TriggerCompatibilityEnum Type { get; private set; }
 
-        public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
+        public ActionTypeEnum Id => ActionTypeEnum.NewReplyToCommentReddit;
 
         public NewReplyToCommentRedditAction()
         {

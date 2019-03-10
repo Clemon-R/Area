@@ -8,7 +8,13 @@ namespace Area.Enums
 {
     public enum ReactionTypeEnum
     {
-        [DescriptionReactionAttribute("Ajout l'album à votre playlist", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleAlbum)]
-        AddToPlaylistSpotify = 0
+        [DescriptionReactionAttribute("Ajout de tracks à une playlist spéciale", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleAlbum)]
+        AddToPlaylistSpotify = 0,
+        [DescriptionReactionAttribute("Upvote le commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditComments)]
+        UpvoteCommentReddit,
+        [DescriptionReactionAttribute("Upvote le post", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts)]
+        UpvotePostReddit,
+        [DescriptionReactionAttribute("Ecris un message sur le dashboard de l'utilisateur", ServiceTypeEnum.Area, TriggerCompatibilityEnum.String)]
+        AddDashboardMessage,
     }
 }

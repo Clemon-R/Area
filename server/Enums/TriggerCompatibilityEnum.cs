@@ -9,8 +9,14 @@ namespace Area.Enums
     {
         None = -1,
         ListSimpleAlbum = 0,
-        ListPlaylistTrack = 1,
-        ListTwitchFollowers = 2,
-        String = 3
+        ListSimpleTrack,
+        ListPlaylistTrack,
+        ListTwitchFollowers,
+        String,
+        RedditComments,
+        RedditPosts,
+        SteamNews,
+        SteamInventoryItem,
+        YoutubeActivity
     }
 }

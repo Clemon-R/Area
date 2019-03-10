@@ -14,7 +14,7 @@ namespace Area.Services.Actions
     {
         public TriggerCompatibilityEnum Type { get; private set; }
 
-        public ActionTypeEnum Id => ActionTypeEnum.FollowedArtistNewReleaseSpotify;
+        public ActionTypeEnum Id => ActionTypeEnum.NewTopPostsReddit;
 
         public NewTopPostsRedditAction()
         {
