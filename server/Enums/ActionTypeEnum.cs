@@ -28,6 +28,3 @@ namespace Area.Enums
         NewYoutubeActivity = 8
     }
 }
-
-        NewInventoryItemSteam = 7,
-        [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity, TriggerCompatibilityEnum.String )]
