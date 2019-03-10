@@ -25,6 +25,6 @@ namespace Area.Enums
         [DescriptionActionAttribute("Nouvel item dans l'inventaire Steam", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
         NewInventoryItemSteam = 7,
         [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity)]
-        NewYoutubeActivity = 7,
+        NewYoutubeActivity = 8
     }
 }
