@@ -14,7 +14,8 @@ namespace Area.Helpers
             Description = description;
             Compatibilitys = new TriggerCompatibilityEnum[] {must};
             Service = service;
-            comp.CopyTo(Compatibilitys, 1);
+            foreach (var compatibility in comp)
+                Compatibilitys.Append(compatibility);
         }
         public string Description { get; set; }
         public TriggerCompatibilityEnum[] Compatibilitys { get; set; }

@@ -13,6 +13,6 @@ namespace Area.Enums
         Reddit = 3,
         Steam = 4,
         Youtube = 5,
-        
+        Area = 6
     }
 }
