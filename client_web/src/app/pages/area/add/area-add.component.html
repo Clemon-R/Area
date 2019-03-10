@@ -4,15 +4,19 @@
   <div class="alert alert-success" role="alert" *ngIf="serviceConnected[0] && serviceTargeted[0]">
     Vous êtes déjà connecté à votre compte Spotify <button class="btn btn-danger" (click)="deleteToken(0)">Déconnecté</button>
   </div>
-  <a *ngIf="!serviceConnected[0] && serviceTargeted[0]" href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/callback&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20playlist-read-collaborative%20user-follow-read%20user-follow-modify"><button class="btn btn-success">Ce connecter à Spotify</button><br/></a>
+  <a *ngIf="!serviceConnected[0] && serviceTargeted[0]" href="https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/callback&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20playlist-read-collaborative%20user-follow-read%20user-follow-modify"><button class="btn btn-success">Se connecter à Spotify</button><br/></a>
   <div class="alert alert-success twitch" role="alert" *ngIf="serviceConnected[1] && serviceTargeted[1]">
     Vous êtes déjà connecté à votre compte Twitch <button class="btn btn-danger" (click)="deleteToken(1)">Déconnecté</button>
   </div>
-  <a *ngIf="!serviceConnected[1] && serviceTargeted[1]" href="https://id.twitch.tv/oauth2/authorize?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n&redirect_uri=http://127.0.0.1:8081/twitch/callback&response_type=code&scope="><button class="btn btn-success twitch">Ce connecter à Twitch</button><br/></a>
+  <a *ngIf="!serviceConnected[1] && serviceTargeted[1]" href="https://id.twitch.tv/oauth2/authorize?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n&redirect_uri=http://127.0.0.1:8081/twitch/callback&response_type=code&scope="><button class="btn btn-success twitch">Se connecter à Twitch</button><br/></a>
   <div class="alert alert-primary" role="alert" *ngIf="serviceConnected[2] && serviceTargeted[2]">
     Vous êtes déjà connecté à votre compte Yammer <button class="btn btn-danger" (click)="deleteToken(2)">Déconnecté</button>
   </div>
-  <a *ngIf="!serviceConnected[2] && serviceTargeted[2]" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Ce connecter à Yammer</button><br/></a>
+  <a *ngIf="!serviceConnected[2] && serviceTargeted[2]" href="https://www.yammer.com/oauth2/authorize?client_id=MXz2pxbqLHQtK7YWsMKxMg&response_type=code&redirect_uri=http://127.0.0.1:8081/yammer/callback"><button class="btn btn-primary">Se connecter à Yammer</button><br/></a>
+  <div class="alert alert-danger" role="alert" *ngIf="serviceConnected[5] && serviceTargeted[5]">
+    Vous êtes déjà connecté à votre compte Youtube <button class="btn btn-danger" (click)="deleteToken(5)">Déconnecté</button>
+  </div>
+  <a *ngIf="!serviceConnected[5] && serviceTargeted[5]" href="https://accounts.google.com/o/oauth2/v2/auth?client_id=473291186491-5tiqjh1gb7uoiv717utbf8ibjgcvfbj0.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8081/youtube/callback&scope=https://www.googleapis.com/auth/youtube&response_type=code"><button class="btn btn-danger">Se connecter à Youtube</button><br/></a>
   <div>
     <div class="form-group">
       <label for="actions">Action</label>
