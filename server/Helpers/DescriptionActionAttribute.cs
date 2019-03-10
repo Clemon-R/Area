@@ -12,10 +12,12 @@ namespace Area.Helpers
         public DescriptionActionAttribute(string description, ServiceTypeEnum service, TriggerCompatibilityEnum must, params TriggerCompatibilityEnum[] comp)
         {
             Description = description;
-            Compatibilitys = new TriggerCompatibilityEnum[] {must};
             Service = service;
+            var tmp = new List<TriggerCompatibilityEnum>();
+            tmp.Add(must);
             foreach (var compatibility in comp)
-                Compatibilitys.Append(compatibility);
+                tmp.Add(compatibility);
+            Compatibilitys = tmp.ToArray();
         }
         public string Description { get; set; }
         public TriggerCompatibilityEnum[] Compatibilitys { get; set; }

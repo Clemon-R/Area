@@ -78,11 +78,12 @@ export class AreaAddComponent implements OnInit {
 
   private refreshTokenAvailable(id: number) {
     console.log('Refresh check token for service: ' + id);
-    this.services[id].isTokenAvailable(this.account).then(
-      (result: ResultViewModel) => {
-        this.serviceConnected[id] = result.success;
-      }
-    );
+    if (this.services[id] != null)
+      this.services[id].isTokenAvailable(this.account).then(
+        (result: ResultViewModel) => {
+          this.serviceConnected[id] = result.success;
+        }
+      );
   }
 
   public ActionChanged(id: number) {
@@ -99,8 +100,11 @@ export class AreaAddComponent implements OnInit {
     console.log('Action: ' + tmp.description);
     const result: ReactionViewModel[] = [];
     for (const reaction of this.reactions) {
-      if (reaction.compatibility == -1 || tmp.compatibilitys.includes(reaction.compatibility)) {
-        result.push(reaction);
+      for (const id of tmp.compatibilitys) {
+        if (reaction.compatibility == -1 || id == reaction.compatibility) {
+          result.push(reaction);
+          break;
+        }
       }
     }
     console.log('Reaction availables:');

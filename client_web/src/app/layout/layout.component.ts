@@ -76,6 +76,7 @@ export class LayoutComponent implements OnInit {
         if (result) {
           document.cookie = result.token;
           console.log('Cookie content: ' + document.cookie);
+          localStorage.setItem('account', JSON.stringify(this.account));
           if (document.cookie) {
             this.connected = true;
           }
