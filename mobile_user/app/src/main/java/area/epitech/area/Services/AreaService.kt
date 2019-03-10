@@ -1,6 +1,7 @@
 package area.epitech.area.Services
 
 import android.util.Log
+import area.epitech.area.ViewModels.Area.TriggerViewModel
 import area.epitech.area.ViewModels.ConnectedViewModel
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Request
@@ -21,6 +22,20 @@ class AreaService {
         val json = Gson().toJson(model)
         Log.d(TAG, "Model Json: $json")
         return Fuel.post("/api/area/delete/trigger/" + id)
+            .body(json)
+            .also { Log.d(TAG, it.cUrlString()) }
+
+    }
+
+    fun NewTrigger(token: String, actionId: Int, reactionId: Int): Request {
+        val model = TriggerViewModel()
+        model.Token = token
+        model.ActionId = actionId
+        model.ReactionId = reactionId
+        Log.d(TAG, "Getting triggers request...")
+        val json = Gson().toJson(model)
+        Log.d(TAG, "Model Json: $json")
+        return Fuel.post("/api/area/new/")
             .body(json)
             .also { Log.d(TAG, it.cUrlString()) }
 
