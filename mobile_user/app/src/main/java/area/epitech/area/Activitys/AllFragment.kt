@@ -5,11 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.MainThread
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.LayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +15,9 @@ import area.epitech.area.R
 import area.epitech.area.Services.AreaService
 import area.epitech.area.ViewModels.Area.ActionViewModel
 import area.epitech.area.ViewModels.Area.ReactionViewModel
-import area.epitech.area.ViewModels.Area.TriggerViewModel
+import area.epitech.area.ViewModels.Area.TriggerResultViewModel
 import com.github.kittinunf.fuel.core.isSuccessful
 import com.github.kittinunf.fuel.core.response
-import kotlinx.android.synthetic.main.fragment_all.*
 
 class AllFragment : Fragment() {
     private val TAG = AllFragment::class.java.simpleName
@@ -47,7 +43,7 @@ class AllFragment : Fragment() {
                         _, response, reactions ->
                     if (!response.isSuccessful)
                         return@response
-                    AreaService.instance.getTriggers(token).response(TriggerViewModel.ListDeserializer()) {
+                    AreaService.instance.getTriggers(token).response(TriggerResultViewModel.ListDeserializer()) {
                             _, response, result ->
                         if (!response.isSuccessful)
                             return@response
