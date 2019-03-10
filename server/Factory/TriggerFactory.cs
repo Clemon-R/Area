@@ -1,7 +1,13 @@
 ﻿using Area.Enums;
 using Area.Factory;
 using Area.Models;
+using Area.Services.Actions;
+using Area.Services.Actions.Reddit;
 using Area.Services.Actions.Spotify;
+using Area.Services.Actions.Steam;
+using Area.Services.Actions.Twitch;
+using Area.Services.Reactions.Area;
+using Area.Services.Reactions.Reddit;
 using Area.Services.Reactions.Spotify;
 using Area.Services.Triggers;
 using System;
@@ -47,6 +53,19 @@ namespace Area.Factory
                     return typeof(FollowedArtistNewReleaseSpotifyAction);
                 case ActionTypeEnum.FollowedPlaylistUpdatedSpotify:
                     return typeof(FollowedPlaylistUpdatedSpotifyAction);
+                case ActionTypeEnum.NewTopPostsReddit:
+                    return typeof(NewTopPostsRedditAction);
+                case ActionTypeEnum.NewReplyToCommentReddit:
+                    return typeof(NewReplyToCommentRedditAction);
+                case ActionTypeEnum.NewSmashClipTwitch:
+                    return typeof(NewSmashClipTwitchAction);
+                case ActionTypeEnum.NewSubTwitch:
+                    return typeof(NewSubTwitchAction);
+                case ActionTypeEnum.GameNewsSteam:
+                    return typeof(GameNewsSteamAction);
+                case ActionTypeEnum.NewInventoryItemSteam:
+                    return typeof(NewObjectInInventorySteamAction);
+                case ActionTypeEnum.NewYoutubeActivity:
                 default:
                     return null;
             }
@@ -58,6 +77,12 @@ namespace Area.Factory
             {
                 case ReactionTypeEnum.AddToPlaylistSpotify:
                     return typeof(AddToPlaylistSpotifyReaction);
+                case ReactionTypeEnum.AddDashboardMessage:
+                    return typeof(AddDashboardMessageAreaReaction);
+                case ReactionTypeEnum.UpvoteCommentReddit:
+                    return typeof(UpvoteCommentRedditReaction);
+                case ReactionTypeEnum.UpvotePostReddit:
+                    return typeof(UpvotePostRedditReaction);
                 default:
                     return null;
             }
