@@ -1,7 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools" >
-<item android:id="@+id/action_onglet_1" android:icon="@drawable/ic_launcher_foreground" android:title="@string/onglet_1"/>
-<item android:id="@+id/action_onglet_2" android:icon="@drawable/ic_launcher_foreground" android:title="@string/onglet_2"/>
-<item android:id="@+id/action_onglet_3" android:icon="@drawable/ic_launcher_foreground" android:title="@string/onglet_3"/>
+    <item android:id="@+id/action_onglet_1" android:icon="@drawable/ic_launcher_foreground"
+          android:title="@string/onglet_1"/>
+    <item android:id="@+id/action_onglet_2" android:icon="@android:drawable/ic_dialog_dialer"
+          android:title="@string/onglet_2"/>
+    <item android:id="@+id/action_onglet_3" android:icon="@android:drawable/ic_menu_manage"
+          android:title="@string/onglet_3"/>
 </menu>

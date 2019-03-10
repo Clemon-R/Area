@@ -1,6 +1,6 @@
 package area.epitech.area.Activitys
 
-import android.support.v4.app.Fragment
+import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +8,15 @@ import android.view.ViewGroup
 import area.epitech.area.R
 
 /**
- * A placeholder fragment containing a simple view.
+ * A fragment representing a list of Items.
+ * Activities containing this fragment MUST implement the
+ * [AddFragment.OnListFragmentInteractionListener] interface.
  */
-class HomeActivityFragment : Fragment() {
-
+class AddFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_add, container, false)
     }
 }
