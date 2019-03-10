@@ -42,10 +42,13 @@ namespace Area.Services.App
                             _triggerFactory.CreateTriggerTemplate(trigger);
                             trigger.Template.TryActivate(account, string.Empty);
                             account.LastVerificationDate = DateTime.Now;
+                            _context.Update(trigger);
                         }
-                        _context.UpdateRange(account.Triggers);
                     }
-                    _context.SaveChanges();
+                    try {
+                        _context.SaveChanges();
+                    }catch (Exception){
+                    }
                 }catch (Exception e)
                 {
                     Console.WriteLine($"BackgroundJob: Stoping...\n{e.StackTrace}\n{e.Message}");

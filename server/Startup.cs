@@ -22,6 +22,14 @@ using Area.Services.Actions;
 using Area.Services.Reactions;
 using Area.Factory;
 using Area.Services.Triggers;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
+using Area.Controllers;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json.Serialization;
 
 namespace Area
 {
@@ -82,8 +90,10 @@ namespace Area
                 options.AddPolicy("AllowSpecificOrigin1",
                     builder => builder.AllowAnyOrigin());
             });
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddRouting();
+            services.AddHttpContextAccessor();
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,11 +110,22 @@ namespace Area
             }
 
             app.UseCors("AllowOrigin");
+
+            var rb = new RouteBuilder(app);
+            RequestDelegate factorialRequestHandler = c => {
+                c.Response.Headers.Add("Content-Type", "application/json");
+                return c.Response.WriteAsync(this.GetAboutContent(app));
+            };
+            rb.MapRoute(
+                template: "about.json",
+                handler: factorialRequestHandler
+            );
+            app.UseRouter(rb.Build());
             app.UseMvc();
             LaunchBackgroundJob(app);
         }
 
-        private static void UpdateDatabase(IApplicationBuilder app)
+        private void UpdateDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
@@ -117,7 +138,20 @@ namespace Area
             }
         }
 
-        private static void LaunchBackgroundJob(IApplicationBuilder app)
+        private string GetAboutContent(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                var service = serviceScope.ServiceProvider.GetService<AreaService>();
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                return JsonConvert.SerializeObject(service.About(), Formatting.Indented, settings);
+            }
+        }
+
+        private void LaunchBackgroundJob(IApplicationBuilder app)
         {
             var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>().CreateScope();
