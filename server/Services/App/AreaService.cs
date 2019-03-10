@@ -4,23 +4,30 @@ using Area.Helpers;
 using Area.Models;
 using Area.ViewModels;
 using Area.ViewModels.Area;
+using Area.ViewModels.Area.About;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Area.Services.App
 {
     public class AreaService : IService
     {
+        private readonly IHttpContextAccessor _accessor;
         private readonly ApplicationDbContext _context;
         private readonly TriggerFactory _triggerFactory;
 
-        public AreaService(ApplicationDbContext context,
+        public AreaService(
+            IHttpContextAccessor accessor,
+            ApplicationDbContext context,
             TriggerFactory triggerFactory)
         {
             _context = context;
             _triggerFactory = triggerFactory;
+            _accessor = accessor;
         }
 
         public List<ActionViewModel> GetActions()
@@ -96,6 +103,68 @@ namespace Area.Services.App
             _triggerFactory.CreateTriggerTemplate(trigger);
             Console.WriteLine("AreaService(NewArea): AREA created");
             return new SuccessViewModel();
+        }
+
+		internal AboutViewModel About()
+		{
+            var data = _accessor.HttpContext.Connection.RemoteIpAddress.ToString().Split(":");
+            var result = new AboutViewModel() {
+                Client = new AboutClientViewModel() {
+                    Host =  data[data.Length > 0 ? data.Length - 1 : 0]
+                },
+                Server = new AboutServerViewModel() {
+                    Current_time = ((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString(),
+                    Services = new List<AboutServiceViewModel>()
+                }
+            };
+            foreach (int i in Enum.GetValues(typeof(ServiceTypeEnum)))
+            {
+                var type = (ServiceTypeEnum)i;
+                var service = new AboutServiceViewModel(){
+                    Name = type.ToString(),
+                    Actions = this.GetActionForService(type),
+                    Reactions = this.GetReactionForService(type)
+                };
+                result.Server.Services.Add(service);
+            }
+			return result;
+		}
+
+        private List<AboutActionReactionViewModel> GetActionForService(ServiceTypeEnum id)
+        {
+            var result = new List<AboutActionReactionViewModel>();
+            foreach (int i in Enum.GetValues(typeof(ActionTypeEnum)))
+            {
+                var type = (ActionTypeEnum)i;
+                var description = type.GetAttributeOfType<DescriptionActionAttribute>();
+                if (id != description.Service)
+                    continue;
+                var action = new AboutActionReactionViewModel()
+                {
+                    Name = type.ToString(),
+                    Description = description.Description
+                };
+                result.Add(action);
+            }
+            return result;
+        }
+
+         private List<AboutActionReactionViewModel> GetReactionForService(ServiceTypeEnum id)
+        {
+            var result = new List<AboutActionReactionViewModel>();
+            foreach (ReactionTypeEnum type in Enum.GetValues(typeof(ReactionTypeEnum)))
+            {
+                var description = type.GetAttributeOfType<DescriptionReactionAttribute>();
+                if (id != description.Service)
+                    continue;
+                var action = new AboutActionReactionViewModel()
+                {
+                    Name = type.ToString(),
+                    Description = description.Description
+                };
+                result.Add(action);
+            }
+            return result;
         }
     }
 }
