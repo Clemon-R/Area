@@ -7,13 +7,16 @@ using Area.Models;
 using Area.Services.App;
 using Area.Enums;
 using Area.Helpers;
+using Area.Graphs.Spotify;
+using Area.Wrappers.Spotify.Models;
 
 namespace Area.Services.Actions.Spotify
 {
     public class FollowedPlaylistUpdatedSpotifyAction : IAction
     {
+        private readonly SpotifyWrapper _spotifyWrapper;
         private readonly SpotifyService _spotifyService;
-        private List<PlaylistTrack> _newTracks = new List<PlaylistTrack>();
+        private List<PlaylistTrack> _newTracks;
         
         public TriggerCompatibilityEnum Type { get; private set; }
 
@@ -22,6 +25,7 @@ namespace Area.Services.Actions.Spotify
 
         public FollowedPlaylistUpdatedSpotifyAction(IServiceProvider serviceProvider)
         {
+            _spotifyWrapper = (SpotifyWrapper)serviceProvider.GetService(typeof(SpotifyWrapper));
             _spotifyService = (SpotifyService)serviceProvider.GetService(typeof(SpotifyService));
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
@@ -29,13 +33,15 @@ namespace Area.Services.Actions.Spotify
         public void CheckAction(Account user)
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
-            string currentUserId = "?";
+            string currentUserId = (_spotifyWrapper.GetSpotifyProfile(_spotifyService.GetSpotifyToken(user)) as SpotifyProfileModel).Id;
             var lastCheck = user.LastVerificationDate;
-            List<PlaylistTrack> newTracks = new List<PlaylistTrack>();
-            Paging<SimplePlaylist> playlists = _spotifyService.GetUserPlaylists(api);
+            Paging<SimplePlaylist> playlists = _spotifyService.GetUserPlaylists(api, user);
+            if (playlists == null)
+                return;
+            _newTracks = new List<PlaylistTrack>();
             for (int i = 0; i < playlists.Items.Count; i++)
             {
-                Paging<PlaylistTrack> tracks = _spotifyService.GetPlaylistTracks(api, playlists.Items[i].Id);
+                Paging<PlaylistTrack> tracks = _spotifyService.GetPlaylistTracks(api, playlists.Items[i].Id, user);
 
                 for (int j = 0; j < tracks.Items.Count; j++)
                 {

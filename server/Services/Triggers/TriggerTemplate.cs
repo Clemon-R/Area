@@ -31,13 +31,16 @@ namespace Area.Services.Triggers
 
         public bool TryActivate(Account user, string args)
         {
+            Console.WriteLine("Checking action");
             _action.CheckAction( user);
             if (_action.IsTriggered())
             {
                 Console.WriteLine($"{Id}({user.UserName}): Activate");
                 object data = new ActionDataConverter.ActionDataConverter().Convert(_action.Type, _reaction.Type, _action.GetResult(), _serviceProvider, user);
                 if (data != null)
-                    return _reaction.Execute(user, _action.GetResult(), args);
+                    return _reaction.Execute(user, data, args);
+                else
+                    Console.WriteLine("Converted data is null !");
             }
             return false;
         }

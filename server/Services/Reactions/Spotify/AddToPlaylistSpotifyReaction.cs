@@ -17,7 +17,6 @@ namespace Area.Services.Reactions.Spotify
         private readonly SpotifyService _spotifyService;
 
         public TriggerCompatibilityEnum Type { get; private set; }
-
         public ReactionTypeEnum Id => ReactionTypeEnum.AddToPlaylistSpotify;
 
         public AddToPlaylistSpotifyReaction(IServiceProvider serviceProvider)
@@ -29,17 +28,29 @@ namespace Area.Services.Reactions.Spotify
         public bool Execute(Account user, object result, string args)
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
-            var tracks = _spotifyService.GetTracksFromAlbums(api, result as List<SimpleAlbum>);
-            var playlists = _spotifyService.GetUserPlaylists(api);
+            var tracks = result as List<SimpleTrack>;
+            var playlists = _spotifyService.GetUserPlaylists(api, user);
+
+            if (playlists == null || tracks == null)
+                return false;
             for (int i = 0; i < playlists.Items.Count; i++)
             {
                 if (playlists.Items[i].Name == "AreaPlaylist")
                 {
-                    _spotifyService.AddTracksToPlaylist(api, tracks, playlists.Items[i].Id);
+                    Console.WriteLine("AreaPlaylist already exists, adding new track to it");
+                    _spotifyService.AddTracksToPlaylist(api, tracks, playlists.Items[i].Id, user);
                     return true;
                 }
             }
-            return true;
+            FullPlaylist playlist = _spotifyService.CreatePlaylist(api, "AreaPlaylist", user);
+            if (playlist != null)
+            {
+                Console.WriteLine("AreayPlaylist created and tracks added");
+                _spotifyService.AddTracksToPlaylist(api, tracks, playlist.Id, user);
+                return true;
+            }
+            Console.WriteLine("AreaPlaylist not found even after creating it");
+            return false;
         }
     }
 }

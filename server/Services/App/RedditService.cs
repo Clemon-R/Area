@@ -4,6 +4,7 @@ using Area.Enums;
 using Area.Models;
 using Area.ViewModels;
 using Area.Wrappers.Models;
+using Reddit;
 using server.Wrappers.Reddit;
 using server.Wrappers.Reddit.Models;
 
@@ -22,11 +23,11 @@ namespace Area.Services.App
 
 		public override IViewModel GenerateToken(Account owner, string code)
 		{
-            Console.WriteLine($"YoutubeService(GenerateToken): The user code is {code}");
+            Console.WriteLine($"RedditService(GenerateToken): The user code is {code}");
             var result = _redditWrapper.GenerateRedditToken(code);
             if (!result.Success)
             {
-                Console.WriteLine("YoutubeService(GenerateToken): Failed to get token");
+                Console.WriteLine("RedditService(GenerateToken): Failed to get token");
                 return new ErrorViewModel() { Error = (result as RequestFailedModel).Error };
             }
             _context.Tokens.RemoveRange(owner.Tokens.Where(t => t.Type == Enums.ServiceTypeEnum.Reddit));
@@ -42,8 +43,15 @@ namespace Area.Services.App
             owner.Tokens.Add(token);
             _context.Update(owner);
             _context.SaveChanges();
-            Console.WriteLine("YoutubeService(GenerateToken): Token successfully saved");
+            Console.WriteLine("RedditService(GenerateToken): Token successfully saved");
             return new SuccessViewModel();
 		}
+
+        public RedditAPI GetApi(Account user)
+        {
+            RedditAPI api = new RedditAPI("appId", "refreshToken", "appSecret", "accessToken");
+
+            return api;
+        }
 	}
 }

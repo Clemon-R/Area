@@ -6,6 +6,7 @@ using Area.ViewModels;
 using Area.Wrappers.Models;
 using Area.Wrappers.Youtube;
 using Area.Wrappers.Youtube.Models;
+using Google.Apis.Services;
 
 namespace Area.Services.App
 {
@@ -14,14 +15,14 @@ namespace Area.Services.App
         private readonly YoutubeWrapper _youtubeWrapper;
         private readonly ApplicationDbContext _context;
 
-		public YoutubeService(ApplicationDbContext context, YoutubeWrapper youtubeWrapper) : base(context, ServiceTypeEnum.Youtube)
-		{
+        public YoutubeService(ApplicationDbContext context, YoutubeWrapper youtubeWrapper) : base(context, ServiceTypeEnum.Youtube)
+        {
             _youtubeWrapper = youtubeWrapper;
             _context = context;
-		}
+        }
 
-		public override IViewModel GenerateToken(Account owner, string code)
-		{
+        public override IViewModel GenerateToken(Account owner, string code)
+        {
             Console.WriteLine($"YoutubeService(GenerateToken): The user code is {code}");
             var result = _youtubeWrapper.GenerateYoutubeToken(code);
             if (!result.Success)
@@ -44,6 +45,17 @@ namespace Area.Services.App
             _context.SaveChanges();
             Console.WriteLine("YoutubeService(GenerateToken): Token successfully saved");
             return new SuccessViewModel();
-		}
-	}
+        }
+
+        public Google.Apis.YouTube.v3.YouTubeService GetApi(Account user)
+        {
+            var api = new Google.Apis.YouTube.v3.YouTubeService(new BaseClientService.Initializer()
+            {
+                ApplicationName = "Area",
+                ApiKey = "devkey",
+            });
+
+            return api;
+        }
+    }
 }
