@@ -4,7 +4,7 @@ import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import java.io.Reader
 
-class ResultViewModel {
+open class ResultViewModel {
     public val success: Boolean = false
     public val error: String = ""
 
