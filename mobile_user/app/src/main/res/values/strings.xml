@@ -2,7 +2,10 @@
     <string name="app_name">Area</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="onglet_1">Test</string>
-    <string name="onglet_2">Test</string>
-    <string name="onglet_3">Test</string>
+    <string name="onglet_1">Accueil</string>
+    <string name="onglet_2">Mes services</string>
+    <string name="onglet_3">Nouvelle AREA</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -2,8 +2,10 @@ package area.epitech.area.Activitys
 
 import android.accounts.Account
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import area.epitech.area.R
 import area.epitech.area.Services.AccountService
+import area.epitech.area.Services.SpotifyService
 import area.epitech.area.ViewModels.Account.AccountViewModel
 import area.epitech.area.ViewModels.Account.LoginViewModel
 import area.epitech.area.ViewModels.ResultViewModel
@@ -51,15 +54,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val btnSpotify = findViewById<Button>(R.id.btnSpotify)
+        btnSpotify.setOnClickListener {
+            Log.d(TAG, "Connecting to account through spotify...")
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://accounts.spotify.com/authorize?client_id=a42c9625d0534a27911d6d708531b4b9&response_type=code&redirect_uri=http://127.0.0.1:8081/spotify/login")
+            )
+            startActivity(intent)
+        }
+
         Log.d(TAG, "Loading application cache...")
         this.prefs = this.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
+        loadAccount()
+        handleSpotifyRedirec()
+    }
+
+    private fun loadAccount()
+    {
+        val btnConnect = findViewById<Button>(R.id.btnConnect)
         val accountData = this.prefs!!.getString("Account", null)
+
         if (accountData != null) {
             Log.d(TAG, "Loading account...")
             val result: Request =  AccountService.instance.get(accountData)
             result.response(AccountViewModel.Deserializer()) {
                     _, response, result ->
-                Log.d(TAG, "Response received")
                 if (response.statusCode != 200) {
                     this.getAccount(response,  null)
                 } else {
@@ -68,7 +88,32 @@ class MainActivity : AppCompatActivity() {
             }
         } else
             btnConnect.visibility = View.VISIBLE
+    }
 
+    private fun handleSpotifyRedirec()
+    {
+        val appLinkIntent = intent
+
+        if (appLinkIntent.action != null && appLinkIntent.action.endsWith(".VIEW")) {
+            val code = appLinkIntent.data.getQueryParameter("code")
+            val params = appLinkIntent.data.toString().split('/')
+            if (code != null && params.size > 3) {
+                when (params[3]) {
+                    "spotify" -> {
+                        Log.d(TAG, "Loading account...")
+                        val result: Request =  SpotifyService.instance.connectLogin(code)
+                        result.response(AccountViewModel.Deserializer()) {
+                                _, response, result ->
+                            if (response.statusCode != 200) {
+                                this.connect(response,  null)
+                            } else {
+                                this.connect(response,  result.get())
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun getAccount(response: Response, result: AccountViewModel?)
@@ -77,8 +122,8 @@ class MainActivity : AppCompatActivity() {
             when (response.statusCode)
             {
                 200 -> {
-                    Log.d(TAG, "Request successfull")
                     if (result.success) {
+                        Log.d(TAG, "Request successfull")
                         goToHome(result!!.token)
                         return
                     }
@@ -143,6 +188,14 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             val intent = HomeActivity.newIntent(this, token)
             startActivity(intent)
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            val intent = Intent(context,
+                MainActivity::class.java)
+            return intent
         }
     }
 }
