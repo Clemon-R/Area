@@ -22,7 +22,7 @@
   </div>
   <a *ngIf="!serviceConnected[3] && serviceTargeted[3]" href="https://www.reddit.com/api/v1/authorize?client_id=hfTIumnrQMLA_A&response_type=code&state=dzeydzduihzdzelkdzmskiez&redirect_uri=http://127.0.0.1:8081/reddit/callback&duration=permanent&scope=identity"><button class="btn btn-danger">Se connecter à Reddit</button><br/></a>
   <div>
-    <div class="form-group">
+    <div class="form-group"> 
       <label for="actions">Action</label>
       <select class="form-control" id="actions" (change)="ActionChanged($event.target.value)">
         <option *ngFor="let action of actions" value="{{action.id}}">{{getService(action.service)}} - {{action.description}}</option>
