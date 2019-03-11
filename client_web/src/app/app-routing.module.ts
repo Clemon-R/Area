@@ -25,8 +25,7 @@ const routes: Routes = [
   { path: 'area', loadChildren: () => AreaModule},
   { path: 'youtube', loadChildren: () => YoutubeModule},
   { path: 'reddit', loadChildren: () => RedditModule},
-  { path: 'register', component: RegisterComponent },
-  { path: '**', component: Page404 }
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({

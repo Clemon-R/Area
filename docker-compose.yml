@@ -16,6 +16,8 @@ services:
             - "8081:4200"
         links:
             - server
+        volumes:
+            - ".:/src/assets"
     mobile_user:
         build:
             context: ./mobile_user
