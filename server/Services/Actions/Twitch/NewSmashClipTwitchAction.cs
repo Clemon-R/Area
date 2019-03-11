@@ -31,7 +31,7 @@ namespace Area.Services.Actions.Twitch
 
         public void CheckAction(Account user)
         {
-            TwitchAPI api = _twitchService.GetApi(null);
+            TwitchAPI api = _twitchService.GetApi(_twitchService.GetToken(user));
 
             var game = api.Helix.Games.GetGamesAsync(null, new List<string>() { "Super Smash Bros. Ultimate" }).GetAwaiter().GetResult();
             if (game.Games.Length > 0)

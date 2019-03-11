@@ -180,7 +180,6 @@ namespace Area.Services.App
             return api.GetPlaylistTracks(id, playlistId);
         }
 
-
         public FullPlaylist CreatePlaylist(SpotifyWebAPI api, string name, Account user)
         {
             string id = (_spotifyWrapper.GetSpotifyProfile(GetSpotifyToken(user)) as SpotifyProfileModel).Id;

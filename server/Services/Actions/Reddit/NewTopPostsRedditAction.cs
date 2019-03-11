@@ -29,7 +29,7 @@ namespace Area.Services.Actions
 
         public void CheckAction(Models.Account user)
         {
-            RedditAPI api = _redditService.GetApi(user);
+            RedditAPI api = _redditService.GetApi(_redditService.GetToken(user));
 
             var subreddits = api.Account.MySubscribedSubreddits();
 

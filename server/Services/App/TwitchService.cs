@@ -50,13 +50,19 @@ namespace Area.Services.App
             return new SuccessViewModel();
         }
 
-        public TwitchAPI GetApi(TwitchTokenModel token)
+        public Token GetToken(Account user)
+        {
+            return user.Tokens.Where(t => t.Type == ServiceTypeEnum.Twitch).FirstOrDefault();
+        }
+
+        public TwitchAPI GetApi(Token token)
         {
             TwitchAPI api = new TwitchAPI();
 
             api.Settings.Scopes.Add(TwitchLib.Api.Core.Enums.AuthScopes.Channel_Subscriptions);
             api.Settings.ClientId = "g2kkfu5px956qtxvzfvsi9jbqhip4n";
-            api.Settings.AccessToken = token.Access_Token;
+            api.Settings.AccessToken = token.AccessToken;
+            api.Settings.Secret = "a2w11c1wu4q8mb5wqjzf4q5njq41co";
             return api;
         }
     }

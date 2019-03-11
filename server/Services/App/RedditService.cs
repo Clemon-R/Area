@@ -47,9 +47,14 @@ namespace Area.Services.App
             return new SuccessViewModel();
 		}
 
-        public RedditAPI GetApi(Account user)
+        public Token GetToken(Account user)
         {
-            RedditAPI api = new RedditAPI("appId", "refreshToken", "appSecret", "accessToken");
+            return user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
+        }
+
+        public RedditAPI GetApi(Token token)
+        {
+            RedditAPI api = new RedditAPI("hfTIumnrQMLA_A", token.RefreshToken, "9wp2Hj1WzmAMSmS1srmgi99UdYM", token.AccessToken);
 
             return api;
         }
