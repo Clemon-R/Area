@@ -52,7 +52,7 @@ namespace Area.Services.App
             var api = new Google.Apis.YouTube.v3.YouTubeService(new BaseClientService.Initializer()
             {
                 ApplicationName = "Area",
-                ApiKey = "devkey",
+                ApiKey = "473291186491-5tiqjh1gb7uoiv717utbf8ibjgcvfbj0",
             });
 
             return api;

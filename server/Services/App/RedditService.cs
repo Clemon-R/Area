@@ -49,7 +49,17 @@ namespace Area.Services.App
 
         public Token GetToken(Account user)
         {
-            return user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
+            var tmp =  user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
+
+            return tmp;
+            if (tmp == null)
+                return null;
+            var result = _redditWrapper.RefreshRedditToken(tmp);
+            if (!result.Success)
+                return null;
+            var model = result as RedditTokenModel;
+            tmp.AccessToken = model.Access_Token;
+            return tmp;
         }
 
         public RedditAPI GetApi(Token token)
