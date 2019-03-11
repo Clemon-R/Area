@@ -44,14 +44,13 @@ namespace server.Wrappers.Reddit
             }
         }
 
-        /*public IRequestStateModel RefreshRedditToken(Token token)
+        public IRequestStateModel RefreshRedditToken(Token token)
         {
             var data = new Dictionary<string, string>();
             string authInfo = "hfTIumnrQMLA_A:9wp2Hj1WzmAMSmS1srmgi99UdYM";
             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-            data.Add("code", code);
-            data.Add("grant_type", "authorization_code");
-            data.Add("redirect_uri", "http://127.0.0.1:8081/reddit/callback");
+            data.Add("refresh_token", token.RefreshToken);
+            data.Add("grant_type", "refresh_token");
 
             using (var httpClient = new HttpClient())
             {
@@ -72,6 +71,6 @@ namespace server.Wrappers.Reddit
                     return JsonConvert.DeserializeObject<RedditTokenModel>(responseContent);
                 }
             }
-        }*/
+        }
     }
 }

@@ -49,6 +49,21 @@ namespace Area.Services.App
 
         public Token GetToken(Account user)
         {
+            return user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
+        }
+
+        public RedditAPI GetApi(Token token)
+        {
+            RedditAPI api = new RedditAPI("hfTIumnrQMLA_A", token.RefreshToken, "9wp2Hj1WzmAMSmS1srmgi99UdYM", token.AccessToken);
+
+            return api;
+        }
+	}
+}
+		}
+
+        public Token GetToken(Account user)
+        {
             var tmp =  user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
 
             return tmp;
@@ -60,13 +75,3 @@ namespace Area.Services.App
             var model = result as RedditTokenModel;
             tmp.AccessToken = model.Access_Token;
             return tmp;
-        }
-
-        public RedditAPI GetApi(Token token)
-        {
-            RedditAPI api = new RedditAPI("hfTIumnrQMLA_A", token.RefreshToken, "9wp2Hj1WzmAMSmS1srmgi99UdYM", token.AccessToken);
-
-            return api;
-        }
-	}
-}
