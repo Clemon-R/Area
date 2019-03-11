@@ -47,5 +47,10 @@ namespace Area.Services.App
             Console.WriteLine("YammerService(GenerateYammerToken): Token successfully saved");
             return new SuccessViewModel();
         }
+
+        public Token GetToken(Account user)
+        {
+            return user.Tokens.Where(t => t.Type == Enums.ServiceTypeEnum.Yammer).FirstOrDefault();
+        }
     }
 }

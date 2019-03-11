@@ -30,7 +30,7 @@ namespace Area.Services.Actions.Twitch
 
         public void CheckAction(Account user)
         {
-            TwitchAPI api = _twitchService.GetApi(null);
+            TwitchAPI api = _twitchService.GetApi(_twitchService.GetToken(user));
 
             GetUsersFollowsResponse userFollows = api.Helix.Users.GetUsersFollowsAsync("user_id").GetAwaiter().GetResult();
 
