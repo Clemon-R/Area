@@ -1,4 +1,5 @@
-﻿using Area.Wrappers.Models;
+﻿using Area.Models;
+using Area.Wrappers.Models;
 using Area.Wrappers.Twitch.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,6 +23,25 @@ namespace Area.Wrappers.Twitch
                 $"&code={code}" +
                 "&grant_type=authorization_code" +
                 $"&redirect_uri={url}", new StringContent(string.Empty)).Result;
+                var responseContent = response.Content.ReadAsStringAsync().Result;
+                if (responseContent.Contains("status"))
+                {
+                    var json = JObject.Parse(responseContent);
+                    return new RequestFailedModel() { Error = (string)json["message"] };
+                }
+                return JsonConvert.DeserializeObject<TwitchTokenModel>(responseContent);
+            }
+        }
+
+        public IRequestStateModel RefreshTwitchToken(Token token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var response = httpClient.PostAsync(@"https://id.twitch.tv/oauth2/token" +
+                "?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n" +
+                "&client_secret=a2w11c1wu4q8mb5wqjzf4q5njq41co" +
+                $"refresh_token={token.RefreshToken}" + 
+                "&grant_type=refresh_token", new StringContent(string.Empty)).Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
                 if (responseContent.Contains("status"))
                 {

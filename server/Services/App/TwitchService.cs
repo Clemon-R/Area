@@ -52,7 +52,15 @@ namespace Area.Services.App
 
         public Token GetToken(Account user)
         {
-            return user.Tokens.Where(t => t.Type == ServiceTypeEnum.Twitch).FirstOrDefault();
+            var tmp = user.Tokens.Where(t => t.Type == ServiceTypeEnum.Twitch).FirstOrDefault();
+            if (tmp == null)
+                return null;
+            var result = _twitchWrapper.RefreshTwitchToken(tmp);
+            if (!result.Success)
+                return null;
+            var model = result as TwitchTokenModel;
+            tmp.AccessToken = model.Access_Token;
+            return tmp;
         }
 
         public TwitchAPI GetApi(Token token)
