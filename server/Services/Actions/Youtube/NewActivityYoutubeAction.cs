@@ -24,12 +24,12 @@ namespace Area.Services.Actions.Youtube
             _youtubeService = (App.YoutubeService)serviceProvider.GetService(typeof(App.YoutubeService));
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             var api = _youtubeService.GetApi(user);
 
             var request = api.Activities.List("snippet");
-            request.PublishedAfter = user.LastVerificationDate;
+            request.PublishedAfter = lastCheck;
             var result = request.Execute();
 
             foreach(var searchRes in result.Items)
@@ -46,6 +46,13 @@ namespace Area.Services.Actions.Youtube
         public bool IsTriggered()
         {
             return _newActivites.Count > 0;
+        }
+
+        private DateTime _lastTriggerDate;
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

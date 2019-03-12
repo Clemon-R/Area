@@ -140,7 +140,7 @@ namespace Area.Services.App
                     }
                     trigger.Template = new TriggerTemplate(action, reaction, _serviceProvider);
                 }
-                trigger.Template.TryActivate(owner, null);
+                trigger.Template.TryActivate(owner, null, DateTime.Now);
             }
             return new SuccessViewModel();
         }

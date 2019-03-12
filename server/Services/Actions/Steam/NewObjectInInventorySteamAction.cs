@@ -19,12 +19,19 @@ namespace Area.Services.Actions.Steam
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             var api = new SteamWebAPI2.Interfaces.PlayerService("devkey");
             //var iventoryApi = new SteamWebAPI2.Interfaces.I
 
             throw new NotImplementedException();
+        }
+
+        private DateTime _lastTriggerDate;
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
 
         public object GetResult()

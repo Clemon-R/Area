@@ -13,6 +13,7 @@ namespace Area.Services.Actions.Youtube
 {
     public class NewReplyToCommentYoutubeAction : IAction
     {
+        private DateTime _lastTriggerDate;
         private readonly App.YoutubeService _youtubeService;
 
         public TriggerCompatibilityEnum Type => throw new NotImplementedException();
@@ -25,7 +26,7 @@ namespace Area.Services.Actions.Youtube
             _youtubeService = (App.YoutubeService)serviceProvider.GetService(typeof(App.YoutubeService));
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             var api = _youtubeService.GetApi(user);
 
@@ -41,6 +42,11 @@ namespace Area.Services.Actions.Youtube
         public bool IsTriggered()
         {
             return _newActivites.Count > 0;
+        }
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

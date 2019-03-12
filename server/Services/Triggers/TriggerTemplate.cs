@@ -16,6 +16,7 @@ namespace Area.Services.Triggers
         private readonly IAction _action;
         private readonly IReaction _reaction;
         private readonly IServiceProvider _serviceProvider;
+        private DateTime _triggerDate;
 
         public TriggerTemplate(
             Type action,
@@ -29,12 +30,14 @@ namespace Area.Services.Triggers
 
         public string Id => $"{_action.Id} and {_reaction.Id}";
 
-        public bool TryActivate(Account user, string args)
+        public bool TryActivate(Account user, string args, DateTime lastCheck)
         {
             Console.WriteLine("Checking action");
-            _action.CheckAction( user);
+            _triggerDate = lastCheck;
+            _action.CheckAction(user, lastCheck);
             if (_action.IsTriggered())
             {
+                _triggerDate = _action.GetDate();
                 Console.WriteLine($"{Id}({user.UserName}): Activate");
                 object data = new ActionDataConverter.ActionDataConverter().Convert(_action.Type, _reaction.Type, _action.GetResult(), _serviceProvider, user);
                 if (data != null)
@@ -43,6 +46,11 @@ namespace Area.Services.Triggers
                     Console.WriteLine("Converted data is null !");
             }
             return false;
+        }
+
+        public DateTime GetTriggerDate()
+        {
+            return _triggerDate;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Area.Models
         public int Id { get; set; }
         public ActionTypeEnum ActionType { get; set; }
         public ReactionTypeEnum ReactionType { get; set; }
+        public DateTime? LastVerificationDate { get; set; }
         [NotMapped]
         public TriggerTemplate Template { get; set; }
     }

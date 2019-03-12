@@ -14,6 +14,7 @@ namespace Area.Services.Actions.Spotify
 {
     public class FollowedPlaylistUpdatedSpotifyAction : IAction
     {
+        private DateTime _lastTriggerDate;
         private readonly SpotifyWrapper _spotifyWrapper;
         private readonly SpotifyService _spotifyService;
         private List<PlaylistTrack> _newTracks;
@@ -30,11 +31,10 @@ namespace Area.Services.Actions.Spotify
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             string currentUserId = (_spotifyWrapper.GetSpotifyProfile(_spotifyService.GetSpotifyToken(user)) as SpotifyProfileModel).Id;
-            var lastCheck = user.LastVerificationDate;
             Paging<SimplePlaylist> playlists = _spotifyService.GetUserPlaylists(api, user);
             if (playlists == null)
                 return;
@@ -47,6 +47,10 @@ namespace Area.Services.Actions.Spotify
                 {
                     if (tracks.Items[j].AddedAt >= lastCheck && tracks.Items[j].AddedBy.Id != currentUserId)
                     {
+                        if (_lastTriggerDate == null)
+                            _lastTriggerDate = tracks.Items[j].AddedAt;
+                        else if (_lastTriggerDate < tracks.Items[j].AddedAt)
+                            _lastTriggerDate = tracks.Items[j].AddedAt;
                         _newTracks.Add(tracks.Items[j]);
                     }
                 }
@@ -61,6 +65,11 @@ namespace Area.Services.Actions.Spotify
         public bool IsTriggered()
         {
             return _newTracks.Count > 0;
+        }
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Area.Services.Actions.Steam
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             var api = new SteamWebAPI2.Interfaces.PlayerService("devkey");
             var newsApi = new SteamWebAPI2.Interfaces.SteamNews("devkey");
@@ -38,7 +38,7 @@ namespace Area.Services.Actions.Steam
 
                 for (int j = 0; j < gameNews.Count; j++)
                 {
-                    if (FromUnixTime(gameNews.ElementAt(j).Date) > user.LastVerificationDate)
+                    if (FromUnixTime(gameNews.ElementAt(j).Date) > lastCheck)
                     {
                         _news.Add(gameNews.ElementAt(j));
                     }
@@ -60,6 +60,13 @@ namespace Area.Services.Actions.Steam
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTime);
+        }
+
+        private DateTime _lastTriggerDate;
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

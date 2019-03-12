@@ -14,6 +14,7 @@ namespace Area.Services.Actions
     public class NewTopPostsRedditAction : IAction
     {
         private readonly RedditService _redditService;
+        private DateTime _lastTriggerDate;
 
         public TriggerCompatibilityEnum Type { get; private set; }
 
@@ -27,7 +28,7 @@ namespace Area.Services.Actions
 
         List<Post> _newTopPosts = new List<Post>();
 
-        public void CheckAction(Models.Account user)
+        public void CheckAction(Models.Account user, DateTime lastCheck)
         {
             RedditAPI api = _redditService.GetApi(_redditService.GetToken(user));
 
@@ -39,7 +40,7 @@ namespace Area.Services.Actions
                 
                 for (int j = 0; j < risingPosts.Count; j++)
                 {
-                    if (risingPosts[j].Created > user.LastVerificationDate)
+                    if (risingPosts[j].Created > lastCheck)
                     {
                         _newTopPosts.Add(risingPosts[j]);
                     }
@@ -55,6 +56,11 @@ namespace Area.Services.Actions
         public bool IsTriggered()
         {
             return _newTopPosts.Count > 0;
+        }
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

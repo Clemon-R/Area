@@ -41,11 +41,13 @@ namespace Area.Services.App
                         foreach (var trigger in account.Triggers)
                         {
                             Console.WriteLine("Checking trigger...");
+                            if (trigger.LastVerificationDate == null)
+                                trigger.LastVerificationDate = DateTime.Now;
                             _triggerFactory.CreateTriggerTemplate(trigger);
-                            trigger.Template.TryActivate(account, string.Empty);
+                            trigger.Template.TryActivate(account, string.Empty, (DateTime)trigger.LastVerificationDate);
+                            trigger.LastVerificationDate = trigger.Template.GetTriggerDate();
                             _context.Update(trigger);
                         }
-                        account.LastVerificationDate = DateTime.Now;
                     }
                     try {
                         _context.SaveChanges();
