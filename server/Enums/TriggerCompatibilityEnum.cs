@@ -17,6 +17,6 @@ namespace Area.Enums
         RedditPosts,
         SteamNews,
         SteamInventoryItem,
-        YoutubeActivity,
+        YoutubeActivity
     }
 }

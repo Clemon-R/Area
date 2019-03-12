@@ -31,7 +31,7 @@ namespace Area.Services.Actions.Twitch
 
         public void CheckAction(Account user)
         {
-            TwitchAPI api = _twitchService.GetApi(_twitchService.GetToken(user));
+            TwitchAPI api = _twitchService.GetApi(user);
 
             if (api == null)
                 return;
