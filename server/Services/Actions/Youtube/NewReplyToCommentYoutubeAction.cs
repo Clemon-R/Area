@@ -13,13 +13,24 @@ namespace Area.Services.Actions.Youtube
 {
     public class NewReplyToCommentYoutubeAction : IAction
     {
+        private readonly App.YoutubeService _youtubeService;
+
         public TriggerCompatibilityEnum Type => throw new NotImplementedException();
         List<Activity> _newActivites = new List<Activity>();
 
         public ActionTypeEnum Id => throw new NotImplementedException();
 
+        public NewReplyToCommentYoutubeAction(IServiceProvider serviceProvider)
+        {
+            _youtubeService = (App.YoutubeService)serviceProvider.GetService(typeof(App.YoutubeService));
+        }
+
         public void CheckAction(Account user)
         {
+            var api = _youtubeService.GetApi(user);
+
+            var request = api.Comments.List("snippet");
+
         }
 
         public object GetResult()

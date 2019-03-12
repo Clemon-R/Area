@@ -17,6 +17,7 @@ namespace Area.Services.Reactions.Area
         {
             string msg = result as string;
 
+            Console.WriteLine("DashBoardMessageReaction : " + msg);
             // send msg to area dashboard
             return true;
         }
