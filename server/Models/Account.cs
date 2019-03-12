@@ -20,6 +20,5 @@ namespace Area.Models
         public string Token { get; set; }
         public ICollection<Trigger> Triggers { get; set; }
         public ICollection<Token> Tokens { get; set; }
-        public DateTime? LastVerificationDate { get; set; }
     }
 }

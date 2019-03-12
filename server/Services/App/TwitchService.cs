@@ -68,9 +68,9 @@ namespace Area.Services.App
         public TwitchAPI GetApi(Account user)
         {
             TwitchAPI api = new TwitchAPI();
-            var token = this.GetToken(user);
+            var token = GetToken(user);
 
-            api.Settings.Scopes = new List<TwitchLib.Api.Core.Enums.AuthScopes>() { TwitchLib.Api.Core.Enums.AuthScopes.Channel_Subscriptions };
+            api.Settings.Scopes = new List<TwitchLib.Api.Core.Enums.AuthScopes>() { TwitchLib.Api.Core.Enums.AuthScopes.Channel_Subscriptions, TwitchLib.Api.Core.Enums.AuthScopes.User_Follows_Edit };
             api.Settings.ClientId = "g2kkfu5px956qtxvzfvsi9jbqhip4n";
             api.Settings.AccessToken = token.AccessToken;
             api.Settings.Secret = "a2w11c1wu4q8mb5wqjzf4q5njq41co";

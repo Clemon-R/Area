@@ -27,12 +27,12 @@ namespace Area.Services.Actions.Spotify
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             var api = _spotifyService.GetSpotifyWebApi(_spotifyService.GetSpotifyToken(user));
             FollowedArtists followedArtists = _spotifyService.GetFollowedArtists(api);
             NewAlbumReleases releases = _spotifyService.GetNewReleases(api);
-            var lastCheck = user.LastVerificationDate;
+
             for (int i = 0; i < followedArtists.Artists.Items.Count; i++)
             {
                 for (int j = 0; j < releases.Albums.Items.Count; j++)
@@ -57,6 +57,13 @@ namespace Area.Services.Actions.Spotify
         public bool IsTriggered()
         {
             return _newReleases.Count != 0;
+        }
+
+        private DateTime _lastTriggerDate;
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

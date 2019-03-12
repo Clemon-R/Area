@@ -30,11 +30,13 @@ namespace Area.Services.Reactions.Twitch
             TwitchAPI api = _twitchService.GetApi(user);
             List<User> users = result as List<User>;
 
+            Console.WriteLine("Executing FollowUsers Twitch Reaction");
             if (users == null || api == null)
                 return false;
             for (int i = 0; i < users.Count; i++)
             {
-                api.V5.Users.FollowChannelAsync(users[i].Id, users[i].Login);
+                Console.WriteLine("Following " + users[i].DisplayName);
+                api.V5.Users.FollowChannelAsync(users[i].Id, users[i].Id);
             }
             return true;
         }

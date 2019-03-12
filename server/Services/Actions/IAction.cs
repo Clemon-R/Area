@@ -9,10 +9,11 @@ namespace Area.Services.Actions
 {
     public interface IAction
     {
-        void CheckAction(Account user);
+        void CheckAction(Account user, DateTime lastCheck);
         bool IsTriggered();
         TriggerCompatibilityEnum Type { get; }
         ActionTypeEnum Id { get; }
         object GetResult();
+        DateTime GetDate();
     }
 }

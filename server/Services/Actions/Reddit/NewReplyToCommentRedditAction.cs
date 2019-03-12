@@ -13,6 +13,7 @@ namespace Area.Services.Actions.Reddit
 {
     public class NewReplyToCommentRedditAction : IAction
     {
+        private DateTime _lastTriggerDate;
         private readonly RedditService _redditService;
 
         public TriggerCompatibilityEnum Type { get; private set; }
@@ -27,7 +28,7 @@ namespace Area.Services.Actions.Reddit
 
         List<Comment> _newReplies = new List<Comment>();
 
-        public void CheckAction(Models.Account user)
+        public void CheckAction(Models.Account user, DateTime lastCheck)
         {
             RedditAPI api = _redditService.GetApi(_redditService.GetToken(user));
 
@@ -39,7 +40,7 @@ namespace Area.Services.Actions.Reddit
 
                 for (int j = 0; j < replies.Count; j++)
                 {
-                    if (replies[j].Created > user.LastVerificationDate)
+                    if (replies[j].Created > lastCheck)
                     {
                         _newReplies.Add(replies[j]);
                     }
@@ -55,6 +56,11 @@ namespace Area.Services.Actions.Reddit
         public bool IsTriggered()
         {
             return _newReplies.Count > 0;
+        }
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

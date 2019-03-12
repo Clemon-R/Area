@@ -11,10 +11,10 @@ namespace Area.Services.Actions.Yammer
     public class YammerAction : IAction
     {
         public TriggerCompatibilityEnum Type => throw new NotImplementedException();
-
+        private DateTime _lastTriggerDate;
         public ActionTypeEnum Id => throw new NotImplementedException();
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             throw new NotImplementedException();
         }
@@ -27,6 +27,11 @@ namespace Area.Services.Actions.Yammer
         public bool IsTriggered()
         {
             throw new NotImplementedException();
+        }
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }

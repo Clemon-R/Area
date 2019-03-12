@@ -29,7 +29,7 @@ namespace Area.Services.Actions.Twitch
             Type = Id.GetAttributeOfType<DescriptionActionAttribute>().Compatibilitys[0];
         }
 
-        public void CheckAction(Account user)
+        public void CheckAction(Account user, DateTime lastCheck)
         {
             TwitchAPI api = _twitchService.GetApi(user);
 
@@ -41,7 +41,7 @@ namespace Area.Services.Actions.Twitch
                 var clips = api.Helix.Clips.GetClipAsync(null, game.Games[0].Id).GetAwaiter().GetResult();
                 for (int i = 0; i < clips.Clips.Length; i++)
                 {
-                    if (Convert.ToDateTime(clips.Clips[i].CreatedAt) > user.LastVerificationDate)
+                    if (Convert.ToDateTime(clips.Clips[i].CreatedAt) > lastCheck)
                     {
                         _newClips.Add(clips.Clips[i]);
                     }
@@ -57,6 +57,13 @@ namespace Area.Services.Actions.Twitch
         public bool IsTriggered()
         {
             return _newClips.Count > 0;
+        }
+
+        private DateTime _lastTriggerDate;
+
+        public DateTime GetDate()
+        {
+            return _lastTriggerDate;
         }
     }
 }
