@@ -12,6 +12,7 @@ import {YammerModule} from './pages/yammer/yammer.module';
 import {AreaModule} from './pages/area/area.module';
 import {YoutubeModule} from './pages/youtube/youtube.module';
 import {RedditModule} from './pages/reddit/reddit.module';
+import {ApkComponent} from './pages/apk/apk.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'area', loadChildren: () => AreaModule},
   { path: 'youtube', loadChildren: () => YoutubeModule},
   { path: 'reddit', loadChildren: () => RedditModule},
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'client.apk', component: ApkComponent }
 ];
 
 @NgModule({
