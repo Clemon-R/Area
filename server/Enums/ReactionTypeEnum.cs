@@ -14,7 +14,9 @@ namespace Area.Enums
         UpvoteCommentReddit = 1,
         [DescriptionReactionAttribute("Upvote le post", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditPosts)]
         UpvotePostReddit = 2,
-        [DescriptionReactionAttribute("Ecris un message sur le dashboard de l'utilisateur", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.String)]
-        AddDashboardMessage = 3
+        [DescriptionReactionAttribute("Ecris un message sur le dashboard de l'utilisateur", ServiceTypeEnum.Area, TriggerCompatibilityEnum.String)]
+        AddDashboardMessage = 3,
+        [DescriptionReactionAttribute("Suis l'utilisateur sur Twitch", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.ListTwitchUser)]
+        FollowUserTwitch = 4,
     }
 }

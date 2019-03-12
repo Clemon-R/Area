@@ -49,7 +49,12 @@ namespace Area.Services.App
 
         public Token GetToken(Account user)
         {
-            var tmp =  user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
+            return user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
+        }
+
+        /*public Token GetToken(Account user)
+        {
+            var tmp = user.Tokens.Where(t => t.Type == ServiceTypeEnum.Reddit).FirstOrDefault();
 
             return tmp;
             if (tmp == null)
@@ -60,7 +65,7 @@ namespace Area.Services.App
             var model = result as RedditTokenModel;
             tmp.AccessToken = model.Access_Token;
             return tmp;
-        }
+        }*/
 
         public RedditAPI GetApi(Token token)
         {
@@ -70,3 +75,5 @@ namespace Area.Services.App
         }
 	}
 }
+
+

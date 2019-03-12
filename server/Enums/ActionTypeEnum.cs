@@ -8,13 +8,13 @@ namespace Area.Enums
 {
     public enum ActionTypeEnum
     {
-        [DescriptionActionAttribute("Un nouvelle album d'un artiste suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleAlbum, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack )]
+        [DescriptionActionAttribute("Nouvel album d'un artiste suivi", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListSimpleAlbum, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack )]
         FollowedArtistNewReleaseSpotify = 0,
         [DescriptionActionAttribute("Mise à jour d'une playlist suivie", ServiceTypeEnum.Spotify, TriggerCompatibilityEnum.ListPlaylistTrack, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListSimpleTrack )]
         FollowedPlaylistUpdatedSpotify = 1,
-        [DescriptionActionAttribute("Nouvel abonnement", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.ListTwitchFollowers, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListTwitchFollowers )]
+        [DescriptionActionAttribute("Nouveau Follower", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.ListTwitchUser, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.ListTwitchUser )]
         NewSubTwitch = 2,
-        [DescriptionActionAttribute("Nouveau clip smash sur Twitch", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.None, TriggerCompatibilityEnum.String )]
+        [DescriptionActionAttribute("Nouveau clip smash sur Twitch", ServiceTypeEnum.Twitch, TriggerCompatibilityEnum.None, TriggerCompatibilityEnum.String )]
         NewSmashClipTwitch = 3,
         [DescriptionActionAttribute("Nouvelle réponse à un commentaire", ServiceTypeEnum.Reddit, TriggerCompatibilityEnum.RedditComments, TriggerCompatibilityEnum.String, TriggerCompatibilityEnum.RedditComments )]
         NewReplyToCommentReddit = 4,
@@ -24,7 +24,7 @@ namespace Area.Enums
         GameNewsSteam = 6,
         [DescriptionActionAttribute("Nouvel item dans l'inventaire Steam", ServiceTypeEnum.Steam, TriggerCompatibilityEnum.None)]
         NewInventoryItemSteam = 7,
-        [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity, new TriggerCompatibilityEnum[] { TriggerCompatibilityEnum.String })]
+        [DescriptionActionAttribute("Nouvelle activité intéressante sur Youtube", ServiceTypeEnum.Youtube, TriggerCompatibilityEnum.YoutubeActivity, TriggerCompatibilityEnum.String)]
         NewYoutubeActivity = 8
     }
 }

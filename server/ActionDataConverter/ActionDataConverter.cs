@@ -16,7 +16,7 @@ namespace Area.ActionDataConverter
 {
     public class ActionDataConverter
     {
-        public object Convert(TriggerCompatibilityEnum action, TriggerCompatibilityEnum reaction, object data, IServiceProvider serviceProvider,Models.Account user)
+        public object Convert(TriggerCompatibilityEnum action, TriggerCompatibilityEnum reaction, object data, IServiceProvider serviceProvider, Models.Account user)
         {
             switch (reaction)
             {
@@ -28,6 +28,20 @@ namespace Area.ActionDataConverter
                     return ConvertToRedditComments(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.String:
                     return ConvertToString(data, action, serviceProvider, user);
+                case TriggerCompatibilityEnum.ListTwitchUser:
+                    return ConvertToListTwitchUser(data, action, serviceProvider, user);
+                default:
+                    return null;
+            }
+        }
+
+        private object ConvertToListTwitchUser(object data, TriggerCompatibilityEnum action, IServiceProvider serviceProvider, Models.Account user)
+        {
+            Console.WriteLine("Convert to list twitch user");
+            switch (action)
+            {
+                case TriggerCompatibilityEnum.ListTwitchUser:
+                    return data;
                 default:
                     return null;
             }
@@ -62,7 +76,7 @@ namespace Area.ActionDataConverter
                     return ListAlbumsToString(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.ListSimpleTrack:
                     return ListSimpleTrackToString(data, action, serviceProvider, user);
-                case TriggerCompatibilityEnum.ListTwitchFollowers:
+                case TriggerCompatibilityEnum.ListTwitchUser:
                     return ListTwitchFollowersToString(data, action, serviceProvider, user);
                 case TriggerCompatibilityEnum.String:
                     return data;
@@ -136,7 +150,7 @@ namespace Area.ActionDataConverter
 
         private object ListTwitchFollowersToString(object data, TriggerCompatibilityEnum action, IServiceProvider serviceProvider, Models.Account user)
         {
-            int newFollowersCount = (data as List<Follow>).Count;
+            int newFollowersCount = (data as List<TwitchLib.Api.Helix.Models.Users.User>).Count;
             string msg = "You have " + newFollowersCount + " new follower" + (newFollowersCount > 1 ? "s" : "");
 
             return msg as object;

@@ -8,13 +8,12 @@ using Area.Models;
 using Area.Services.App;
 using TwitchLib.Api;
 using TwitchLib.Api.Helix.Models.Users;
-using TwitchLib.Client;
 
 namespace Area.Services.Actions.Twitch
 {
     public class NewSubTwitchAction : IAction
     {
-        List<Follow> _newFollowers = new List<Follow>();
+        List<User> _newFollowers = new List<User>();
 
         TwitchService _twitchService;
 
@@ -32,14 +31,18 @@ namespace Area.Services.Actions.Twitch
         {
             TwitchAPI api = _twitchService.GetApi(_twitchService.GetToken(user));
 
-            GetUsersFollowsResponse userFollows = api.Helix.Users.GetUsersFollowsAsync("user_id").GetAwaiter().GetResult();
-
+            GetUsersFollowsResponse userFollows = api.Helix.Users.GetUsersFollowsAsync("", "", 20, "", "user_id").Result;
+            List<string> followerIds = new List<string>();
             for (int i = 0; i < userFollows.Follows.Length; i++)
             {
                 if (userFollows.Follows[i].FollowedAt > user.LastVerificationDate)
                 {
-                    _newFollowers.Add(userFollows.Follows[i]);
+                    followerIds.Add(userFollows.Follows[i].FromUserId);
                 }
+            }
+            if (followerIds.Count > 0)
+            {
+                _newFollowers = api.Helix.Users.GetUsersAsync(followerIds).Result.Users.ToList();
             }
         }
 

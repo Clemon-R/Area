@@ -11,12 +11,12 @@ namespace Area.Enums
         ListSimpleAlbum = 0,
         ListSimpleTrack,
         ListPlaylistTrack,
-        ListTwitchFollowers,
+        ListTwitchUser,
         String,
         RedditComments,
         RedditPosts,
         SteamNews,
         SteamInventoryItem,
-        YoutubeActivity
+        YoutubeActivity,
     }
 }
