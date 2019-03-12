@@ -27,7 +27,7 @@ namespace Area.Services.Reactions.Twitch
 
         public bool Execute(Account user, object result, string args)
         {
-            TwitchAPI api = _twitchService.GetApi(_twitchService.GetToken(user));
+            TwitchAPI api = _twitchService.GetApi(user);
             List<User> users = result as List<User>;
 
             if (users == null || api == null)

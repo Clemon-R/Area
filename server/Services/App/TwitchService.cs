@@ -4,6 +4,7 @@ using Area.ViewModels;
 using Area.Wrappers.Models;
 using Area.Wrappers.Twitch;
 using Area.Wrappers.Twitch.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,11 +55,9 @@ namespace Area.Services.App
         public Token GetToken(Account user)
         {
             var tmp = user.Tokens.Where(t => t.Type == ServiceTypeEnum.Twitch).FirstOrDefault();
-            Console.WriteLine("Twitch token from db is null");
             if (tmp == null)
                 return null;
             var result = _twitchWrapper.RefreshTwitchToken(tmp);
-            Console.WriteLine("Refreshing twitch token failed");
             if (!result.Success)
                 return null;
             var model = result as TwitchTokenModel;
@@ -66,17 +65,11 @@ namespace Area.Services.App
             return tmp;
         }
 
-        public TwitchAPI GetApi(Token token)
+        public TwitchAPI GetApi(Account user)
         {
             TwitchAPI api = new TwitchAPI();
+            var token = this.GetToken(user);
 
-            if (api == null)
-                return null;
-            if (token == null)
-            {
-                Console.WriteLine("Token is null");
-                return null;
-            }
             api.Settings.Scopes = new List<TwitchLib.Api.Core.Enums.AuthScopes>() { TwitchLib.Api.Core.Enums.AuthScopes.Channel_Subscriptions };
             api.Settings.ClientId = "g2kkfu5px956qtxvzfvsi9jbqhip4n";
             api.Settings.AccessToken = token.AccessToken;

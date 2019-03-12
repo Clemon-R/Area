@@ -40,9 +40,10 @@ namespace Area.Wrappers.Twitch
                 var response = httpClient.PostAsync(@"https://id.twitch.tv/oauth2/token" +
                 "?client_id=g2kkfu5px956qtxvzfvsi9jbqhip4n" +
                 "&client_secret=a2w11c1wu4q8mb5wqjzf4q5njq41co" +
-                $"refresh_token={token.RefreshToken}" + 
+                $"&refresh_token={token.RefreshToken}" + 
                 "&grant_type=refresh_token", new StringContent(string.Empty)).Result;
                 var responseContent = response.Content.ReadAsStringAsync().Result;
+                Console.WriteLine(responseContent);
                 if (responseContent.Contains("status"))
                 {
                     var json = JObject.Parse(responseContent);
