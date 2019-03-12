@@ -30,7 +30,7 @@ namespace Area.Services.Reactions.Twitch
             TwitchAPI api = _twitchService.GetApi(_twitchService.GetToken(user));
             List<User> users = result as List<User>;
 
-            if (users == null)
+            if (users == null || api == null)
                 return false;
             for (int i = 0; i < users.Count; i++)
             {

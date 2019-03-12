@@ -9,6 +9,7 @@ using Area.Services.Actions.Twitch;
 using Area.Services.Reactions.Area;
 using Area.Services.Reactions.Reddit;
 using Area.Services.Reactions.Spotify;
+using Area.Services.Reactions.Twitch;
 using Area.Services.Triggers;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,8 @@ namespace Area.Factory
                     return typeof(UpvoteCommentRedditReaction);
                 case ReactionTypeEnum.UpvotePostReddit:
                     return typeof(UpvotePostRedditReaction);
+                case ReactionTypeEnum.FollowUserTwitch:
+                    return typeof(FollowUserTwitchReaction);
                 default:
                     return null;
             }
