@@ -31,7 +31,7 @@
     <div class="form-group" *ngIf="reactionConnected">
       <label for="reactions">Reaction</label>
       <select class="form-control" id="reactions" (change)="reactionChanged($event.target.value)">
-          <option *ngFor="let reaction of validReactions" value="{{reaction.id}}">{{getService(action.service)}} - {{reaction.description}}</option>
+          <option *ngFor="let reaction of validReactions" value="{{reaction.id}}">{{getService(reaction.service)}} - {{reaction.description}}</option>
       </select>
     </div>
     <div class="form-group" [hidden]="true">
